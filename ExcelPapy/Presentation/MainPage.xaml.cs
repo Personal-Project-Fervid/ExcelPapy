@@ -1,4 +1,4 @@
-﻿namespace ExcelPapy.Presentation;
+namespace ExcelPapy.Presentation;
 
 public sealed partial class MainPage : Page
 {

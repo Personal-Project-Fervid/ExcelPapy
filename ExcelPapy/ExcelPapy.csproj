@@ -34,5 +34,15 @@
       ThemeService;
     </UnoFeatures>
   </PropertyGroup>
+  <ItemGroup>
+    <Page Update="Objects\Cellules.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Styles\Styles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
 
 </Project>

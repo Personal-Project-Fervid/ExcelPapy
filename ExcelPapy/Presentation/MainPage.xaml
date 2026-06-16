@@ -1,30 +1,42 @@
 ﻿<Page x:Class="ExcelPapy.Presentation.MainPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:local="using:ExcelPapy.Presentation"
+      xmlns:local="using:ExcelPapy.Objects"
       xmlns:uen="using:Uno.Extensions.Navigation.UI"
       xmlns:utu="using:Uno.Toolkit.UI"
-      xmlns:um="using:Uno.Material"
-      NavigationCacheMode="Required"
-      Background="{ThemeResource BackgroundBrush}">
-  <ScrollViewer IsTabStop="True">
-    <Grid utu:SafeArea.Insets="VisibleBounds">
-      <Grid.RowDefinitions>
-        <RowDefinition Height="Auto" />
-        <RowDefinition />
-      </Grid.RowDefinitions>
-      <utu:NavigationBar Content="{Binding Title}" />
+      xmlns:um="using:Uno.Material">
 
-      <StackPanel Grid.Row="1"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Center"
-            Spacing="16">
-        <TextBox Text="{Binding Name, Mode=TwoWay}"
-            PlaceholderText="Enter your name:" />
-        <Button Content="Go to Second Page"
-            AutomationProperties.AutomationId="SecondPageButton"
-            Command="{Binding GoToSecond}" />
-      </StackPanel>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="120"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Border BorderThickness="3" BorderBrush="Black" Background="#B3B3B3" Grid.ColumnSpan="10" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0,0,0,-3"/>
+        <!-- Personnalisateur de texte -->
+        
+        <!-- Personnalisateur de cellule -->
+        
+        <!-- Personnalisateur de l'application -->
+        
+        <!-- mémoire du fichier -->
+
+        <!-- Cellules-->
+            <local:Cellules Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="10" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
+
+        <Border BorderThickness="3" BorderBrush="Black" Grid.Row="1" Grid.ColumnSpan="10" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
+            
     </Grid>
-  </ScrollViewer>
 </Page>
