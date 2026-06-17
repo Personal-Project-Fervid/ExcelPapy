@@ -8,6 +8,7 @@
         <Setter Property="FontWeight" Value="SemiBold"/>
         <Setter Property="Foreground" Value="Black"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="HorizontalAlignment" Value="Stretch"/>
         <Setter Property="Padding" Value="4,2"/>
         <Setter Property="Background" Value="#F5F5F5"/>
         <Setter Property="IsSpellCheckEnabled" Value="False"/>

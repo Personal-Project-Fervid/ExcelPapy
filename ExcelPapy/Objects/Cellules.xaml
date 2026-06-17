@@ -4,8 +4,12 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:ExcelPapy.ViewModels"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006">
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:converters="using:ExcelPapy.Converters">
 
+    <UserControl.Resources>
+        <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+    </UserControl.Resources>
 
     <Grid>
 
@@ -26,7 +30,7 @@
 
 
         <!-- En-têtes des colonnes (A, B, C...) -->
-        <ScrollViewer x:Name="HeaderScrollViewer" Grid.Row="0" Grid.Column="1" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Disabled" >
+        <ScrollViewer x:Name="HeaderScrollViewer" Grid.Row="0" Grid.Column="1" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden" >
             <ItemsRepeater ItemsSource="{Binding ColumnHeaders}">
                 <ItemsRepeater.Layout>
                     <StackLayout Orientation="Horizontal" Spacing="0" />
@@ -80,23 +84,24 @@
 
                 <ItemsRepeater.ItemTemplate>
                     <DataTemplate x:DataType="local:RowViewModel">
-                        <ItemsRepeater ItemsSource="{Binding Cells}">
-                            <ItemsRepeater.Layout>
-                                <StackLayout Orientation="Horizontal" Spacing="0"/>
-                            </ItemsRepeater.Layout>
+                        <Grid Height="{Binding Cells[0].RowHeader.Height}">
+                            <ItemsRepeater ItemsSource="{Binding Cells}">
+                                <ItemsRepeater.Layout>
+                                    <StackLayout Orientation="Horizontal" Spacing="0"/>
+                                </ItemsRepeater.Layout>
 
-                            <ItemsRepeater.ItemTemplate>
-                                <DataTemplate x:DataType="local:CellViewModel">
-                                    <Border BorderBrush="#BABABA" BorderThickness="0,0,3,3"
-                                            Width="{Binding ColumnHeader.Width}"
-                                            Height="{Binding RowHeader.Height}"
-                                            Background="#F5F5F5">
-                                        <TextBox Text="{Binding Value, Mode=TwoWay}"
-                                                 Style="{StaticResource CellTextStyle}"/>
-                                    </Border>
-                                </DataTemplate>
-                            </ItemsRepeater.ItemTemplate>
-                        </ItemsRepeater>
+                                <ItemsRepeater.ItemTemplate>
+                                    <DataTemplate x:DataType="local:CellViewModel">
+                                        <Border BorderBrush="#BABABA" BorderThickness="0,0,3,3" Width="{Binding ColumnHeader.Width}" Height="{Binding RowHeader.Height}" Background="#F5F5F5" PointerPressed="OnCellPointerPressed" PointerMoved="OnCellPointerMoved" PointerReleased="OnCellPointerReleased">
+                                            <Grid>
+                                                <TextBox x:Name="CellTextBox" Text="{Binding Value, Mode=TwoWay}" Style="{StaticResource CellTextStyle}" IsReadOnly="True" IsHitTestVisible="False" KeyDown="OnTextBoxKeyDown" PointerPressed="OnTextBoxPointerPressed" PointerMoved="OnTextBoxPointerMoved"/>
+                                                <Border x:Name="SelectionOverlay" IsHitTestVisible="False" BorderBrush="#1E6FD9" BorderThickness="{Binding SelectionBorderThickness}" Background="#301E6FD9" Visibility="{Binding IsSelected, Converter={StaticResource BoolToVisibilityConverter}}" Margin="-3"/>
+                                            </Grid>
+                                        </Border>
+                                    </DataTemplate>
+                                </ItemsRepeater.ItemTemplate>
+                            </ItemsRepeater>
+                        </Grid>
                     </DataTemplate>
                 </ItemsRepeater.ItemTemplate>
             </ItemsRepeater>

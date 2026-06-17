@@ -20,14 +20,15 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="120"/>
+            <RowDefinition Height="150"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
         <Border BorderThickness="3" BorderBrush="Black" Background="#B3B3B3" Grid.ColumnSpan="10" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0,0,0,-3"/>
         <!-- Personnalisateur de texte -->
-        
+        <local:TextPersonalization Grid.ColumnSpan="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="15"/>
         <!-- Personnalisateur de cellule -->
+        <local:CellPersonalization Grid.Column="2" Grid.ColumnSpan="3" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="15"/>
         
         <!-- Personnalisateur de l'application -->
         
