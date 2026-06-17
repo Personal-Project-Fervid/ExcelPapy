@@ -32,7 +32,7 @@
 
                 <!-- Popup avec les choix -->
                 <Popup x:Name="BorderPickerPopup" IsLightDismissEnabled="True" PlacementTarget="{Binding ElementName=BorderPickerButton}" DesiredPlacement="Bottom">
-                    <Border Background="White" BorderBrush="Black" BorderThickness="3" CornerRadius="15" MinWidth="{Binding ActualWidth, ElementName=BorderPickerButton}">
+                    <Border x:Name="BorderPickerBorder" Background="White" BorderBrush="Black" BorderThickness="3" CornerRadius="15" MinWidth="{Binding ActualWidth, ElementName=BorderPickerButton}">
                         <StackPanel Padding="5">
 
                             <Button Click="OnBorderSelected" Tag="Top" Background="Transparent" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left">
@@ -150,55 +150,55 @@
 
                 <!-- Popup avec les choix -->
                 <Popup x:Name="BackgroundPickerPopup" IsLightDismissEnabled="True" PlacementTarget="{Binding ElementName=BackgroundPickerButton}" DesiredPlacement="Bottom">
-                    <Border Background="White" BorderBrush="Black" BorderThickness="3" CornerRadius="15" MinWidth="{Binding ActualWidth, ElementName=BackgroundPickerButton}">
+                    <Border x:Name="BackgroundPickerBorder" Background="White" BorderBrush="Black" BorderThickness="3" CornerRadius="15" MinWidth="{Binding ActualWidth, ElementName=BackgroundPickerButton}">
                         <StackPanel Padding="5">
 
-                            <Button Click="OnBackgroundSelected" Tag="Top" Background="Transparent" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left">
+                            <Button Click="OnBackgroundSelected" Tag="White" Background="Transparent" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left">
                                 <StackPanel Orientation="Horizontal" Spacing="10">
                                     <Border Width="24" Height="24" Background="White" HorizontalAlignment="Left" BorderBrush="Black" BorderThickness="1"/>
-                                    <TextBlock Text="Blanc" FontSize="18" FontWeight="DemiBold" VerticalAlignment="Center"/>
+                                    <TextBlock Text="Fond Blanc" FontSize="18" FontWeight="DemiBold" VerticalAlignment="Center"/>
                                 </StackPanel>
                             </Button>
 
-                            <Button Click="OnBackgroundSelected" Tag="Left" Background="Transparent" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left">
+                            <Button Click="OnBackgroundSelected" Tag="Red" Background="Transparent" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left">
                                 <StackPanel Orientation="Horizontal" Spacing="10">
-                                    <Border Width="24" Height="24" Background="White" HorizontalAlignment="Left" BorderBrush="Black" BorderThickness="1"/>
-                                    <TextBlock Text="Blanc" FontSize="18" FontWeight="DemiBold" VerticalAlignment="Center"/>
+                                    <Border Width="24" Height="24" Background="Red" HorizontalAlignment="Left" BorderBrush="Black" BorderThickness="1"/>
+                                    <TextBlock Text="Fond Rouge" FontSize="18" FontWeight="DemiBold" VerticalAlignment="Center"/>
                                 </StackPanel>
                             </Button>
 
-                            <Button Click="OnBackgroundSelected" Tag="Right" Background="Transparent" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left">
+                            <Button Click="OnBackgroundSelected" Tag="Blue" Background="Transparent" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left">
                                 <StackPanel Orientation="Horizontal" Spacing="10">
-                                    <Border Width="24" Height="24" Background="White" HorizontalAlignment="Left" BorderBrush="Black" BorderThickness="1"/>
-                                    <TextBlock Text="Blanc" FontSize="18" FontWeight="DemiBold" VerticalAlignment="Center"/>
+                                    <Border Width="24" Height="24" Background="Blue" HorizontalAlignment="Left" BorderBrush="Black" BorderThickness="1"/>
+                                    <TextBlock Text="Fond Bleu" FontSize="18" FontWeight="DemiBold" VerticalAlignment="Center"/>
                                 </StackPanel>
                             </Button>
 
-                            <Button Click="OnBackgroundSelected" Tag="Bottom" Background="Transparent" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" >
+                            <Button Click="OnBackgroundSelected" Tag="Yellow" Background="Transparent" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" >
                                 <StackPanel Orientation="Horizontal" Spacing="10">
-                                    <Border Width="24" Height="24" Background="White" HorizontalAlignment="Left" BorderBrush="Black" BorderThickness="1"/>
-                                    <TextBlock Text="Blanc" FontSize="18" FontWeight="DemiBold" VerticalAlignment="Center"/>
+                                    <Border Width="24" Height="24" Background="Yellow" HorizontalAlignment="Left" BorderBrush="Black" BorderThickness="1"/>
+                                    <TextBlock Text="Fond Jaune" FontSize="18" FontWeight="DemiBold" VerticalAlignment="Center"/>
                                 </StackPanel>
                             </Button>
 
-                            <Button Click="OnBackgroundSelected" Tag="None" Background="Transparent" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left">
+                            <Button Click="OnBackgroundSelected" Tag="Green" Background="Transparent" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left">
                                 <StackPanel Orientation="Horizontal" Spacing="10">
-                                    <Border Width="24" Height="24" Background="White" HorizontalAlignment="Left" BorderBrush="Black" BorderThickness="1"/>
-                                    <TextBlock Text="Blanc" FontSize="18" FontWeight="DemiBold" VerticalAlignment="Center"/>
+                                    <Border Width="24" Height="24" Background="Green" HorizontalAlignment="Left" BorderBrush="Black" BorderThickness="1"/>
+                                    <TextBlock Text="Fond Vert" FontSize="18" FontWeight="DemiBold" VerticalAlignment="Center"/>
                                 </StackPanel>
                             </Button>
 
-                            <Button Click="OnBackgroundSelected" Tag="All" Background="Transparent" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left">
+                            <Button Click="OnBackgroundSelected" Tag="Purple" Background="Transparent" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left">
                                 <StackPanel Orientation="Horizontal" Spacing="10" >
-                                    <Border Width="24" Height="24" Background="White" HorizontalAlignment="Left" BorderBrush="Black" BorderThickness="1"/>
-                                    <TextBlock Text="Blanc" FontSize="18" FontWeight="DemiBold" VerticalAlignment="Center"/>
+                                    <Border Width="24" Height="24" Background="Purple" HorizontalAlignment="Left" BorderBrush="Black" BorderThickness="1"/>
+                                    <TextBlock Text="Fond Violet" FontSize="18" FontWeight="DemiBold" VerticalAlignment="Center"/>
                                 </StackPanel>
                             </Button>
 
-                            <Button Click="OnBackgroundSelected" Tag="Outer" Background="Transparent" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left">
+                            <Button Click="OnBackgroundSelected" Tag="Pink" Background="Transparent" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left">
                                 <StackPanel Orientation="Horizontal" Spacing="10" >
-                                    <Border Width="24" Height="24" Background="White" HorizontalAlignment="Left" BorderBrush="Black" BorderThickness="1"/>
-                                    <TextBlock Text="Blanc" FontSize="18" FontWeight="DemiBold" VerticalAlignment="Center"/>
+                                    <Border Width="24" Height="24" Background="Pink" HorizontalAlignment="Left" BorderBrush="Black" BorderThickness="1"/>
+                                    <TextBlock Text="Fond Rose" FontSize="18" FontWeight="DemiBold" VerticalAlignment="Center"/>
                                 </StackPanel>
                             </Button>
 
