@@ -25,14 +25,25 @@
         </Grid.RowDefinitions>
 
         <Border BorderThickness="3" BorderBrush="Black" Background="#B3B3B3" Grid.ColumnSpan="10" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0,0,0,-3"/>
-        <!-- Personnalisateur de texte -->
-        <local:TextPersonalization Grid.ColumnSpan="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="15"/>
-        <!-- Personnalisateur de cellule -->
-        <local:CellPersonalization Grid.Column="2" Grid.ColumnSpan="3" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="15"/>
+
+        <StackPanel Orientation="Horizontal" Spacing="0" Grid.ColumnSpan="10">
+
+            <!-- Personnalisateur de texte -->
+            <local:TextPersonalization Margin="15" Width="300"/>
+            
+            <!-- Personnalisateur de cellule -->
+            <local:CellPersonalization Margin="0,15,15,15" Width="500"/>
+
+            
+            <!-- Personnalisateur de l'application -->
+            <local:AppPersonalization Margin="0,15,15,15" Width="300"/>
+            
+            <!-- mémoire du fichier -->
+            <local:FilesModule Margin="0,15,15,15" Width="300"/>
+
+
+        </StackPanel>
         
-        <!-- Personnalisateur de l'application -->
-        
-        <!-- mémoire du fichier -->
 
         <!-- Cellules-->
             <local:Cellules Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="10" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>

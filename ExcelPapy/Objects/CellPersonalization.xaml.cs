@@ -10,10 +10,10 @@ public sealed partial class CellPersonalization : UserControl
     {
         this.InitializeComponent();
 
-        SelectedBorderText.Text = "Bord du Haut";
+        SelectedBorderText.Text = "Bordure Supérieure";
         UpdateSelectedIcon("Top");
 
-        SelectedBackgroundText.Text = "Couleur";
+        SelectedBackgroundText.Text = "Couleur du Fond";
         UpdateBackgroundIcon("Blanc");
     }
 
@@ -97,6 +97,8 @@ public sealed partial class CellPersonalization : UserControl
             SelectedBackgroundText.Text = colorname switch
             {
                 "White" => "Fond Blanc",
+                "Grey" => "Fond Gris Clair",
+                "Black" => "Fond Noir",
                 "Green" => "Fond Vert",
                 "Purple" => "Fond Violet",
                 "Pink" => "Fond Rose",
@@ -109,6 +111,8 @@ public sealed partial class CellPersonalization : UserControl
             SelectedBackgroundIcon.Background = colorname switch
             {
                 "White" => new SolidColorBrush(Microsoft.UI.Colors.White),
+                "Grey" => new SolidColorBrush(Microsoft.UI.Colors.FromARGB(0xFF, 0xF5, 0xF5, 0xF5)),
+                "Black" => new SolidColorBrush(Microsoft.UI.Colors.Black),
                 "Red" => new SolidColorBrush(Microsoft.UI.Colors.Red),
                 "Blue" => new SolidColorBrush(Microsoft.UI.Colors.Blue),
                 "Yellow" => new SolidColorBrush(Microsoft.UI.Colors.Yellow),

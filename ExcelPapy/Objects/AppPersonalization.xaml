@@ -4,12 +4,130 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:ExcelPapy.Objects"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
-    d:DesignHeight="300"
-    d:DesignWidth="400">
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006">
 
-    <Grid>
+    <Border Background="#E6E6E6" CornerRadius="15" BorderBrush="Black" BorderThickness="3">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
 
-    </Grid>
+            <!-- Gras de l'application -->
+            <Grid Grid.ColumnSpan="3" Margin="5">
+                <!-- Bouton qui affiche la sélection actuelle -->
+                <Button x:Name="BoldAppPickerButton" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="White" CornerRadius="15" BorderBrush="Black" BorderThickness="3" Click="OnBoldAppPickerClick" HorizontalContentAlignment="Left">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock x:Name="SelectedBoldAppText" Text="G" FontSize="18" FontWeight="DemiBold" VerticalAlignment="Center"/>
+                        <TextBlock Text=" app'" FontSize="18" FontWeight="DemiBold" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+
+                <!-- Popup avec les choix -->
+                <Popup x:Name="BoldAppPickerPopup" IsLightDismissEnabled="True" PlacementTarget="{Binding ElementName=BoldAppPickerButton}" DesiredPlacement="Bottom">
+                    <Border x:Name="BoldAppPickerBorder" Background="White" BorderBrush="Black" BorderThickness="3" CornerRadius="15" MinWidth="{Binding ActualWidth, ElementName=BoldAppPickerButton}">
+                        <StackPanel Padding="5">
+
+                            <Button Click="OnBoldAppSelected" Tag="Light" Background="Transparent" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left">
+                                <StackPanel Orientation="Horizontal" Spacing="10">
+                                    <TextBlock Text="G" FontSize="18" FontWeight="Light" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
+
+                            <Button Click="OnBoldAppSelected" Tag="Normal" Background="Transparent" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left">
+                                <StackPanel Orientation="Horizontal" Spacing="10">
+                                    <TextBlock Text="G" FontSize="18" FontWeight="Normal" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
+
+                            <Button Click="OnBoldAppSelected" Tag="DemiBold" Background="Transparent" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left">
+                                <StackPanel Orientation="Horizontal" Spacing="10">
+                                    <TextBlock Text="G" FontSize="18" FontWeight="DemiBold" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
+
+                            <Button Click="OnBoldAppSelected" Tag="Bold" Background="Transparent" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" >
+                                <StackPanel Orientation="Horizontal" Spacing="10">
+                                    <TextBlock Text="G" FontSize="18" FontWeight="Bold" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
+
+                            <Button Click="OnBoldAppSelected" Tag="ExtraBold" Background="Transparent" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left">
+                                <StackPanel Orientation="Horizontal" Spacing="10">
+                                    <TextBlock Text="G" FontSize="18" FontWeight="ExtraBold" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
+
+                            <Button Click="OnBoldAppSelected" Tag="Black" Background="Transparent" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left">
+                                <StackPanel Orientation="Horizontal" Spacing="10" >
+                                    <TextBlock Text="G" FontSize="18" FontWeight="Black" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
+
+                            <Button Click="OnBoldAppSelected" Tag="UltraBlack" Background="Transparent" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left">
+                                <StackPanel Orientation="Horizontal" Spacing="10" >
+                                    <TextBlock Text="G" FontSize="18" FontWeight="UltraBlack" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
+
+                        </StackPanel>
+                    </Border>
+                </Popup>
+            </Grid>
+
+            <!-- Police-->
+            <Grid Grid.Row="1" Grid.ColumnSpan="4" Margin="5">
+                <!-- Bouton qui affiche la sélection actuelle -->
+                <Button x:Name="PolicePickerButton" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="White" CornerRadius="15" BorderBrush="Black" BorderThickness="3" Click="OnPolicePickerClick" HorizontalContentAlignment="Left">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock x:Name="SelectedPoliceText" Text="Police" FontSize="18" FontWeight="DemiBold" VerticalAlignment="Center" FontFamily="Segoe UI"/>
+                        <TextBlock Text=" de l'application" FontSize="18" FontWeight="DemiBold" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+
+                <!-- Popup avec les choix -->
+                <Popup x:Name="PolicePickerPopup" IsLightDismissEnabled="True" PlacementTarget="{Binding ElementName=PolicePickerButton}" DesiredPlacement="Bottom">
+                    <Border x:Name="PolicePickerBorder" Background="White" BorderBrush="Black" BorderThickness="3" CornerRadius="15" MinWidth="{Binding ActualWidth, ElementName=PolicePickerButton}">
+                        <StackPanel Padding="5">
+
+                            <Button Click="OnPoliceSelected" Tag="Segoe UI" Background="Transparent" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left">
+                                <StackPanel Orientation="Horizontal" Spacing="10">
+                                    <TextBlock Text="Segoe UI" FontSize="18" FontWeight="DemiBold" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
+
+                            <Button Click="OnPoliceSelected" Tag="Arial" Background="Transparent" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left">
+                                <StackPanel Orientation="Horizontal" Spacing="10">
+                                    <TextBlock Text="Arial" FontSize="18" FontWeight="DemiBold" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
+
+                            <Button Click="OnPoliceSelected" Tag="Calibri" Background="Transparent" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left">
+                                <StackPanel Orientation="Horizontal" Spacing="10">
+                                    <TextBlock Text="Calibri" FontSize="18" FontWeight="DemiBold" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
+
+                            <Button Click="OnPoliceSelected" Tag="Times new roman" Background="Transparent" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left">
+                                <StackPanel Orientation="Horizontal" Spacing="10">
+                                    <TextBlock Text="Times New Roman" FontSize="18" FontWeight="DemiBold" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
+
+                            <Button Click="OnPoliceSelected" Tag="Verdana" Background="Transparent" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" >
+                                <StackPanel Orientation="Horizontal" Spacing="10">
+                                    <TextBlock Text="Verdana" FontSize="18" FontWeight="DemiBold" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
+                        </StackPanel>
+                    </Border>
+                </Popup>
+            </Grid>
+        </Grid>
+    </Border>
 </UserControl>

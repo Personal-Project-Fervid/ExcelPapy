@@ -9,7 +9,22 @@
     d:DesignHeight="300"
     d:DesignWidth="400">
 
-    <Grid>
+    <Border Background="#E6E6E6" CornerRadius="15" BorderBrush="Black" BorderThickness="3">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
 
-    </Grid>
+            <Button Content="Sauvegarder" Grid.ColumnSpan="3" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="White" CornerRadius="15" BorderBrush="Black" BorderThickness="3" HorizontalContentAlignment="Left" Margin="5"  FontWeight="DemiBold" FontSize="18"/>
+
+            <Button Content="Enregistrer Sous" Grid.ColumnSpan="3" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="White" CornerRadius="15" BorderBrush="Black" BorderThickness="3" HorizontalContentAlignment="Left" Margin="5" FontWeight="DemiBold" FontSize="18"/>
+
+        </Grid>
+    </Border>
 </UserControl>
