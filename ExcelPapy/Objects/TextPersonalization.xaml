@@ -24,10 +24,16 @@
             <!-- Police-->
             <Grid Grid.Row="0" Grid.ColumnSpan="4" Margin="5">
                 <!-- Bouton qui affiche la sélection actuelle -->
-                <Button x:Name="PolicePickerButton" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="White" CornerRadius="15" BorderBrush="Black" BorderThickness="3" Click="OnPolicePickerClick" HorizontalContentAlignment="Left">
-                    <StackPanel Orientation="Horizontal" Spacing="10">
-                        <TextBlock x:Name="SelectedPoliceText" FontSize="18" FontWeight="DemiBold" VerticalAlignment="Center" FontFamily="Segoe UI"/>
-                    </StackPanel>
+                <Button x:Name="PolicePickerButton" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="White" CornerRadius="15" BorderBrush="Black" BorderThickness="3" Click="OnPolicePickerClick">
+                    <Grid>
+                        <TextBlock x:Name="SelectedPoliceText" FontSize="18" FontWeight="DemiBold" VerticalAlignment="Center" HorizontalAlignment="Left" FontFamily="Segoe UI" Height="24" Width="120" Margin="-15,0,15,0"/>
+                        <Grid Height="24" Width="24" HorizontalAlignment="Right" Margin="15,0,-15,0">
+                            <Line X1="0" Y1="6" X2="12" Y2="18" Stroke="Black" StrokeThickness="3"/>
+                            <Line X1="12" Y1="18" X2="12" Y2="19" Stroke="Black" StrokeThickness="3"/>
+                            <Line X1="12" Y1="18" X2="23" Y2="6" Stroke="Black" StrokeThickness="3"/>
+                        </Grid>
+                    </Grid>
+                        
                 </Button>
 
                 <!-- Popup avec les choix -->
@@ -72,10 +78,15 @@
             <!-- FontSize -->
             <Grid Grid.Row="0" Grid.Column="4" Grid.ColumnSpan="2" Margin="5">
                 <!-- Bouton qui affiche la sélection actuelle -->
-                <Button x:Name="FontSizePickerButton" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="White" CornerRadius="15" BorderBrush="Black" BorderThickness="3" Click="OnFontSizePickerClick" HorizontalContentAlignment="Left">
-                    <StackPanel Orientation="Horizontal" Spacing="10">
-                        <TextBlock x:Name="SelectedFontSizeText" Text="Bordure..." FontSize="18" FontWeight="DemiBold" VerticalAlignment="Center"/>
-                    </StackPanel>
+                <Button x:Name="FontSizePickerButton" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="White" CornerRadius="15" BorderBrush="Black" BorderThickness="3" Click="OnFontSizePickerClick">
+                    <Grid>
+                        <TextBlock x:Name="SelectedFontSizeText" Text="Bordure..." FontSize="18" FontWeight="DemiBold" VerticalAlignment="Center" Margin="-15,0,15,0" HorizontalAlignment="Left"/>
+                        <Grid Height="24" Width="24" HorizontalAlignment="Right" Margin="15,0,-15,0">
+                            <Line X1="0" Y1="6" X2="12" Y2="18" Stroke="Black" StrokeThickness="3"/>
+                            <Line X1="12" Y1="18" X2="12" Y2="19" Stroke="Black" StrokeThickness="3"/>
+                            <Line X1="12" Y1="18" X2="23" Y2="6" Stroke="Black" StrokeThickness="3"/>
+                        </Grid>
+                    </Grid>
                 </Button>
 
                 <!-- Popup avec les choix -->
@@ -132,6 +143,11 @@
                     <Grid Margin="5,-3,-5,3">
                         <TextBlock x:Name="SelectedPoliceColorText" Text="A" FontSize="28" FontWeight="DemiBold" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,-4,0,4"/>
                         <Border x:Name="SelectedPoliceColorIcon" Width="20" Height="6" Background="Black" VerticalAlignment="Bottom" HorizontalAlignment="Left" BorderBrush="Black" BorderThickness="1" Margin="-1,0,-1,0"/>
+                        <Grid Height="24" Width="24" HorizontalAlignment="Right" Margin="80,3,-80,-3">
+                            <Line X1="0" Y1="6" X2="12" Y2="18" Stroke="Black" StrokeThickness="3"/>
+                            <Line X1="12" Y1="18" X2="12" Y2="19" Stroke="Black" StrokeThickness="3"/>
+                            <Line X1="12" Y1="18" X2="23" Y2="6" Stroke="Black" StrokeThickness="3"/>
+                        </Grid>
                     </Grid>
                 </Button>
 

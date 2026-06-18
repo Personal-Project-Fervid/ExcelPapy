@@ -21,11 +21,20 @@
             <!-- Gras de l'application -->
             <Grid Grid.ColumnSpan="3" Margin="5">
                 <!-- Bouton qui affiche la sélection actuelle -->
-                <Button x:Name="BoldAppPickerButton" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="White" CornerRadius="15" BorderBrush="Black" BorderThickness="3" Click="OnBoldAppPickerClick" HorizontalContentAlignment="Left">
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock x:Name="SelectedBoldAppText" Text="G" FontSize="18" FontWeight="DemiBold" VerticalAlignment="Center"/>
-                        <TextBlock Text=" app'" FontSize="18" FontWeight="DemiBold" VerticalAlignment="Center"/>
-                    </StackPanel>
+                <Button x:Name="BoldAppPickerButton" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="White" CornerRadius="15" BorderBrush="Black" BorderThickness="3" Click="OnBoldAppPickerClick">
+                    <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Width="244" Height="26" Margin="-6,0,6,0">
+                            <TextBlock x:Name="SelectedBoldAppText" Text="G" FontSize="18" FontWeight="DemiBold" VerticalAlignment="Center"/>
+                            <TextBlock Text=" app'" FontSize="18" FontWeight="DemiBold" VerticalAlignment="Center"/>
+                        </StackPanel>
+                        
+                        <Grid Height="24" Width="24" HorizontalAlignment="Right" Margin="6,0,-6,0">
+                            <Line X1="0" Y1="6" X2="12" Y2="18" Stroke="Black" StrokeThickness="3"/>
+                            <Line X1="12" Y1="18" X2="12" Y2="19" Stroke="Black" StrokeThickness="3"/>
+                            <Line X1="12" Y1="18" X2="23" Y2="6" Stroke="Black" StrokeThickness="3"/>
+                        </Grid>
+                    </Grid>
+                    
                 </Button>
 
                 <!-- Popup avec les choix -->
@@ -84,10 +93,18 @@
             <Grid Grid.Row="1" Grid.ColumnSpan="4" Margin="5">
                 <!-- Bouton qui affiche la sélection actuelle -->
                 <Button x:Name="PolicePickerButton" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="White" CornerRadius="15" BorderBrush="Black" BorderThickness="3" Click="OnPolicePickerClick" HorizontalContentAlignment="Left">
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock x:Name="SelectedPoliceText" Text="Police" FontSize="18" FontWeight="DemiBold" VerticalAlignment="Center" FontFamily="Segoe UI"/>
-                        <TextBlock Text=" de l'application" FontSize="18" FontWeight="DemiBold" VerticalAlignment="Center"/>
-                    </StackPanel>
+                    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Width="244" Height="26" Margin="6,0,-6,0">
+                            <TextBlock x:Name="SelectedPoliceText" Text="Police" FontSize="18" FontWeight="DemiBold" VerticalAlignment="Center" FontFamily="Segoe UI"/>
+                            <TextBlock Text=" de l'application" FontSize="18" FontWeight="DemiBold" VerticalAlignment="Center"/>
+                        </StackPanel>
+
+                        <Grid Height="24" Width="24" HorizontalAlignment="Right" Margin="16,0,-16,0">
+                            <Line X1="0" Y1="6" X2="12" Y2="18" Stroke="Black" StrokeThickness="3"/>
+                            <Line X1="12" Y1="18" X2="12" Y2="19" Stroke="Black" StrokeThickness="3"/>
+                            <Line X1="12" Y1="18" X2="23" Y2="6" Stroke="Black" StrokeThickness="3"/>
+                        </Grid>
+                    </Grid>
                 </Button>
 
                 <!-- Popup avec les choix -->
