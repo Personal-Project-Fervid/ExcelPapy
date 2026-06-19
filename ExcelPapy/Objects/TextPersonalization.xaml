@@ -25,16 +25,17 @@
             <Grid Grid.Row="0" Grid.ColumnSpan="4" Margin="5">
                 <!-- Bouton qui affiche la sélection actuelle -->
                 <Button x:Name="PolicePickerButton" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="White" CornerRadius="15" BorderBrush="Black" BorderThickness="3" Click="OnPolicePickerClick">
-                    <Grid>
-                        <TextBlock x:Name="SelectedPoliceText" FontSize="18" FontWeight="DemiBold" VerticalAlignment="Center" HorizontalAlignment="Left" FontFamily="Segoe UI" Height="24" Width="120" Margin="-15,0,15,0"/>
-                        <Grid Height="24" Width="24" HorizontalAlignment="Right" Margin="15,0,-15,0">
+                    <Grid Width="144">
+                        <TextBlock x:Name="SelectedPoliceText" FontSize="18" FontWeight="DemiBold" VerticalAlignment="Center" HorizontalAlignment="Left" FontFamily="Segoe UI" Height="24" Width="110" Margin="-3,0,3,0"/>
+                        <Grid Height="24" Width="24" HorizontalAlignment="Right" Margin="9,0,-9,0">
                             <Line X1="0" Y1="6" X2="12" Y2="18" Stroke="Black" StrokeThickness="3"/>
                             <Line X1="12" Y1="18" X2="12" Y2="19" Stroke="Black" StrokeThickness="3"/>
                             <Line X1="12" Y1="18" X2="23" Y2="6" Stroke="Black" StrokeThickness="3"/>
                         </Grid>
                     </Grid>
-                        
                 </Button>
+                <Line Stroke="Black" StrokeThickness="3" X1="143" Y1="6" X2="143" Y2="40"/>
+                <Button Click="PolicePersonalization" VerticalAlignment="Stretch" HorizontalAlignment="Left" Background="Transparent" CornerRadius="15,0,0,15" BorderThickness="0" Width="143"/>
 
                 <!-- Popup avec les choix -->
                 <Popup x:Name="PolicePickerPopup" IsLightDismissEnabled="True" PlacementTarget="{Binding ElementName=PolicePickerButton}" DesiredPlacement="Bottom">
@@ -80,14 +81,16 @@
                 <!-- Bouton qui affiche la sélection actuelle -->
                 <Button x:Name="FontSizePickerButton" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="White" CornerRadius="15" BorderBrush="Black" BorderThickness="3" Click="OnFontSizePickerClick">
                     <Grid>
-                        <TextBlock x:Name="SelectedFontSizeText" Text="Bordure..." FontSize="18" FontWeight="DemiBold" VerticalAlignment="Center" Margin="-15,0,15,0" HorizontalAlignment="Left"/>
-                        <Grid Height="24" Width="24" HorizontalAlignment="Right" Margin="15,0,-15,0">
+                        <TextBlock x:Name="SelectedFontSizeText" Text="Bordure..." FontSize="18" FontWeight="DemiBold" VerticalAlignment="Center" Margin="-20,0,20,0" HorizontalAlignment="Left"/>
+                        <Grid Height="24" Width="24" HorizontalAlignment="Right" Margin="20,0,-20,0">
                             <Line X1="0" Y1="6" X2="12" Y2="18" Stroke="Black" StrokeThickness="3"/>
                             <Line X1="12" Y1="18" X2="12" Y2="19" Stroke="Black" StrokeThickness="3"/>
                             <Line X1="12" Y1="18" X2="23" Y2="6" Stroke="Black" StrokeThickness="3"/>
                         </Grid>
                     </Grid>
                 </Button>
+                <Line Stroke="Black" StrokeThickness="3" X1="45" Y1="6" X2="45" Y2="40"/>
+                <Button Click="FontSizePersonalization" VerticalAlignment="Stretch" HorizontalAlignment="Left" Background="Transparent" CornerRadius="15,0,0,15" BorderThickness="0" Width="45"/>
 
                 <!-- Popup avec les choix -->
                 <Popup x:Name="FontSizePickerPopup" IsLightDismissEnabled="True" PlacementTarget="{Binding ElementName=FontSizePickerButton}" DesiredPlacement="Bottom">
@@ -143,13 +146,15 @@
                     <Grid Margin="5,-3,-5,3">
                         <TextBlock x:Name="SelectedPoliceColorText" Text="A" FontSize="28" FontWeight="DemiBold" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,-4,0,4"/>
                         <Border x:Name="SelectedPoliceColorIcon" Width="20" Height="6" Background="Black" VerticalAlignment="Bottom" HorizontalAlignment="Left" BorderBrush="Black" BorderThickness="1" Margin="-1,0,-1,0"/>
-                        <Grid Height="24" Width="24" HorizontalAlignment="Right" Margin="80,3,-80,-3">
+                        <Grid Height="24" Width="24" HorizontalAlignment="Right" Margin="85,3,-85,-3">
                             <Line X1="0" Y1="6" X2="12" Y2="18" Stroke="Black" StrokeThickness="3"/>
                             <Line X1="12" Y1="18" X2="12" Y2="19" Stroke="Black" StrokeThickness="3"/>
                             <Line X1="12" Y1="18" X2="23" Y2="6" Stroke="Black" StrokeThickness="3"/>
                         </Grid>
                     </Grid>
                 </Button>
+                <Line Stroke="Black" StrokeThickness="3" X1="94" Y1="6" X2="94" Y2="40"/>
+                <Button Click="PoliceColorPersonalization" VerticalAlignment="Stretch" HorizontalAlignment="Left" Background="Transparent" CornerRadius="15,0,0,15" BorderThickness="0" Width="94"/>
 
                 <!-- Popup avec les choix -->
                 <Popup x:Name="PoliceColorPickerPopup" IsLightDismissEnabled="True" PlacementTarget="{Binding ElementName=PoliceColorPickerButton}" DesiredPlacement="Bottom">

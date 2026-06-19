@@ -29,24 +29,24 @@
         <StackPanel Orientation="Horizontal" Spacing="0" Grid.ColumnSpan="10">
 
             <!-- Personnalisateur de texte -->
-            <local:TextPersonalization Margin="15" Width="300"/>
+            <local:TextPersonalization x:Name="TextPersonalization" Margin="15" Width="300"/>
             
             <!-- Personnalisateur de cellule -->
-            <local:CellPersonalization Margin="0,15,15,15" Width="500"/>
+            <local:CellPersonalization x:Name="CellPersonalization" Margin="0,15,15,15" Width="500"/>
 
             
             <!-- Personnalisateur de l'application -->
-            <local:AppPersonalization Margin="0,15,15,15" Width="300"/>
+            <local:AppPersonalization x:Name="AppPersonalization" Margin="0,15,15,15" Width="300"/>
             
             <!-- mémoire du fichier -->
-            <local:FilesModule Margin="0,15,15,15" Width="300"/>
+            <local:FilesModule x:Name="FilesModule" Margin="0,15,15,15" Width="300"/>
 
 
         </StackPanel>
         
 
         <!-- Cellules-->
-            <local:Cellules Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="10" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
+            <local:Cellules x:Name="Cellules" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="10" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
 
         <Border BorderThickness="3" BorderBrush="Black" Grid.Row="1" Grid.ColumnSpan="10" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
             

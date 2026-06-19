@@ -1,31 +1,55 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Controls.Primitives;
-using Microsoft.UI.Xaml.Data;
-using Microsoft.UI.Xaml.Input;
-using Microsoft.UI.Xaml.Media;
-using Microsoft.UI.Xaml.Navigation;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-
-// The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
+using ExcelPapy.ViewModels;
 
 namespace ExcelPapy.Objects;
 
 public sealed partial class TextPersonalization : UserControl
 {
+    private string? _policeCell;
+    public string? PoliceCell
+    {
+        get => _policeCell;
+        set
+        {
+            _policeCell = value;
+        }
+    }
+
+    private string? _fontSizeCell;
+    public string? FontSizeCell
+    {
+        get => _fontSizeCell;
+        set
+        {
+            _fontSizeCell = value;
+        }
+    }
+
+    private Brush? _policeColorCell;
+    public Brush? PoliceColorCell
+    {
+        get => _policeColorCell;
+        set
+        {
+            _policeColorCell = value;
+        }
+    }
+
     public TextPersonalization()
     {
         this.InitializeComponent();
 
         SelectedPoliceText.Text = "Segoe UI";
         SelectedPoliceText.FontFamily = new FontFamily("Segoe UI");
+        PoliceCell = "Segoe UI";
         SelectedFontSizeText.Text = "12";
+        FontSizeCell = "12";
+        SelectedPoliceColorText.Text = "Black";
+    }
+
+    private MainViewModel? _mainViewModel;
+    public void SetViewModel(MainViewModel vm)
+    {
+        _mainViewModel = vm;
     }
 
     private void OnPolicePickerClick(object sender, RoutedEventArgs e)
@@ -59,6 +83,11 @@ public sealed partial class TextPersonalization : UserControl
                 _ => new FontFamily("Segoe UI")
             };
 
+            PoliceCell = police;
+
+
+            _mainViewModel?.ApplyFontFamilyToSelection(PoliceCell ?? "Segoe UI");
+
             PolicePickerPopup.IsOpen = false;
         }
     }
@@ -82,6 +111,12 @@ public sealed partial class TextPersonalization : UserControl
                 "18" => "18",
                 _ => "Taille..."
             };
+
+            FontSizeCell = fontSize;
+
+
+            var x = double.Parse(FontSizeCell);
+            _mainViewModel?.ApplyFontSizeToSelection(x);
 
             FontSizePickerPopup.IsOpen = false;
         }
@@ -124,12 +159,28 @@ public sealed partial class TextPersonalization : UserControl
                 _ => new SolidColorBrush(Microsoft.UI.Colors.White)
             };
 
+            PoliceColorCell = SelectedPoliceColorIcon.Background;
+
+            _mainViewModel?.ApplyForegroundToSelection(PoliceColorCell ?? new SolidColorBrush(Microsoft.UI.Colors.Black));
+
             PoliceColorPickerPopup.IsOpen = false;
         }
     }
 
-    private void UpdatePoliceColorIcon(string? colorname)
+    public void PolicePersonalization(object sender, RoutedEventArgs e)
+    {
+        _mainViewModel?.ApplyFontFamilyToSelection(PoliceCell ?? "Segoe UI");
+    }
+
+    public void FontSizePersonalization(object sender, RoutedEventArgs e)
+    {
+        double fontSize = double.Parse(FontSizeCell);
+        _mainViewModel?.ApplyFontSizeToSelection(fontSize);
+    }
+
+    public void PoliceColorPersonalization(object sender, RoutedEventArgs e)
     {
 
+        _mainViewModel?.ApplyForegroundToSelection(PoliceColorCell ?? new SolidColorBrush(Microsoft.UI.Colors.Black));
     }
 }

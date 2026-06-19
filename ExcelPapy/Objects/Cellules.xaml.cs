@@ -1,20 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using ExcelPapy.ViewModels;
 using Microsoft.UI.Xaml.Input;
-using Microsoft.UI.Input;
-using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Controls.Primitives;
-using Microsoft.UI.Xaml.Data;
-using Microsoft.UI.Xaml.Media;
-using Microsoft.UI.Xaml.Navigation;
 using Microsoft.UI.Xaml.Shapes;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
@@ -34,10 +20,14 @@ public sealed partial class Cellules : UserControl
         RowHeaderScrollViewer.ViewChanged += OnRowHeaderScrollChanged;
     }
 
+    public void SetViewModel(MainViewModel vm)
+    {
+        this.DataContext = vm;
+    }
+
     private void OnColumnResize(object sender, ManipulationDeltaRoutedEventArgs e)
     {
-        if (sender is Rectangle rect &&
-            rect.DataContext is ColumnHeaderViewModel col)
+        if (sender is Rectangle rect && rect.DataContext is ColumnHeaderViewModel col)
         {
             col.Width = Math.Max(50, col.Width + e.Delta.Translation.X);
         }
@@ -117,9 +107,6 @@ public sealed partial class Cellules : UserControl
 
     private void OnResizePointerExited(object sender, PointerRoutedEventArgs e)
         => SetCursor(LoadCursor(IntPtr.Zero, IDC_ARROW));
-
-    
-
     private void OnCellScrollChanged(object sender, ScrollViewerViewChangedEventArgs e)
     {
         if (_isSyncing) return;

@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
-using Microsoft.UI.Xaml;
-
 namespace ExcelPapy.ViewModels;
 
 public partial class CellViewModel : ObservableObject
@@ -26,4 +21,14 @@ public partial class CellViewModel : ObservableObject
     public RowHeaderViewModel? RowHeader { get; init; }
 
 
+    // Personalization properties
+
+    [ObservableProperty]
+    private string _fontFamily = "Segoe UI"; 
+
+    [ObservableProperty]
+    private double _fontSize = 12; 
+
+    [ObservableProperty]
+    private Brush _foreground = new SolidColorBrush(Microsoft.UI.Colors.Black); 
 }

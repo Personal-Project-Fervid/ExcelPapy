@@ -1,7 +1,4 @@
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Text;
 
 namespace ExcelPapy.ViewModels;
 
@@ -141,5 +138,29 @@ public partial class MainViewModel
                 }
             }
         }
+    }
+
+    public void ApplyFontFamilyToSelection(string fontFamily)
+    {
+        foreach (var row in Rows)
+            foreach (var cell in row.Cells)
+                if (cell.IsSelected)
+                    cell.FontFamily = fontFamily;
+    }
+
+    public void ApplyFontSizeToSelection(double fontSize)
+    {
+        foreach (var row in Rows)
+            foreach (var cell in row.Cells)
+                if (cell.IsSelected)
+                    cell.FontSize = fontSize;
+    }
+
+    public void ApplyForegroundToSelection(Brush brush)
+    {
+        foreach (var row in Rows)
+            foreach (var cell in row.Cells)
+                if (cell.IsSelected)
+                    cell.Foreground = brush;
     }
 }
