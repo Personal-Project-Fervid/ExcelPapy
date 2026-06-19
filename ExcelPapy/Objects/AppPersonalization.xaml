@@ -114,31 +114,31 @@
 
                             <Button Click="OnPoliceSelected" Tag="Segoe UI" Background="Transparent" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left">
                                 <StackPanel Orientation="Horizontal" Spacing="10">
-                                    <TextBlock Text="Segoe UI" FontSize="18" FontWeight="DemiBold" VerticalAlignment="Center"/>
+                                    <TextBlock Text="Segoe UI" FontSize="18" FontWeight="DemiBold" VerticalAlignment="Center" FontFamily="Segoe UI"/>
                                 </StackPanel>
                             </Button>
 
                             <Button Click="OnPoliceSelected" Tag="Arial" Background="Transparent" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left">
                                 <StackPanel Orientation="Horizontal" Spacing="10">
-                                    <TextBlock Text="Arial" FontSize="18" FontWeight="DemiBold" VerticalAlignment="Center"/>
+                                    <TextBlock Text="Arial" FontSize="18" FontWeight="DemiBold" VerticalAlignment="Center" FontFamily="Arial"/>
                                 </StackPanel>
                             </Button>
 
                             <Button Click="OnPoliceSelected" Tag="Calibri" Background="Transparent" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left">
                                 <StackPanel Orientation="Horizontal" Spacing="10">
-                                    <TextBlock Text="Calibri" FontSize="18" FontWeight="DemiBold" VerticalAlignment="Center"/>
+                                    <TextBlock Text="Calibri" FontSize="18" FontWeight="DemiBold" VerticalAlignment="Center" FontFamily="Calibri"/>
                                 </StackPanel>
                             </Button>
 
                             <Button Click="OnPoliceSelected" Tag="Times new roman" Background="Transparent" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left">
                                 <StackPanel Orientation="Horizontal" Spacing="10">
-                                    <TextBlock Text="Times New Roman" FontSize="18" FontWeight="DemiBold" VerticalAlignment="Center"/>
+                                    <TextBlock Text="Times New Roman" FontSize="18" FontWeight="DemiBold" VerticalAlignment="Center" FontFamily="Times New Roman"/>
                                 </StackPanel>
                             </Button>
 
                             <Button Click="OnPoliceSelected" Tag="Verdana" Background="Transparent" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" >
                                 <StackPanel Orientation="Horizontal" Spacing="10">
-                                    <TextBlock Text="Verdana" FontSize="18" FontWeight="DemiBold" VerticalAlignment="Center"/>
+                                    <TextBlock Text="Verdana" FontSize="18" FontWeight="DemiBold" VerticalAlignment="Center" FontFamily="Verdana"/>
                                 </StackPanel>
                             </Button>
                         </StackPanel>
