@@ -27,8 +27,33 @@ public partial class CellViewModel : ObservableObject
     private string _fontFamily = "Segoe UI"; 
 
     [ObservableProperty]
-    private double _fontSize = 12; 
+    private double _fontSize = 24; 
 
     [ObservableProperty]
-    private Brush _foreground = new SolidColorBrush(Microsoft.UI.Colors.Black); 
+    private Brush _foreground = new SolidColorBrush(Microsoft.UI.Colors.Black);
+
+    [ObservableProperty]
+    private bool _isBold = false;
+
+    [ObservableProperty]
+    private string _fontWeight = "Normal";
+
+    [ObservableProperty]
+    private bool _isItalic = false;
+
+    [ObservableProperty]
+    private string _fontStyle = "Normal";
+
+    //À voir
+    [ObservableProperty]
+    private bool _fontUnderline = false;
+
+    [ObservableProperty]
+    private string _verticalAlignment = "Center";
+
+    [ObservableProperty]
+    private string _horizontalAlignment = "Left";
+
+    [ObservableProperty]
+    private Brush _background = new SolidColorBrush(Microsoft.UI.Colors.FromARGB(0xFF, 0XF5, 0XF5, 0XF5));
 }

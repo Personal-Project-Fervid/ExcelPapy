@@ -48,7 +48,7 @@
         <!-- Cellules-->
             <local:Cellules x:Name="Cellules" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="10" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
 
-        <Border BorderThickness="3" BorderBrush="Black" Grid.Row="1" Grid.ColumnSpan="10" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
+        <Border BorderThickness="3" BorderBrush="Black" Grid.Row="1" Grid.ColumnSpan="10" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />
             
     </Grid>
 </Page>

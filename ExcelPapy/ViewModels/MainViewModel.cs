@@ -1,4 +1,7 @@
 using System.Collections.ObjectModel;
+using Microsoft.UI.Text;
+using SkiaSharp;
+using Windows.UI.Text;
 
 namespace ExcelPapy.ViewModels;
 
@@ -162,5 +165,59 @@ public partial class MainViewModel
             foreach (var cell in row.Cells)
                 if (cell.IsSelected)
                     cell.Foreground = brush;
+    }
+
+    public void ApplyFontWeightToSelection()
+    {
+        foreach (var row in Rows)
+            foreach (var cell in row.Cells)
+                if (cell.IsSelected)
+                {
+                    if(cell.IsBold)
+                        cell.FontWeight = "Normal";
+                    else
+                        cell.FontWeight = "Bold";
+
+                    cell.IsBold = !cell.IsBold;
+                }
+    }
+
+    public void ApplyFontStyleToSelection()
+    {
+        foreach (var row in Rows)
+            foreach (var cell in row.Cells)
+                if (cell.IsSelected)
+                {
+                    if(cell.IsItalic)
+                        cell.FontStyle = "Normal";
+                    else
+                        cell.FontStyle = "Italic";
+
+                    cell.IsItalic = !cell.IsItalic;
+                }
+    }
+
+    public void ApplyVerticalAlignmentToSelection(string VerticalAlignment)
+    {
+        foreach (var row in Rows)
+            foreach (var cell in row.Cells)
+                if (cell.IsSelected)
+                    cell.VerticalAlignment = VerticalAlignment;
+    }
+
+    public void ApplyHorizontalAlignmentToSelection(string HorizontalAlignment)
+    {
+        foreach (var row in Rows)
+            foreach (var cell in row.Cells)
+                if (cell.IsSelected)
+                    cell.HorizontalAlignment = HorizontalAlignment;
+    }
+
+    public void ApplyBackgroundToSelection(Brush background)
+    {
+        foreach (var row in Rows)
+            foreach (var cell in row.Cells)
+                if (cell.IsSelected)
+                    cell.Background = background;
     }
 }

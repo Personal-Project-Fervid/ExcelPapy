@@ -39,7 +39,7 @@
 
                 <!-- Popup avec les choix -->
                 <Popup x:Name="BoldAppPickerPopup" IsLightDismissEnabled="True" PlacementTarget="{Binding ElementName=BoldAppPickerButton}" DesiredPlacement="Bottom">
-                    <Border x:Name="BoldAppPickerBorder" Background="White" BorderBrush="Black" BorderThickness="3" CornerRadius="15" MinWidth="{Binding ActualWidth, ElementName=BoldAppPickerButton}">
+                    <Border x:Name="BoldAppPickerBorder" Background="#E0F7F7F7" Margin="0,3,0,-3" BorderBrush="Black" BorderThickness="3" CornerRadius="15" MinWidth="{Binding ActualWidth, ElementName=BoldAppPickerButton}">
                         <StackPanel Padding="5">
 
                             <Button Click="OnBoldAppSelected" Tag="Light" Background="Transparent" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left">
@@ -109,7 +109,7 @@
 
                 <!-- Popup avec les choix -->
                 <Popup x:Name="PolicePickerPopup" IsLightDismissEnabled="True" PlacementTarget="{Binding ElementName=PolicePickerButton}" DesiredPlacement="Bottom">
-                    <Border x:Name="PolicePickerBorder" Background="White" BorderBrush="Black" BorderThickness="3" CornerRadius="15" MinWidth="{Binding ActualWidth, ElementName=PolicePickerButton}">
+                    <Border x:Name="PolicePickerBorder" Background="#E0F7F7F7" Margin="0,3,0,-3" BorderBrush="Black" BorderThickness="3" CornerRadius="15" MinWidth="{Binding ActualWidth, ElementName=PolicePickerButton}">
                         <StackPanel Padding="5">
 
                             <Button Click="OnPoliceSelected" Tag="Segoe UI" Background="Transparent" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left">

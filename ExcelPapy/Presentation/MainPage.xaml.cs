@@ -11,5 +11,6 @@ public sealed partial class MainPage : Page
         this.InitializeComponent();
         Cellules.SetViewModel(ViewModel);
         TextPersonalization.SetViewModel(ViewModel);
+        CellPersonalization.SetViewModel(ViewModel);
     }
 }

@@ -43,7 +43,7 @@ public sealed partial class TextPersonalization : UserControl
         PoliceCell = "Segoe UI";
         SelectedFontSizeText.Text = "12";
         FontSizeCell = "12";
-        SelectedPoliceColorText.Text = "Black";
+        SelectedPoliceColorText.Text = "A";
     }
 
     private MainViewModel? _mainViewModel;
@@ -105,10 +105,23 @@ public sealed partial class TextPersonalization : UserControl
             var fontSize = btn.Tag?.ToString();
             SelectedFontSizeText.Text = fontSize switch
             {
+                "8" => "8",
+                "9" => "9",
+                "10" => "10",
+                "11" => "11",
                 "12" => "12",
                 "14" => "14",
                 "16" => "16",
                 "18" => "18",
+                "20" => "20",
+                "22" => "22",
+                "24" => "24",
+                "26" => "26",
+                "28" => "28",
+                "36" => "36",
+                "48" => "48",
+                "72" => "72",
+
                 _ => "Taille..."
             };
 
@@ -133,30 +146,45 @@ public sealed partial class TextPersonalization : UserControl
         if (sender is Button btn)
         {
             var colorname = btn.Tag?.ToString();
-            SelectedPoliceColorText.Text = colorname switch
-            {
-                "White" => "A",
-                "Black" => "A",
-                "Green" => "A",
-                "Purple" => "A",
-                "Pink" => "A",
-                "Blue" => "A",
-                "Red" => "A",
-                "Yellow" => "A",
-                _ => "A"
-            };
 
             SelectedPoliceColorIcon.Background = colorname switch
             {
-                "White" => new SolidColorBrush(Microsoft.UI.Colors.White),
+                //Noir  Blanc
                 "Black" => new SolidColorBrush(Microsoft.UI.Colors.Black),
+                "#A8A8A8" => new SolidColorBrush(Microsoft.UI.Colors.FromARGB(0xFF, 0xA8, 0xA8, 0xA8)),
+                "White" => new SolidColorBrush(Microsoft.UI.Colors.White),
+
+                //Rouge
+                "#B41A09"=> new SolidColorBrush(Microsoft.UI.Colors.FromARGB(0xFF, 0xB4, 0x1A, 0x09)),
                 "Red" => new SolidColorBrush(Microsoft.UI.Colors.Red),
-                "Blue" => new SolidColorBrush(Microsoft.UI.Colors.Blue),
+                "#FF9675" => new SolidColorBrush(Microsoft.UI.Colors.FromARGB(0xFF, 0xFF, 0x96, 0x75)),
+
+                //Bleu
+                "#20529A" => new SolidColorBrush(Microsoft.UI.Colors.FromARGB(0xFF, 0x20, 0x52, 0x9A)),
+                "#0084FF" => new SolidColorBrush(Microsoft.UI.Colors.FromARGB(0xFF, 0x00, 0x84, 0xFF)),
+                "#8CAEFF" => new SolidColorBrush(Microsoft.UI.Colors.FromARGB(0xFF, 0x8C, 0xAE, 0xFF)),
+
+                //Jaune
+                "#B3B21A" => new SolidColorBrush(Microsoft.UI.Colors.FromARGB(0xFF, 0xB3, 0xB2, 0x1A)),
                 "Yellow" => new SolidColorBrush(Microsoft.UI.Colors.Yellow),
-                "Green" => new SolidColorBrush(Microsoft.UI.Colors.Green),
+                "#FFFF95" => new SolidColorBrush(Microsoft.UI.Colors.FromARGB(0xFF, 0xFF, 0xFF, 0x95)),
+
+                //Vert
+                "#1E7A15" => new SolidColorBrush(Microsoft.UI.Colors.FromARGB(0xFF, 0x1E, 0x7A, 0x15)),
+                "#00C700" => new SolidColorBrush(Microsoft.UI.Colors.FromARGB(0xFF, 0x00, 0xC7, 0x00)),
+                "#88DD74" => new SolidColorBrush(Microsoft.UI.Colors.FromARGB(0xFF, 0x88, 0xDD, 0x74)),
+
+                //Violet
+                "#511150" => new SolidColorBrush(Microsoft.UI.Colors.FromARGB(0xFF, 0x51, 0x11, 0x50)),
                 "Purple" => new SolidColorBrush(Microsoft.UI.Colors.Purple),
-                "Pink" => new SolidColorBrush(Microsoft.UI.Colors.Pink),
-                _ => new SolidColorBrush(Microsoft.UI.Colors.White)
+                "#BD81B9" => new SolidColorBrush(Microsoft.UI.Colors.FromARGB(0xFF, 0xBD, 0x81, 0xB9)),
+
+                //Rose
+                "#903261" => new SolidColorBrush(Microsoft.UI.Colors.FromARGB(0xFF, 0x90, 0x32, 0x61)),
+                "#EB469C" => new SolidColorBrush(Microsoft.UI.Colors.FromARGB(0xFF, 0xEB, 0x46, 0x9C)),
+                "#FAA2C8" => new SolidColorBrush(Microsoft.UI.Colors.FromARGB(0xFF, 0xFA, 0xA2, 0xC8)),  
+
+                _ => new SolidColorBrush(Microsoft.UI.Colors.Black)
             };
 
             PoliceColorCell = SelectedPoliceColorIcon.Background;
@@ -183,4 +211,22 @@ public sealed partial class TextPersonalization : UserControl
 
         _mainViewModel?.ApplyForegroundToSelection(PoliceColorCell ?? new SolidColorBrush(Microsoft.UI.Colors.Black));
     }
+
+    public void BoldPersonalization(object sender, RoutedEventArgs e)
+    {
+        _mainViewModel?.ApplyFontWeightToSelection();
+    }
+
+    public void FontStylePersonalization(object sender, RoutedEventArgs e)
+    {
+
+        _mainViewModel?.ApplyFontStyleToSelection();
+    }
+
+    public void UnderlinePersonalization(object sender, RoutedEventArgs e)
+    {
+        // à voir
+    }
+
+
 }

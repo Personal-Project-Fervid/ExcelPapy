@@ -92,10 +92,31 @@
 
                                 <ItemsRepeater.ItemTemplate>
                                     <DataTemplate x:DataType="local:CellViewModel">
-                                        <Border x:Name="CellBorder" BorderBrush="#BABABA" BorderThickness="0,0,3,3" Width="{Binding ColumnHeader.Width}" Height="{Binding RowHeader.Height}" Background="#F5F5F5" PointerPressed="OnCellPointerPressed" PointerMoved="OnCellPointerMoved" PointerReleased="OnCellPointerReleased">
+                                        <Border x:Name="CellBorder"
+                                                BorderBrush="#BABABA"
+                                                BorderThickness="0,0,3,3"
+                                                Width="{Binding ColumnHeader.Width}"
+                                                Height="{Binding RowHeader.Height}"
+                                                Background="{Binding Background}"
+                                                PointerPressed="OnCellPointerPressed"
+                                                PointerMoved="OnCellPointerMoved"
+                                                PointerReleased="OnCellPointerReleased">
                                             <Grid>
-                                                <TextBox x:Name="CellTextBox" Text="{Binding Value, Mode=TwoWay}" FontFamily="{Binding FontFamily}" FontSize="{Binding FontSize}" Foreground="{Binding Foreground}" Style="{StaticResource CellTextStyle}" IsReadOnly="True" IsHitTestVisible="False" KeyDown="OnTextBoxKeyDown" PointerPressed="OnTextBoxPointerPressed" PointerMoved="OnTextBoxPointerMoved"/>
-                                                <Border x:Name="SelectionOverlay" IsHitTestVisible="False" BorderBrush="#1E6FD9" BorderThickness="{Binding SelectionBorderThickness}" Background="#301E6FD9" Visibility="{Binding IsSelected, Converter={StaticResource BoolToVisibilityConverter}}" Margin="-3"/>
+                                                <TextBox x:Name="CellTextBox"
+                                                         Text="{Binding Value, Mode=TwoWay}"
+                                                         FontFamily="{Binding FontFamily}"
+                                                         FontSize="{Binding FontSize}"
+                                                         Foreground="{Binding Foreground}"
+                                                         FontWeight="{Binding FontWeight}"
+                                                         FontStyle="{Binding FontStyle}"
+                                                         VerticalAlignment="{Binding VerticalAlignment}"
+                                                         HorizontalAlignment="{Binding HorizontalAlignment}"
+                                                         Style="{StaticResource CellTextStyle}"
+                                                         IsReadOnly="True" IsHitTestVisible="False"
+                                                         KeyDown="OnTextBoxKeyDown"
+                                                         PointerPressed="OnTextBoxPointerPressed"
+                                                         PointerMoved="OnTextBoxPointerMoved"/>
+                                                <Border x:Name="SelectionOverlay" IsHitTestVisible="False" BorderBrush="#EBC117" BorderThickness="{Binding SelectionBorderThickness}" Background="#80E8D268" Visibility="{Binding IsSelected, Converter={StaticResource BoolToVisibilityConverter}}" Margin="-3"/>
                                             </Grid>
                                         </Border>
                                     </DataTemplate>

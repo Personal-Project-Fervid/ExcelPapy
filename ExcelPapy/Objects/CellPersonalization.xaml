@@ -24,7 +24,7 @@
             </Grid.RowDefinitions>
 
             <!-- HorizontalAlignment = Left -->
-            <Button VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="5" Grid.Row="0" Grid.Column="0" Background="Transparent">
+            <Button Tag="Left" Click="OnHorizontalAlignmentSelected" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="5" Grid.Row="0" Grid.Column="0" Background="Transparent">
                 <Grid>2
                     <Line X1="0" Y1="4" X2="30" Y2="4" Stroke="Black" StrokeThickness="3"/>
                     <Line X1="0" Y1="12" X2="20" Y2="12" Stroke="Black" StrokeThickness="3"/>
@@ -34,7 +34,7 @@
             </Button>
 
             <!-- HorizontalAlignment = Center -->
-            <Button VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="5" Grid.Row="0" Grid.Column="1" Background="Transparent">
+            <Button Tag="Center" Click="OnHorizontalAlignmentSelected" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="5" Grid.Row="0" Grid.Column="1" Background="Transparent">
                 <Grid>2
                     <Line X1="0" Y1="4" X2="30" Y2="4" Stroke="Black" StrokeThickness="3"/>
                     <Line X1="5" Y1="12" X2="25" Y2="12" Stroke="Black" StrokeThickness="3"/>
@@ -44,7 +44,7 @@
             </Button>
 
             <!-- HorizontalAlignment = Right -->
-            <Button VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="5" Grid.Row="0" Grid.Column="2" Background="Transparent">
+            <Button Tag="Right" Click="OnHorizontalAlignmentSelected" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="5" Grid.Row="0" Grid.Column="2" Background="Transparent">
                 <Grid>2
                     <Line X1="0" Y1="4" X2="30" Y2="4" Stroke="Black" StrokeThickness="3"/>
                     <Line X1="10" Y1="12" X2="30" Y2="12" Stroke="Black" StrokeThickness="3"/>
@@ -54,7 +54,7 @@
             </Button>
 
             <!-- VerticalAlignment = Top -->
-            <Button VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="5" Grid.Row="1" Grid.Column="0" Background="Transparent">
+            <Button Tag="Top" Click="OnVerticalAlignmentSelected" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="5" Grid.Row="1" Grid.Column="0" Background="Transparent">
                 <Grid>
                     <Line X1="0" Y1="-8" X2="30" Y2="-8" Stroke="Black" StrokeThickness="3"/>
                     <Line X1="5" Y1="0" X2="25" Y2="0" Stroke="Black" StrokeThickness="3"/>
@@ -63,7 +63,7 @@
             </Button>
 
             <!-- VerticalAlignment = Center -->
-            <Button VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="5" Grid.Row="1" Grid.Column="1" Background="Transparent">
+            <Button Tag="Center" Click="OnVerticalAlignmentSelected" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="5" Grid.Row="1" Grid.Column="1" Background="Transparent">
                 <Grid>
                     <Line X1="0" Y1="2" X2="30" Y2="2" Stroke="Black" StrokeThickness="3"/>
                     <Line X1="5" Y1="10" X2="25" Y2="10" Stroke="Black" StrokeThickness="3"/>
@@ -72,7 +72,7 @@
             </Button>
 
             <!-- VerticalAlignment = Bottom -->
-            <Button VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="5" Grid.Row="1" Grid.Column="2" Background="Transparent">
+            <Button Tag="Bottom" Click="OnVerticalAlignmentSelected" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="5" Grid.Row="1" Grid.Column="2" Background="Transparent">
                 <Grid>
                     <Line X1="0" Y1="12" X2="30" Y2="12" Stroke="Black" StrokeThickness="3"/>
                     <Line X1="5" Y1="20" X2="25" Y2="20" Stroke="Black" StrokeThickness="3"/>
@@ -92,17 +92,19 @@
                             </Canvas>
                             <TextBlock x:Name="SelectedBorderText" Text="Bordure..." FontSize="18" FontWeight="DemiBold" VerticalAlignment="Center"/>
                         </StackPanel>
-                        <Grid Height="24" Width="24" HorizontalAlignment="Right" Margin="12,0,-12,0">
+                        <Grid Height="24" Width="24" HorizontalAlignment="Right" Margin="14,0,-14,0">
                             <Line X1="0" Y1="6" X2="12" Y2="18" Stroke="Black" StrokeThickness="3"/>
                             <Line X1="12" Y1="18" X2="12" Y2="19" Stroke="Black" StrokeThickness="3"/>
                             <Line X1="12" Y1="18" X2="23" Y2="6" Stroke="Black" StrokeThickness="3"/>
                         </Grid>
                     </Grid>
                 </Button>
+                <Line Stroke="Black" StrokeThickness="3" X1="253" Y1="6" X2="253" Y2="40"/>
+                <Button Click="BorderPersonalization" VerticalAlignment="Stretch" HorizontalAlignment="Left" Background="Transparent" CornerRadius="15,6,6,15" Margin="1,1,0,1" BorderThickness="0" Width="253"/>
 
                 <!-- Popup avec les choix -->
                 <Popup x:Name="BorderPickerPopup" IsLightDismissEnabled="True" PlacementTarget="{Binding ElementName=BorderPickerButton}" DesiredPlacement="Bottom">
-                    <Border x:Name="BorderPickerBorder" Background="White" BorderBrush="Black" BorderThickness="3" CornerRadius="15" MinWidth="{Binding ActualWidth, ElementName=BorderPickerButton}">
+                    <Border x:Name="BorderPickerBorder" Background="#E0F7F7F7" Margin="0,3,0,-3" BorderBrush="Black" BorderThickness="3" CornerRadius="15" MinWidth="{Binding ActualWidth, ElementName=BorderPickerButton}">
                         <StackPanel Padding="5">
 
                             <Button Click="OnBorderSelected" Tag="Top" Background="Transparent" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left">
@@ -218,373 +220,118 @@
                             <TextBlock x:Name="SelectedBackgroundText" Text="Bordure..." FontSize="18" FontWeight="DemiBold" VerticalAlignment="Center"/>
                         </StackPanel>
 
-                        <Grid Height="24" Width="24" HorizontalAlignment="Right" Margin="12,0,-12,0">
+                        <Grid Height="24" Width="24" HorizontalAlignment="Right" Margin="14,0,-14,0">
                             <Line X1="0" Y1="6" X2="12" Y2="18" Stroke="Black" StrokeThickness="3"/>
                             <Line X1="12" Y1="18" X2="12" Y2="19" Stroke="Black" StrokeThickness="3"/>
                             <Line X1="12" Y1="18" X2="23" Y2="6" Stroke="Black" StrokeThickness="3"/>
                         </Grid>
                     </Grid>
                 </Button>
+                <Line Stroke="Black" StrokeThickness="3" X1="253" Y1="6" X2="253" Y2="40"/>
+                <Button Click="BackgroundPersonalization" VerticalAlignment="Stretch" HorizontalAlignment="Left" Background="Transparent" CornerRadius="15,6,6,15" Margin="1,1,0,1" BorderThickness="0" Width="253"/>
 
                 <!-- Popup avec les choix -->
                 <Popup x:Name="BackgroundPickerPopup" IsLightDismissEnabled="True" PlacementTarget="{Binding ElementName=BackgroundPickerButton}" DesiredPlacement="Bottom">
-                    <Border x:Name="BackgroundPickerBorder" Background="White" BorderBrush="Black" BorderThickness="3" CornerRadius="15" MinWidth="{Binding ActualWidth, ElementName=BackgroundPickerButton}">
-                        <StackPanel Padding="5" Spacing="10" Margin="0,10,0,-10">
+                    <Border x:Name="BackgroundPickerBorder" Background="#E0F7F7F7" Margin="0,3,0,-3" BorderBrush="Black" BorderThickness="3" CornerRadius="15" MinWidth="{Binding ActualWidth, ElementName=BackgroundPickerButton}">
+                        <StackPanel Padding="5" Spacing="2" Margin="0,2,0,-2">
 
                             <!-- Noir -->
-                            <StackPanel Orientation="Horizontal" Spacing="10" Margin="10,0,-10,0">
-
-                                <Grid>
-                                    <Border Width="24" Height="24" Background="Black" BorderBrush="Black" BorderThickness="1"/>
-                                    <Button Click="OnBackgroundSelected" Tag="Black" Background="Transparent" HorizontalAlignment="Stretch" Width="24" Height="24"/>
-                                </Grid>
-
-                                <Grid>
-                                    <Border Width="24" Height="24" Background="#1A1A1A" BorderBrush="Black" BorderThickness="1"/>
-                                    <Button Click="OnBackgroundSelected" Tag="#1A1A1A" Background="Transparent" HorizontalAlignment="Stretch" Width="24" Height="24"/>
-                                </Grid>
-
-                                <Grid>
-                                    <Border Width="24" Height="24" Background="#1D1D1D" BorderBrush="Black" BorderThickness="1"/>
-                                    <Button Click="OnBackgroundSelected" Tag="#1D1D1D" Background="Transparent" HorizontalAlignment="Stretch" Width="24" Height="24"/>
-                                </Grid>
-
-                                <Grid>
-                                    <Border Width="24" Height="24" Background="#2C2C2C" BorderBrush="Black" BorderThickness="1"/>
-                                    <Button Click="OnBackgroundSelected" Tag="#2C2C2C" Background="Transparent" HorizontalAlignment="Stretch" Width="24" Height="24"/>
-                                </Grid>
-
-                                <Grid>
-                                    <Border Width="24" Height="24" Background="#404040" BorderBrush="Black" BorderThickness="1"/>
-                                    <Button Click="OnBackgroundSelected" Tag="#404040" Background="Transparent" HorizontalAlignment="Stretch" Width="24" Height="24"/>
-                                </Grid>
-
-                                <Grid>
-                                    <Border Width="24" Height="24" Background="#565656" BorderBrush="Black" BorderThickness="1"/>
-                                    <Button Click="OnBackgroundSelected" Tag="#565656" Background="Transparent" HorizontalAlignment="Stretch" Width="24" Height="24"/>
-                                </Grid>
-
-                                <Grid>
-                                    <Border Width="24" Height="24" Background="#6C6C6C" BorderBrush="Black" BorderThickness="1"/>
-                                    <Button Click="OnBackgroundSelected" Tag="#6C6C6C" Background="Transparent" HorizontalAlignment="Stretch" Width="24" Height="24"/>
-                                </Grid>
-
-                                <Grid>
-                                    <Border Width="24" Height="24" Background="#828282" BorderBrush="Black" BorderThickness="1"/>
-                                    <Button Click="OnBackgroundSelected" Tag="#828282" Background="Transparent" HorizontalAlignment="Stretch" Width="24" Height="24"/>
-                                </Grid>
-                                
+                            <StackPanel Orientation="Horizontal" Spacing="2" Margin="6,0,-6,0">
+                                <Button Click="OnBackgroundSelected" Tag="Black" Background="Black" Style="{StaticResource ColorButton}"/>
+                                <Button Click="OnBackgroundSelected" Tag="#1A1A1A" Background="#1A1A1A" Style="{StaticResource ColorButton}"/>
+                                <Button Click="OnBackgroundSelected" Tag="#1D1D1D" Background="#1D1D1D" Style="{StaticResource ColorButton}"/>
+                                <Button Click="OnBackgroundSelected" Tag="#2C2C2C" Background="#2C2C2C" Style="{StaticResource ColorButton}"/>
+                                <Button Click="OnBackgroundSelected" Tag="#404040" Background="#404040" Style="{StaticResource ColorButton}"/>
+                                <Button Click="OnBackgroundSelected" Tag="#565656" Background="#565656" Style="{StaticResource ColorButton}"/>
+                                <Button Click="OnBackgroundSelected" Tag="#6C6C6C" Background="#6C6C6C" Style="{StaticResource ColorButton}"/>
+                                <Button Click="OnBackgroundSelected" Tag="#828282" Background="#828282" Style="{StaticResource ColorButton}"/>
                             </StackPanel>
 
                             <!-- Blanc-->
-                            <StackPanel Orientation="Horizontal" Spacing="10" Margin="10,0,-10,0">
-                                
-                                <Grid>
-                                    <Border Width="24" Height="24" Background="White" BorderBrush="Black" BorderThickness="1"/>
-                                    <Button Click="OnBackgroundSelected" Tag="White" Background="Transparent" HorizontalAlignment="Stretch" Width="24" Height="24"/>
-                                </Grid>
-
-                                <Grid>
-                                    <Border Width="24" Height="24" Background="#E5E5E5" BorderBrush="Black" BorderThickness="1"/>
-                                    <Button Click="OnBackgroundSelected" Tag="#E5E5E5" Background="Transparent" HorizontalAlignment="Stretch" Width="24" Height="24"/>
-                                </Grid>
-
-                                <Grid>
-                                    <Border Width="24" Height="24" Background="#CBCBCB" BorderBrush="Black" BorderThickness="1"/>
-                                    <Button Click="OnBackgroundSelected" Tag="#CBCBCB" Background="Transparent" HorizontalAlignment="Stretch" Width="24" Height="24"/>
-                                </Grid>
-
-                                <Grid>
-                                    <Border Width="24" Height="24" Background="#B2B2B2" BorderBrush="Black" BorderThickness="1"/>
-                                    <Button Click="OnBackgroundSelected" Tag="#B2B2B2" Background="Transparent" HorizontalAlignment="Stretch" Width="24" Height="24"/>
-                                </Grid>
-
-                                <Grid>
-                                    <Border Width="24" Height="24" Background="#9A9A9A" BorderBrush="Black" BorderThickness="1"/>
-                                    <Button Click="OnBackgroundSelected" Tag="#9A9A9A" Background="Transparent" HorizontalAlignment="Stretch" Width="24" Height="24"/>
-                                </Grid>
-
-                                <Grid>
-                                    <Border Width="24" Height="24" Background="#828282" BorderBrush="Black" BorderThickness="1"/>
-                                    <Button Click="OnBackgroundSelected" Tag="#828282" Background="Transparent" HorizontalAlignment="Stretch" Width="24" Height="24"/>
-                                </Grid>
-
-                                <Grid>
-                                    <Border Width="24" Height="24" Background="#6C6C6C" BorderBrush="Black" BorderThickness="1"/>
-                                    <Button Click="OnBackgroundSelected" Tag="#6C6C6C" Background="Transparent" HorizontalAlignment="Stretch" Width="24" Height="24"/>
-                                </Grid>
-
-                                <Grid>
-                                    <Border Width="24" Height="24" Background="#565656" BorderBrush="Black" BorderThickness="1"/>
-                                    <Button Click="OnBackgroundSelected" Tag="#565656" Background="Transparent" HorizontalAlignment="Stretch" Width="24" Height="24"/>
-                                </Grid>
+                            <StackPanel Orientation="Horizontal" Spacing="2" Margin="6,0,-6,0">
+                                <Button Click="OnBackgroundSelected" Tag="White" Background="White" Style="{StaticResource ColorButton}"/>
+                                <Button Click="OnBackgroundSelected" Tag="#E5E5E5" Background="#E5E5E5" Style="{StaticResource ColorButton}"/>
+                                <Button Click="OnBackgroundSelected" Tag="#CBCBCB" Background="#CBCBCB" Style="{StaticResource ColorButton}"/>
+                                <Button Click="OnBackgroundSelected" Tag="#B2B2B2" Background="#B2B2B2" Style="{StaticResource ColorButton}"/>
+                                <Button Click="OnBackgroundSelected" Tag="#9A9A9A" Background="#9A9A9A" Style="{StaticResource ColorButton}"/>
+                                <Button Click="OnBackgroundSelected" Tag="#828282" Background="#828282" Style="{StaticResource ColorButton}"/>
+                                <Button Click="OnBackgroundSelected" Tag="#6C6C6C" Background="#6C6C6C" Style="{StaticResource ColorButton}"/>
+                                <Button Click="OnBackgroundSelected" Tag="#565656" Background="#565656" Style="{StaticResource ColorButton}"/>
                             </StackPanel>
-
+                            
                             <!-- Rouge -->
-                            <StackPanel Orientation="Horizontal" Spacing="10" Margin="10,0,-10,0">
-
-                                <Grid>
-                                    <Border Width="24" Height="24" Background="Red" BorderBrush="Black" BorderThickness="1"/>
-                                    <Button Click="OnBackgroundSelected" Tag="Red" Background="Transparent" HorizontalAlignment="Stretch" Width="24" Height="24"/>
-                                </Grid>
-
-                                <Grid>
-                                    <Border Width="24" Height="24" Background="#FF3B1E" BorderBrush="Black" BorderThickness="1"/>
-                                    <Button Click="OnBackgroundSelected" Tag="#FF3B1E" Background="Transparent" HorizontalAlignment="Stretch" Width="24" Height="24"/>
-                                </Grid>
-
-                                <Grid>
-                                    <Border Width="24" Height="24" Background="#FF5835" BorderBrush="Black" BorderThickness="1"/>
-                                    <Button Click="OnBackgroundSelected" Tag="#FF5835" Background="Transparent" HorizontalAlignment="Stretch" Width="24" Height="24"/>
-                                </Grid>
-
-                                <Grid>
-                                    <Border Width="24" Height="24" Background="#FF6E4A" BorderBrush="Black" BorderThickness="1"/>
-                                    <Button Click="OnBackgroundSelected" Tag="#FF6E4A" Background="Transparent" HorizontalAlignment="Stretch" Width="24" Height="24"/>
-                                </Grid>
-
-                                <Grid>
-                                    <Border Width="24" Height="24" Background="#FF8360" BorderBrush="Black" BorderThickness="1"/>
-                                    <Button Click="OnBackgroundSelected" Tag="#FF8360" Background="Transparent" HorizontalAlignment="Stretch" Width="24" Height="24"/>
-                                </Grid>
-
-                                <Grid>
-                                    <Border Width="24" Height="24" Background="#FF9675" BorderBrush="Black" BorderThickness="1"/>
-                                    <Button Click="OnBackgroundSelected" Tag="#FF9675" Background="Transparent" HorizontalAlignment="Stretch" Width="24" Height="24"/>
-                                </Grid>
-
-                                <Grid>
-                                    <Border Width="24" Height="24" Background="#FFA88B" BorderBrush="Black" BorderThickness="1"/>
-                                    <Button Click="OnBackgroundSelected" Tag="#FFA88B" Background="Transparent" HorizontalAlignment="Stretch" Width="24" Height="24"/>
-                                </Grid>
-
-                                <Grid>
-                                    <Border Width="24" Height="24" Background="#FFBAA2" BorderBrush="Black" BorderThickness="1"/>
-                                    <Button Click="OnBackgroundSelected" Tag="#FFBAA2" Background="Transparent" HorizontalAlignment="Stretch" Width="24" Height="24"/>
-                                </Grid>
+                            <StackPanel Orientation="Horizontal" Spacing="2" Margin="6,0,-6,0">
+                                <Button Click="OnBackgroundSelected" Tag="Red" Background="Red" Style="{StaticResource ColorButton}"/>
+                                <Button Click="OnBackgroundSelected" Tag="#FF3B1E" Background="#FF3B1E" Style="{StaticResource ColorButton}"/>
+                                <Button Click="OnBackgroundSelected" Tag="#FF5835" Background="#FF5835" Style="{StaticResource ColorButton}"/>
+                                <Button Click="OnBackgroundSelected" Tag="#FF6E4A" Background="#FF6E4A" Style="{StaticResource ColorButton}"/>
+                                <Button Click="OnBackgroundSelected" Tag="#FF8360" Background="#FF8360" Style="{StaticResource ColorButton}"/>
+                                <Button Click="OnBackgroundSelected" Tag="#FF9675" Background="#FF9675" Style="{StaticResource ColorButton}"/>
+                                <Button Click="OnBackgroundSelected" Tag="#FFA88B" Background="#FFA88B" Style="{StaticResource ColorButton}"/>
+                                <Button Click="OnBackgroundSelected" Tag="#FFBAA2" Background="#FFBAA2" Style="{StaticResource ColorButton}"/>
                             </StackPanel>
-
+                            
                             <!-- Bleu-->
-                            <StackPanel Orientation="Horizontal" Spacing="10" Margin="10,0,-10,0">
-                                <Grid>
-                                    <Border Width="24" Height="24" Background="#0084FF" BorderBrush="Black" BorderThickness="1"/>
-                                    <Button Click="OnBackgroundSelected" Tag="#0084FF" Background="Transparent" HorizontalAlignment="Stretch" Width="24" Height="24"/>
-                                </Grid>
-
-                                <Grid>
-                                    <Border Width="24" Height="24" Background="#438EFF" BorderBrush="Black" BorderThickness="1"/>
-                                    <Button Click="OnBackgroundSelected" Tag="#438EFF" Background="Transparent" HorizontalAlignment="Stretch" Width="24" Height="24"/>
-                                </Grid>
-
-                                <Grid>
-                                    <Border Width="24" Height="24" Background="#6099FF" BorderBrush="Black" BorderThickness="1"/>
-                                    <Button Click="OnBackgroundSelected" Tag="#6099FF" Background="Transparent" HorizontalAlignment="Stretch" Width="24" Height="24"/>
-                                </Grid>
-
-                                <Grid>
-                                    <Border Width="24" Height="24" Background="#77A3FF" BorderBrush="Black" BorderThickness="1"/>
-                                    <Button Click="OnBackgroundSelected" Tag="#77A3FF" Background="Transparent" HorizontalAlignment="Stretch" Width="24" Height="24"/>
-                                </Grid>
-
-                                <Grid>
-                                    <Border Width="24" Height="24" Background="#8CAEFF" BorderBrush="Black" BorderThickness="1"/>
-                                    <Button Click="OnBackgroundSelected" Tag="#8CAEFF" Background="Transparent" HorizontalAlignment="Stretch" Width="24" Height="24"/>
-                                </Grid>
-
-                                <Grid>
-                                    <Border Width="24" Height="24" Background="#9EB9FF" BorderBrush="Black" BorderThickness="1"/>
-                                    <Button Click="OnBackgroundSelected" Tag="#9EB9FF" Background="Transparent" HorizontalAlignment="Stretch" Width="24" Height="24"/>
-                                </Grid>
-
-                                <Grid>
-                                    <Border Width="24" Height="24" Background="#B0C5FF" BorderBrush="Black" BorderThickness="1"/>
-                                    <Button Click="OnBackgroundSelected" Tag="#B0C5FF" Background="Transparent" HorizontalAlignment="Stretch" Width="24" Height="24"/>
-                                </Grid>
-
-                                <Grid>
-                                    <Border Width="24" Height="24" Background="#C0D0FF" BorderBrush="Black" BorderThickness="1"/>
-                                    <Button Click="OnBackgroundSelected" Tag="#C0D0FF" Background="Transparent" HorizontalAlignment="Stretch" Width="24" Height="24"/>
-                                </Grid>
+                            <StackPanel Orientation="Horizontal" Spacing="2" Margin="6,0,-6,0">
+                                <Button Click="OnBackgroundSelected" Tag="#0084FF" Background="#0084FF" Style="{StaticResource ColorButton}"/>
+                                <Button Click="OnBackgroundSelected" Tag="#438EFF" Background="#438EFF" Style="{StaticResource ColorButton}"/>
+                                <Button Click="OnBackgroundSelected" Tag="#6099FF" Background="#6099FF" Style="{StaticResource ColorButton}"/>
+                                <Button Click="OnBackgroundSelected" Tag="#77A3FF" Background="#77A3FF" Style="{StaticResource ColorButton}"/>
+                                <Button Click="OnBackgroundSelected" Tag="#8CAEFF" Background="#8CAEFF" Style="{StaticResource ColorButton}"/>
+                                <Button Click="OnBackgroundSelected" Tag="#9EB9FF" Background="#9EB9FF" Style="{StaticResource ColorButton}"/>
+                                <Button Click="OnBackgroundSelected" Tag="#B0C5FF" Background="#B0C5FF" Style="{StaticResource ColorButton}"/>
+                                <Button Click="OnBackgroundSelected" Tag="#C0D0FF" Background="#C0D0FF" Style="{StaticResource ColorButton}"/>
                             </StackPanel>
 
                             <!-- Jaune-->
-                            <StackPanel Orientation="Horizontal" Spacing="10" Margin="10,0,-10,0">
-                                
-                                <Grid>
-                                    <Border Width="24" Height="24" Background="Yellow" BorderBrush="Black" BorderThickness="1"/>
-                                    <Button Click="OnBackgroundSelected" Tag="Yellow" Background="Transparent" HorizontalAlignment="Stretch" Width="24" Height="24"/>
-                                </Grid>
-
-                                <Grid>
-                                    <Border Width="24" Height="24" Background="#FFFF6E" BorderBrush="Black" BorderThickness="1"/>
-                                    <Button Click="OnBackgroundSelected" Tag="#FFFF6E" Background="Transparent" HorizontalAlignment="Stretch" Width="24" Height="24"/>
-                                </Grid>
-
-                                <Grid>
-                                    <Border Width="24" Height="24" Background="#FFFF82" BorderBrush="Black" BorderThickness="1"/>
-                                    <Button Click="OnBackgroundSelected" Tag="#FFFF82" Background="Transparent" HorizontalAlignment="Stretch" Width="24" Height="24"/>
-                                </Grid>
-
-                                <Grid>
-                                    <Border Width="24" Height="24" Background="#FFFF95" BorderBrush="Black" BorderThickness="1"/>
-                                    <Button Click="OnBackgroundSelected" Tag="#FFFF95" Background="Transparent" HorizontalAlignment="Stretch" Width="24" Height="24"/>
-                                </Grid>
-
-                                <Grid>
-                                    <Border Width="24" Height="24" Background="#FFFFA7" BorderBrush="Black" BorderThickness="1"/>
-                                    <Button Click="OnBackgroundSelected" Tag="#FFFFA7" Background="Transparent" HorizontalAlignment="Stretch" Width="24" Height="24"/>
-                                </Grid>
-
-                                <Grid>
-                                    <Border Width="24" Height="24" Background="#FFFFB9" BorderBrush="Black" BorderThickness="1"/>
-                                    <Button Click="OnBackgroundSelected" Tag="#FFFFB9" Background="Transparent" HorizontalAlignment="Stretch" Width="24" Height="24"/>
-                                </Grid>
-
-                                <Grid>
-                                    <Border Width="24" Height="24" Background="#FFFFCB" BorderBrush="Black" BorderThickness="1"/>
-                                    <Button Click="OnBackgroundSelected" Tag="#FFFFCB" Background="Transparent" HorizontalAlignment="Stretch" Width="24" Height="24"/>
-                                </Grid>
-
-                                <Grid>
-                                    <Border Width="24" Height="24" Background="#FFFFDC" BorderBrush="Black" BorderThickness="1"/>
-                                    <Button Click="OnBackgroundSelected" Tag="#FFFFDC" Background="Transparent" HorizontalAlignment="Stretch" Width="24" Height="24"/>
-                                </Grid>
+                            <StackPanel Orientation="Horizontal" Spacing="2" Margin="6,0,-6,0">
+                                <Button Click="OnBackgroundSelected" Tag="Yellow" Background="Yellow" Style="{StaticResource ColorButton}"/>
+                                <Button Click="OnBackgroundSelected" Tag="#FFFF6E" Background="#FFFF6E" Style="{StaticResource ColorButton}"/>
+                                <Button Click="OnBackgroundSelected" Tag="#FFFF82" Background="#FFFF82" Style="{StaticResource ColorButton}"/>
+                                <Button Click="OnBackgroundSelected" Tag="#FFFF95" Background="#FFFF95" Style="{StaticResource ColorButton}"/>
+                                <Button Click="OnBackgroundSelected" Tag="#FFFFA7" Background="#FFFFA7" Style="{StaticResource ColorButton}"/>
+                                <Button Click="OnBackgroundSelected" Tag="#FFFFB9" Background="#FFFFB9" Style="{StaticResource ColorButton}"/>
+                                <Button Click="OnBackgroundSelected" Tag="#FFFFCB" Background="#FFFFCB" Style="{StaticResource ColorButton}"/>
+                                <Button Click="OnBackgroundSelected" Tag="#FFFFDC" Background="#FFFFDC" Style="{StaticResource ColorButton}"/>
                             </StackPanel>
 
                             <!-- Vert-->
-                            <StackPanel Orientation="Horizontal" Spacing="10" Margin="10,0,-10,0">
-
-                                <Grid>
-                                    <Border Width="24" Height="24" Background="#00C700" BorderBrush="Black" BorderThickness="1"/>
-                                    <Button Click="OnBackgroundSelected" Tag="#00C700" Background="Transparent" HorizontalAlignment="Stretch" Width="24" Height="24"/>
-                                </Grid>
-
-                                <Grid>
-                                    <Border Width="24" Height="24" Background="#3FCD30" BorderBrush="Black" BorderThickness="1"/>
-                                    <Button Click="OnBackgroundSelected" Tag="#3FCD30" Background="Transparent" HorizontalAlignment="Stretch" Width="24" Height="24"/>
-                                </Grid>
-
-                                <Grid>
-                                    <Border Width="24" Height="24" Background="#5CD249" BorderBrush="Black" BorderThickness="1"/>
-                                    <Button Click="OnBackgroundSelected" Tag="#5CD249" Background="Transparent" HorizontalAlignment="Stretch" Width="24" Height="24"/>
-                                </Grid>
-
-                                <Grid>
-                                    <Border Width="24" Height="24" Background="#73D85F" BorderBrush="Black" BorderThickness="1"/>
-                                    <Button Click="OnBackgroundSelected" Tag="#73D85F" Background="Transparent" HorizontalAlignment="Stretch" Width="24" Height="24"/>
-                                </Grid>
-
-                                <Grid>
-                                    <Border Width="24" Height="24" Background="#88DD74" BorderBrush="Black" BorderThickness="1"/>
-                                    <Button Click="OnBackgroundSelected" Tag="#88DD74" Background="Transparent" HorizontalAlignment="Stretch" Width="24" Height="24"/>
-                                </Grid>
-
-                                <Grid>
-                                    <Border Width="24" Height="24" Background="#9AE288" BorderBrush="Black" BorderThickness="1"/>
-                                    <Button Click="OnBackgroundSelected" Tag="#9AE288" Background="Transparent" HorizontalAlignment="Stretch" Width="24" Height="24"/>
-                                </Grid>
-
-                                <Grid>
-                                    <Border Width="24" Height="24" Background="#ACE89C" BorderBrush="Black" BorderThickness="1"/>
-                                    <Button Click="OnBackgroundSelected" Tag="#ACE89C" Background="Transparent" HorizontalAlignment="Stretch" Width="24" Height="24"/>
-                                </Grid>
-
-                                <Grid>
-                                    <Border Width="24" Height="24" Background="#BEEDB0" BorderBrush="Black" BorderThickness="1"/>
-                                    <Button Click="OnBackgroundSelected" Tag="#BEEDB0" Background="Transparent" HorizontalAlignment="Stretch" Width="24" Height="24"/>
-                                </Grid>
-
+                            <StackPanel Orientation="Horizontal" Spacing="2" Margin="6,0,-6,0">
+                                <Button Click="OnBackgroundSelected" Tag="#00C700" Background="#00C700" Style="{StaticResource ColorButton}"/>
+                                <Button Click="OnBackgroundSelected" Tag="#3FCD30" Background="#3FCD30" Style="{StaticResource ColorButton}"/>
+                                <Button Click="OnBackgroundSelected" Tag="#5CD249" Background="#5CD249" Style="{StaticResource ColorButton}"/>
+                                <Button Click="OnBackgroundSelected" Tag="#73D85F" Background="#73D85F" Style="{StaticResource ColorButton}"/>
+                                <Button Click="OnBackgroundSelected" Tag="#88DD74" Background="#88DD74" Style="{StaticResource ColorButton}"/>
+                                <Button Click="OnBackgroundSelected" Tag="#9AE288" Background="#9AE288" Style="{StaticResource ColorButton}"/>
+                                <Button Click="OnBackgroundSelected" Tag="#ACE89C" Background="#ACE89C" Style="{StaticResource ColorButton}"/>
+                                <Button Click="OnBackgroundSelected" Tag="#BEEDB0" Background="#BEEDB0" Style="{StaticResource ColorButton}"/>
                             </StackPanel>
 
                             <!-- Violet-->
-                            <StackPanel Orientation="Horizontal" Spacing="10" Margin="10,0,-10,0">
-                                
-                                <Grid>
-                                    <Border Width="24" Height="24" Background="Purple" BorderBrush="Black" BorderThickness="1"/>
-                                    <Button Click="OnBackgroundSelected" Tag="Purple" Background="Transparent" HorizontalAlignment="Stretch" Width="24" Height="24"/>
-                                </Grid>
-
-                                <Grid>
-                                    <Border Width="24" Height="24" Background="#8D298B" BorderBrush="Black" BorderThickness="1"/>
-                                    <Button Click="OnBackgroundSelected" Tag="#8D298B" Background="Transparent" HorizontalAlignment="Stretch" Width="24" Height="24"/>
-                                </Grid>
-
-                                <Grid>
-                                    <Border Width="24" Height="24" Background="#994197" BorderBrush="Black" BorderThickness="1"/>
-                                    <Button Click="OnBackgroundSelected" Tag="#994197" Background="Transparent" HorizontalAlignment="Stretch" Width="24" Height="24"/>
-                                </Grid>
-
-                                <Grid>
-                                    <Border Width="24" Height="24" Background="#A557A2" BorderBrush="Black" BorderThickness="1"/>
-                                    <Button Click="OnBackgroundSelected" Tag="#A557A2" Background="Transparent" HorizontalAlignment="Stretch" Width="24" Height="24"/>
-                                </Grid>
-
-                                <Grid>
-                                    <Border Width="24" Height="24" Background="#B16CAD" BorderBrush="Black" BorderThickness="1"/>
-                                    <Button Click="OnBackgroundSelected" Tag="#B16CAD" Background="Transparent" HorizontalAlignment="Stretch" Width="24" Height="24"/>
-                                </Grid>
-
-                                <Grid>
-                                    <Border Width="24" Height="24" Background="#BD81B9" BorderBrush="Black" BorderThickness="1"/>
-                                    <Button Click="OnBackgroundSelected" Tag="#BD81B9" Background="Transparent" HorizontalAlignment="Stretch" Width="24" Height="24"/>
-                                </Grid>
-
-                                <Grid>
-                                    <Border Width="24" Height="24" Background="#C996C4" BorderBrush="Black" BorderThickness="1"/>
-                                    <Button Click="OnBackgroundSelected" Tag="#C996C4" Background="Transparent" HorizontalAlignment="Stretch" Width="24" Height="24"/>
-                                </Grid>
-
-                                <Grid>
-                                    <Border Width="24" Height="24" Background="#D4AAD0" BorderBrush="Black" BorderThickness="1"/>
-                                    <Button Click="OnBackgroundSelected" Tag="#D4AAD0" Background="Transparent" HorizontalAlignment="Stretch" Width="24" Height="24"/>
-                                </Grid>
+                            <StackPanel Orientation="Horizontal" Spacing="2" Margin="6,0,-6,0">
+                                <Button Click="OnBackgroundSelected" Tag="Purple" Background="Purple" Style="{StaticResource ColorButton}"/>
+                                <Button Click="OnBackgroundSelected" Tag="#8D298B" Background="#8D298B" Style="{StaticResource ColorButton}"/>
+                                <Button Click="OnBackgroundSelected" Tag="#994197" Background="#994197" Style="{StaticResource ColorButton}"/>
+                                <Button Click="OnBackgroundSelected" Tag="#A557A2" Background="#A557A2" Style="{StaticResource ColorButton}"/>
+                                <Button Click="OnBackgroundSelected" Tag="#B16CAD" Background="#B16CAD" Style="{StaticResource ColorButton}"/>
+                                <Button Click="OnBackgroundSelected" Tag="#BD81B9" Background="#BD81B9" Style="{StaticResource ColorButton}"/>
+                                <Button Click="OnBackgroundSelected" Tag="#C996C4" Background="#C996C4" Style="{StaticResource ColorButton}"/>
+                                <Button Click="OnBackgroundSelected" Tag="#D4AAD0" Background="#D4AAD0" Style="{StaticResource ColorButton}"/>
                             </StackPanel>
-
+                            
                             <!-- Rose -->
-                            <StackPanel Orientation="Horizontal" Spacing="10" Margin="10,0,-10,0">
-
-                                <Grid>
-                                    <Border Width="24" Height="24" Background="#EB469C" BorderBrush="Black" BorderThickness="1"/>
-                                    <Button Click="OnBackgroundSelected" Tag="#EB469C" Background="Transparent" HorizontalAlignment="Stretch" Width="24" Height="24"/>
-                                </Grid>
-
-                                <Grid>
-                                    <Border Width="24" Height="24" Background="#EF5CA5" BorderBrush="Black" BorderThickness="1"/>
-                                    <Button Click="OnBackgroundSelected" Tag="#EF5CA5" Background="Transparent" HorizontalAlignment="Stretch" Width="24" Height="24"/>
-                                </Grid>
-
-                                <Grid>
-                                    <Border Width="24" Height="24" Background="#F26FAD" BorderBrush="Black" BorderThickness="1"/>
-                                    <Button Click="OnBackgroundSelected" Tag="#F26FAD" Background="Transparent" HorizontalAlignment="Stretch" Width="24" Height="24"/>
-                                </Grid>
-
-                                <Grid>
-                                    <Border Width="24" Height="24" Background="#F581B6" BorderBrush="Black" BorderThickness="1"/>
-                                    <Button Click="OnBackgroundSelected" Tag="#F581B6" Background="Transparent" HorizontalAlignment="Stretch" Width="24" Height="24"/>
-                                </Grid>
-
-                                <Grid>
-                                    <Border Width="24" Height="24" Background="#F892BF" BorderBrush="Black" BorderThickness="1"/>
-                                    <Button Click="OnBackgroundSelected" Tag="#F892BF" Background="Transparent" HorizontalAlignment="Stretch" Width="24" Height="24"/>
-                                </Grid>
-
-                                <Grid>
-                                    <Border Width="24" Height="24" Background="#FAA2C8" BorderBrush="Black" BorderThickness="1"/>
-                                    <Button Click="OnBackgroundSelected" Tag="#FAA2C8" Background="Transparent" HorizontalAlignment="Stretch" Width="24" Height="24"/>
-                                </Grid>
-
-                                <Grid>
-                                    <Border Width="24" Height="24" Background="#FCB2D1" BorderBrush="Black" BorderThickness="1"/>
-                                    <Button Click="OnBackgroundSelected" Tag="#FCB2D1" Background="Transparent" HorizontalAlignment="Stretch" Width="24" Height="24"/>
-                                </Grid>
-
-                                <Grid>
-                                    <Border Width="24" Height="24" Background="#FEC2DA" BorderBrush="Black" BorderThickness="1"/>
-                                    <Button Click="OnBackgroundSelected" Tag="#FEC2DA" Background="Transparent" HorizontalAlignment="Stretch" Width="24" Height="24"/>
-                                </Grid>
+                            <StackPanel Orientation="Horizontal" Spacing="2" Margin="6,0,-6,0">
+                                <Button Click="OnBackgroundSelected" Tag="#EB469C" Background="#EB469C" Style="{StaticResource ColorButton}"/>
+                                <Button Click="OnBackgroundSelected" Tag="#EF5CA5" Background="#EF5CA5" Style="{StaticResource ColorButton}"/>
+                                <Button Click="OnBackgroundSelected" Tag="#F26FAD" Background="#F26FAD" Style="{StaticResource ColorButton}"/>
+                                <Button Click="OnBackgroundSelected" Tag="#F581B6" Background="#F581B6" Style="{StaticResource ColorButton}"/>
+                                <Button Click="OnBackgroundSelected" Tag="#F892BF" Background="#F892BF" Style="{StaticResource ColorButton}"/>
+                                <Button Click="OnBackgroundSelected" Tag="#FAA2C8" Background="#FAA2C8" Style="{StaticResource ColorButton}"/>
+                                <Button Click="OnBackgroundSelected" Tag="#FCB2D1" Background="#FCB2D1" Style="{StaticResource ColorButton}"/>
+                                <Button Click="OnBackgroundSelected" Tag="#FEC2DA" Background="#FEC2DA" Style="{StaticResource ColorButton}"/>
                             </StackPanel>
-
-                            <Rectangle Height="10" Width="2" Fill="Transparent" />
+                            
+                            <Rectangle Height="2" Width="2" Fill="Transparent" />
 
                         </StackPanel>
                     </Border>
