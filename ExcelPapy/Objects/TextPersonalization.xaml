@@ -6,7 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006">
 
-    <Border Background="#E6E6E6" CornerRadius="15" BorderBrush="Black" BorderThickness="3">
+    <Border Background="#E6E6E6" CornerRadius="15" BorderBrush="Black" BorderThickness="3" >
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
@@ -25,6 +25,7 @@
             <!-- Police-->
             <Grid Grid.Row="0" Grid.ColumnSpan="4" Margin="5">
                 <Border x:Name="PolicePickerButton"  Background="White" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" CornerRadius="15" BorderThickness="3" BorderBrush="Black"/>
+
                 <!-- Bouton qui affiche la sélection actuelle -->
                 <Button Click="OnPolicePickerClick" Margin="148,6,6,6" Style="{StaticResource ButtonPersonalizationArrow}">
                     <Grid>
@@ -37,41 +38,65 @@
                 </Button>
                 <Line Stroke="Black" StrokeThickness="3" X1="143" Y1="6" X2="143" Y2="40"/>
                 <Button Click="PolicePersonalization" Width="143" Style="{StaticResource ButtonPersonalizationPopup}"/>
-                <TextBlock x:Name="SelectedPoliceText" FontSize="18" FontWeight="DemiBold" VerticalAlignment="Center" HorizontalAlignment="Left" FontFamily="Segoe UI" Height="24" Width="128" Margin="10,0,-10,0" IsHitTestVisible="False"/>
+                <TextBlock x:Name="SelectedPoliceText" FontSize="18" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Left" FontFamily="Segoe UI" Height="24" Width="128" Margin="10,0,-10,0" IsHitTestVisible="False"/>
 
                 <!-- Popup avec les choix -->
-                <Popup x:Name="PolicePickerPopup" IsLightDismissEnabled="True" PlacementTarget="{Binding ElementName=PolicePickerButton}" DesiredPlacement="Bottom">
-                    <Border x:Name="PolicePickerBorder" Background="#E0F7F7F7" Margin="0,3,0,-3" BorderBrush="Black" BorderThickness="3" CornerRadius="15" MinWidth="{Binding ActualWidth, ElementName=PolicePickerButton}">
-                        <StackPanel Padding="5" Spacing="2">
+                <Popup x:Name="PolicePickerPopup"
+                       IsLightDismissEnabled="True"
+                       PlacementTarget="{Binding ElementName=PolicePickerButton}"
+                       DesiredPlacement="Bottom"
+                       Opened="PolicePickerPopup_Opened"
+                       Closed="PolicePickerPopup_Closed">
+                    
+                    <Border x:Name="PolicePickerBorder"
+                            Margin="0,3,0,-3"
+                            BorderBrush="Black"
+                            BorderThickness="3"
+                            CornerRadius="15"
+                            MinWidth="{Binding ActualWidth, ElementName=PolicePickerButton}">
 
-                            <Button Click="OnPoliceSelected" Tag="Segoe UI" Style="{StaticResource NumberFontSize}">
-                                <TextBlock Text="Segoe UI" FontFamily="Segoe UI" FontSize="20" FontWeight="DemiBold" Margin="0,2,0,-2"/>
-                            </Button>
+                        <Grid>
+                            <Border x:Name="BlurredPoliceContainertransition" CornerRadius="13" Margin="-3" Background="#80FFFFFF"/>
+                            <Border x:Name="BlurredPoliceContainer" CornerRadius="13" Margin="-3">
+                                <Border.Background>
+                                    <ImageBrush x:Name="BlurredBackgroundBrush" Stretch="Fill" />
+                                </Border.Background>
+                            </Border>
 
-                            <Button Click="OnPoliceSelected" Tag="Arial" Style="{StaticResource NumberFontSize}">
-                                <StackPanel Orientation="Horizontal" Spacing="10">
-                                    <TextBlock Text="Arial" FontSize="20" FontWeight="DemiBold" VerticalAlignment="Center" FontFamily="Arial"/>
-                                </StackPanel>
-                            </Button>
+                            <Border Background="#A0FFFFFF" CornerRadius="13"/>
 
-                            <Button Click="OnPoliceSelected" Tag="Calibri" Style="{StaticResource NumberFontSize}">
-                                <StackPanel Orientation="Horizontal" Spacing="10">
-                                    <TextBlock Text="Calibri" FontSize="20" FontWeight="DemiBold" VerticalAlignment="Center" FontFamily="Calibri"/>
-                                </StackPanel>
-                            </Button>
+                            <StackPanel Padding="5" Spacing="7">
 
-                            <Button Click="OnPoliceSelected" Tag="Times new roman" Style="{StaticResource NumberFontSize}">
-                                <StackPanel Orientation="Horizontal" Spacing="10">
-                                    <TextBlock Text="Times New Roman" FontSize="20" FontWeight="DemiBold" VerticalAlignment="Center" FontFamily="Times New Roman"/>
-                                </StackPanel>
-                            </Button>
+                                <Button Click="OnPoliceSelected" Tag="Segoe UI" Style="{StaticResource NumberFontSize}">
+                                    <TextBlock Text="Segoe UI" FontFamily="Segoe UI" FontSize="20" FontWeight="DemiBold" Margin="0,2,0,-2"/>
+                                </Button>
 
-                            <Button Click="OnPoliceSelected" Tag="Verdana" Style="{StaticResource NumberFontSize}">
-                                <StackPanel Orientation="Horizontal" Spacing="10">
-                                    <TextBlock Text="Verdana" FontSize="20" FontWeight="DemiBold" VerticalAlignment="Center" FontFamily="Verdana"/>
-                                </StackPanel>
-                            </Button>
-                        </StackPanel>
+                                <Button Click="OnPoliceSelected" Tag="Arial" Style="{StaticResource NumberFontSize}">
+                                    <StackPanel Orientation="Horizontal" Spacing="10">
+                                        <TextBlock Text="Arial" FontSize="20" FontWeight="Bold" VerticalAlignment="Center" FontFamily="Arial"/>
+                                    </StackPanel>
+                                </Button>
+
+                                <Button Click="OnPoliceSelected" Tag="Calibri" Style="{StaticResource NumberFontSize}">
+                                    <StackPanel Orientation="Horizontal" Spacing="10">
+                                        <TextBlock Text="Calibri" FontSize="20" FontWeight="Bold" VerticalAlignment="Center" FontFamily="Calibri"/>
+                                    </StackPanel>
+                                </Button>
+
+                                <Button Click="OnPoliceSelected" Tag="Times new roman" Style="{StaticResource NumberFontSize}">
+                                    <StackPanel Orientation="Horizontal" Spacing="10">
+                                        <TextBlock Text="Times New Roman" FontSize="20" FontWeight="Bold" VerticalAlignment="Center" FontFamily="Times New Roman"/>
+                                    </StackPanel>
+                                </Button>
+
+                                <Button Click="OnPoliceSelected" Tag="Verdana" Style="{StaticResource NumberFontSize}">
+                                    <StackPanel Orientation="Horizontal" Spacing="10">
+                                        <TextBlock Text="Verdana" FontSize="20" FontWeight="Bold" VerticalAlignment="Center" FontFamily="Verdana"/>
+                                    </StackPanel>
+                                </Button>
+                            </StackPanel>
+                            
+                        </Grid>
                     </Border>
                 </Popup>
             </Grid>
@@ -91,46 +116,54 @@
                 </Button>
                 <Line Stroke="Black" StrokeThickness="3" X1="45" Y1="6" X2="45" Y2="40"/>
                 <Button Click="FontSizePersonalization" Width="45" Style="{StaticResource ButtonPersonalizationPopup}"/>
-                <TextBlock x:Name="SelectedFontSizeText" Text="Bordure..." FontSize="18" FontWeight="DemiBold" VerticalAlignment="Center" Margin="-20,0,20,0" HorizontalAlignment="Center" IsHitTestVisible="False"/>
+                <TextBlock x:Name="SelectedFontSizeText" Text="" FontSize="18" FontWeight="Bold" VerticalAlignment="Center" Margin="-20,0,20,0" HorizontalAlignment="Center" IsHitTestVisible="False"/>
 
                 <!-- Popup avec les choix -->
-                <Popup x:Name="FontSizePickerPopup" IsLightDismissEnabled="True" PlacementTarget="{Binding ElementName=FontSizePickerButton}" DesiredPlacement="Bottom">
-                    <Border x:Name="FontSizePickerBorder" Background="#E0F7F7F7" Margin="0,3,0,-3" BorderBrush="Black" BorderThickness="3" CornerRadius="15" MinWidth="{Binding ActualWidth, ElementName=FontSizePickerButton}" >
-                        <StackPanel Padding="5" Spacing="2">
+                <Popup x:Name="FontSizePickerPopup"
+                       IsLightDismissEnabled="True"
+                       PlacementTarget="{Binding ElementName=FontSizePickerButton}"
+                       DesiredPlacement="Bottom"
+                       Opened="FontSizePickerPopup_Opened"
+                       Closed="FontSizePickerPopup_Closed">
+                    
+                    <Border x:Name="FontSizePickerBorder"
+                            Margin="0,3,0,-3"
+                            BorderBrush="Black"
+                            BorderThickness="3"
+                            CornerRadius="15"
+                            MinWidth="{Binding ActualWidth, ElementName=FontSizePickerButton}">
 
-                            <Button Click="OnFontSizeSelected" Tag="8" Content="8" Style="{StaticResource NumberFontSize}"/>
+                        <Grid>
+                            <Border x:Name="BlurredFontSizeContainertransition" CornerRadius="13" Margin="-3" Background="#80FFFFFF"/>
+                            <Border x:Name="BlurredFontSizeContainer" CornerRadius="13" Margin="-3">
+                                <Border.Background>
+                                    <ImageBrush x:Name="BlurredFontSizeBackgroundBrush" Stretch="UniformToFill" />
+                                </Border.Background>
+                            </Border>
 
-                            <Button Click="OnFontSizeSelected" Tag="9" Content="9" Style="{StaticResource NumberFontSize}"/>
+                            <Border Background="#A0FFFFFF" CornerRadius="13"/>
 
-                            <Button Click="OnFontSizeSelected" Tag="10" Content="10" Style="{StaticResource NumberFontSize}"/>
+                            <StackPanel Padding="5" Spacing="2">
 
-                            <Button Click="OnFontSizeSelected" Tag="11" Content="11" Style="{StaticResource NumberFontSize}"/>
+                                <Button Click="OnFontSizeSelected" Tag="8" Content="8" Style="{StaticResource NumberFontSize}"/>
+                                <Button Click="OnFontSizeSelected" Tag="9" Content="9" Style="{StaticResource NumberFontSize}"/>
+                                <Button Click="OnFontSizeSelected" Tag="10" Content="10" Style="{StaticResource NumberFontSize}"/>
+                                <Button Click="OnFontSizeSelected" Tag="11" Content="11" Style="{StaticResource NumberFontSize}"/>
+                                <Button Click="OnFontSizeSelected" Tag="12" Content="12" Style="{StaticResource NumberFontSize}"/>
+                                <Button Click="OnFontSizeSelected" Tag="14" Content="14" Style="{StaticResource NumberFontSize}"/>
+                                <Button Click="OnFontSizeSelected" Tag="16" Content="16" Style="{StaticResource NumberFontSize}"/>
+                                <Button Click="OnFontSizeSelected" Tag="18" Content="18" Style="{StaticResource NumberFontSize}"/>
+                                <Button Click="OnFontSizeSelected" Tag="20" Content="20" Style="{StaticResource NumberFontSize}"/>
+                                <Button Click="OnFontSizeSelected" Tag="22" Content="22" Style="{StaticResource NumberFontSize}"/>
+                                <Button Click="OnFontSizeSelected" Tag="24" Content="24" Style="{StaticResource NumberFontSize}"/>
+                                <Button Click="OnFontSizeSelected" Tag="26" Content="16" Style="{StaticResource NumberFontSize}"/>
+                                <Button Click="OnFontSizeSelected" Tag="28" Content="28" Style="{StaticResource NumberFontSize}"/>
+                                <Button Click="OnFontSizeSelected" Tag="36" Content="36" Style="{StaticResource NumberFontSize}"/>
+                                <Button Click="OnFontSizeSelected" Tag="48" Content="48" Style="{StaticResource NumberFontSize}"/>
+                                <Button Click="OnFontSizeSelected" Tag="72" Content="72" Style="{StaticResource NumberFontSize}"/>
 
-                            <Button Click="OnFontSizeSelected" Tag="12" Content="12" Style="{StaticResource NumberFontSize}"/>
-
-                            <Button Click="OnFontSizeSelected" Tag="14" Content="14" Style="{StaticResource NumberFontSize}"/>
-
-                            <Button Click="OnFontSizeSelected" Tag="16" Content="16" Style="{StaticResource NumberFontSize}"/>
-
-                            <Button Click="OnFontSizeSelected" Tag="18" Content="18" Style="{StaticResource NumberFontSize}"/>
-
-                            <Button Click="OnFontSizeSelected" Tag="20" Content="20" Style="{StaticResource NumberFontSize}"/>
-
-                            <Button Click="OnFontSizeSelected" Tag="22" Content="22" Style="{StaticResource NumberFontSize}"/>
-
-                            <Button Click="OnFontSizeSelected" Tag="24" Content="24" Style="{StaticResource NumberFontSize}"/>
-
-                            <Button Click="OnFontSizeSelected" Tag="26" Content="16" Style="{StaticResource NumberFontSize}"/>
-
-                            <Button Click="OnFontSizeSelected" Tag="28" Content="28" Style="{StaticResource NumberFontSize}"/>
-
-                            <Button Click="OnFontSizeSelected" Tag="36" Content="36" Style="{StaticResource NumberFontSize}"/>
-
-                            <Button Click="OnFontSizeSelected" Tag="48" Content="48" Style="{StaticResource NumberFontSize}"/>
-
-                            <Button Click="OnFontSizeSelected" Tag="72" Content="72" Style="{StaticResource NumberFontSize}"/>
-
-                        </StackPanel>
+                            </StackPanel>
+                        </Grid>
                     </Border>
                 </Popup>
             </Grid>
@@ -171,66 +204,89 @@
                 <Border x:Name="SelectedPoliceColorIcon" Width="20" Height="6" Background="Black" VerticalAlignment="Bottom" HorizontalAlignment="Left" BorderBrush="Black" BorderThickness="1" Margin="19,-9,-19,9" IsHitTestVisible="False"/>
 
                 <!-- Popup avec les choix -->
-                <Popup x:Name="PoliceColorPickerPopup" IsLightDismissEnabled="True" PlacementTarget="{Binding ElementName=PoliceColorPickerButton}" DesiredPlacement="Bottom">
-                    <Border x:Name="PoliceColorPickerBorder" Background="#E0F7F7F7" Margin="0,3,0,-3" BorderBrush="Black" BorderThickness="3" CornerRadius="15" MinWidth="{Binding ActualWidth, ElementName=PoliceColorPickerButton}">
-                        <StackPanel Padding="5" Spacing="2">
+                <Popup x:Name="PoliceColorPickerPopup"
+                       IsLightDismissEnabled="True"
+                       PlacementTarget="{Binding ElementName=PoliceColorPickerButton}"
+                       DesiredPlacement="Bottom"
+                       Opened="PoliceColorPickerPopup_Opened"
+                       Closed="PoliceColorPickerPopup_Closed">
+                    
+                    <Border x:Name="PoliceColorPickerBorder"
+                            Margin="0,3,0,-3"
+                            BorderBrush="Black"
+                            BorderThickness="3"
+                            CornerRadius="15"
+                            MinWidth="{Binding ActualWidth, ElementName=PoliceColorPickerButton}">
 
-                            <!-- spacing-->
-                            <Rectangle Height="0" Width="2" Fill="Transparent" />
+                        <Grid>
+                            <Border x:Name="BlurredPoliceColorContainertransition" CornerRadius="13" Margin="-3" Background="#80FFFFFF"/>
+                            <Border x:Name="BlurredPoliceColorContainer" CornerRadius="13" Margin="-3">
+                                <Border.Background>
+                                    <ImageBrush x:Name="BlurredPoliceColorBackgroundBrush" Stretch="Fill" />
+                                </Border.Background>
+                            </Border>
 
-                            <!-- Noir et blanc -->
-                            <StackPanel Orientation="Horizontal" Spacing="7" Margin="6,0,-6,0">
-                                <Button Click="OnPoliceColorSelected" Tag="Black" Background="Black" Style="{StaticResource ColorButton}"/>
-                                <Button Click="OnPoliceColorSelected" Tag="#A8A8A8" Background="#A8A8A8" Style="{StaticResource ColorButton}"/>
-                                <Button Click="OnPoliceColorSelected" Tag="White" Background="White" Style="{StaticResource ColorButton}"/>
+                            <Border Background="#A0FFFFFF" CornerRadius="13"/>
+
+                            <StackPanel Padding="5" Spacing="2">
+
+                                <!-- spacing-->
+                                <Rectangle Height="0" Width="2" Fill="Transparent" />
+
+                                <!-- Noir et blanc -->
+                                <StackPanel Orientation="Horizontal" Spacing="7" Margin="6,0,-6,0">
+                                    <Button Click="OnPoliceColorSelected" Tag="Black" Background="Black" Style="{StaticResource ColorButton}"/>
+                                    <Button Click="OnPoliceColorSelected" Tag="#A8A8A8" Background="#A8A8A8" Style="{StaticResource ColorButton}"/>
+                                    <Button Click="OnPoliceColorSelected" Tag="White" Background="White" Style="{StaticResource ColorButton}"/>
+                                </StackPanel>
+
+                                <!-- Rouge -->
+                                <StackPanel Orientation="Horizontal" Spacing="7" Margin="6,0,-6,0">
+                                    <Button Click="OnPoliceColorSelected" Tag="#B41A09" Background="#B41A09" Style="{StaticResource ColorButton}"/>
+                                    <Button Click="OnPoliceColorSelected" Tag="Red" Background="Red" Style="{StaticResource ColorButton}"/>
+                                    <Button Click="OnPoliceColorSelected" Tag="#FF9675" Background="#FF9675" Style="{StaticResource ColorButton}"/>
+                                </StackPanel>
+
+                                <!-- Bleu-->
+                                <StackPanel Orientation="Horizontal" Spacing="7" Margin="6,0,-6,0">
+                                    <Button Click="OnPoliceColorSelected" Tag="#20529A" Background="#20529A" Style="{StaticResource ColorButton}"/>
+                                    <Button Click="OnPoliceColorSelected" Tag="#0084FF" Background="#0084FF" Style="{StaticResource ColorButton}"/>
+                                    <Button Click="OnPoliceColorSelected" Tag="#8CAEFF" Background="#8CAEFF" Style="{StaticResource ColorButton}"/>
+                                </StackPanel>
+
+                                <!-- Jaune -->
+                                <StackPanel Orientation="Horizontal" Spacing="7" Margin="6,0,-6,0">
+                                    <Button Click="OnPoliceColorSelected" Tag="#B3B21A" Background="#B3B21A" Style="{StaticResource ColorButton}"/>
+                                    <Button Click="OnPoliceColorSelected" Tag="Yellow" Background="Yellow" Style="{StaticResource ColorButton}"/>
+                                    <Button Click="OnPoliceColorSelected" Tag="#FFFF95" Background="#FFFF95" Style="{StaticResource ColorButton}"/>
+                                </StackPanel>
+
+                                <!-- Vert -->
+                                <StackPanel Orientation="Horizontal" Spacing="7" Margin="6,0,-6,0">
+                                    <Button Click="OnPoliceColorSelected" Tag="#1E7A15" Background="#1E7A15" Style="{StaticResource ColorButton}"/>
+                                    <Button Click="OnPoliceColorSelected" Tag="#00C700" Background="#00C700" Style="{StaticResource ColorButton}"/>
+                                    <Button Click="OnPoliceColorSelected" Tag="#88DD74" Background="#88DD74" Style="{StaticResource ColorButton}"/>
+                                </StackPanel>
+
+                                <!-- Violet -->
+                                <StackPanel Orientation="Horizontal" Spacing="7" Margin="6,0,-6,0">
+                                    <Button Click="OnPoliceColorSelected" Tag="#511150" Background="#511150" Style="{StaticResource ColorButton}"/>
+                                    <Button Click="OnPoliceColorSelected" Tag="Purple" Background="Purple" Style="{StaticResource ColorButton}"/>
+                                    <Button Click="OnPoliceColorSelected" Tag="#BD81B9" Background="#BD81B9" Style="{StaticResource ColorButton}"/>
+                                </StackPanel>
+
+                                <!-- Rose -->
+                                <StackPanel Orientation="Horizontal" Spacing="7" Margin="6,0,-6,0">
+                                    <Button Click="OnPoliceColorSelected" Tag="#903261" Background="#903261" Style="{StaticResource ColorButton}"/>
+                                    <Button Click="OnPoliceColorSelected" Tag="#EB469C" Background="#EB469C" Style="{StaticResource ColorButton}"/>
+                                    <Button Click="OnPoliceColorSelected" Tag="#FAA2C8" Background="#FAA2C8" Style="{StaticResource ColorButton}"/>
+                                </StackPanel>
+
+                                <!-- spacing-->
+                                <Rectangle Height="0" Width="2" Fill="Transparent" />
+
                             </StackPanel>
-
-                            <!-- Rouge -->
-                            <StackPanel Orientation="Horizontal" Spacing="7" Margin="6,0,-6,0">
-                                <Button Click="OnPoliceColorSelected" Tag="#B41A09" Background="#B41A09" Style="{StaticResource ColorButton}"/>
-                                <Button Click="OnPoliceColorSelected" Tag="Red" Background="Red" Style="{StaticResource ColorButton}"/>
-                                <Button Click="OnPoliceColorSelected" Tag="#FF9675" Background="#FF9675" Style="{StaticResource ColorButton}"/>
-                            </StackPanel>
-
-                            <!-- Bleu-->
-                            <StackPanel Orientation="Horizontal" Spacing="7" Margin="6,0,-6,0">
-                                <Button Click="OnPoliceColorSelected" Tag="#20529A" Background="#20529A" Style="{StaticResource ColorButton}"/>
-                                <Button Click="OnPoliceColorSelected" Tag="#0084FF" Background="#0084FF" Style="{StaticResource ColorButton}"/>
-                                <Button Click="OnPoliceColorSelected" Tag="#8CAEFF" Background="#8CAEFF" Style="{StaticResource ColorButton}"/>
-                            </StackPanel>
-                            
-                            <!-- Jaune -->
-                            <StackPanel Orientation="Horizontal" Spacing="7" Margin="6,0,-6,0">
-                                <Button Click="OnPoliceColorSelected" Tag="#B3B21A" Background="#B3B21A" Style="{StaticResource ColorButton}"/>
-                                <Button Click="OnPoliceColorSelected" Tag="Yellow" Background="Yellow" Style="{StaticResource ColorButton}"/>
-                                <Button Click="OnPoliceColorSelected" Tag="#FFFF95" Background="#FFFF95" Style="{StaticResource ColorButton}"/>
-                            </StackPanel>
-
-                            <!-- Vert -->
-                            <StackPanel Orientation="Horizontal" Spacing="7" Margin="6,0,-6,0">
-                                <Button Click="OnPoliceColorSelected" Tag="#1E7A15" Background="#1E7A15" Style="{StaticResource ColorButton}"/>
-                                <Button Click="OnPoliceColorSelected" Tag="#00C700" Background="#00C700" Style="{StaticResource ColorButton}"/>
-                                <Button Click="OnPoliceColorSelected" Tag="#88DD74" Background="#88DD74" Style="{StaticResource ColorButton}"/>
-                            </StackPanel>
-
-                            <!-- Violet -->
-                            <StackPanel Orientation="Horizontal" Spacing="7" Margin="6,0,-6,0">
-                                <Button Click="OnPoliceColorSelected" Tag="#511150" Background="#511150" Style="{StaticResource ColorButton}"/>
-                                <Button Click="OnPoliceColorSelected" Tag="Purple" Background="Purple" Style="{StaticResource ColorButton}"/>
-                                <Button Click="OnPoliceColorSelected" Tag="#BD81B9" Background="#BD81B9" Style="{StaticResource ColorButton}"/>
-                            </StackPanel>
-
-                            <!-- Rose -->
-                            <StackPanel Orientation="Horizontal" Spacing="7" Margin="6,0,-6,0">
-                                <Button Click="OnPoliceColorSelected" Tag="#903261" Background="#903261" Style="{StaticResource ColorButton}"/>
-                                <Button Click="OnPoliceColorSelected" Tag="#EB469C" Background="#EB469C" Style="{StaticResource ColorButton}"/>
-                                <Button Click="OnPoliceColorSelected" Tag="#FAA2C8" Background="#FAA2C8" Style="{StaticResource ColorButton}"/>
-                            </StackPanel>
-
-                            <!-- spacing-->
-                            <Rectangle Height="0" Width="2" Fill="Transparent" />
-                            
-                        </StackPanel>
+                        </Grid>
                     </Border>
                 </Popup>
             </Grid>

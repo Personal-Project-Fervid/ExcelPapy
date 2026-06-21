@@ -12,5 +12,8 @@ public sealed partial class MainPage : Page
         Cellules.SetViewModel(ViewModel);
         TextPersonalization.SetViewModel(ViewModel);
         CellPersonalization.SetViewModel(ViewModel);
+
+        TextPersonalization.CaptureRoot = RootGrid;
+        CellPersonalization.CaptureRoot = RootGrid;
     }
 }
