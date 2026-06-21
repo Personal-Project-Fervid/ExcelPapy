@@ -317,11 +317,12 @@ public sealed partial class CellPersonalization : UserControl
 
     }
 
-    private async Task BlurTransition(FrameworkElement x, FrameworkElement y)
+    private async Task BlurTransition(FrameworkElement x, FrameworkElement y, CancellationToken token)
     {
         x.Visibility = Visibility.Visible;
         for (double i = 0; i < 1; i += 0.05)
         {
+            token.ThrowIfCancellationRequested();
             y.Opacity = 1 - i;
             x.Opacity = i;
             await Task.Delay(50);
@@ -331,8 +332,14 @@ public sealed partial class CellPersonalization : UserControl
         y.Visibility = Visibility.Collapsed;
     }
 
+    private CancellationTokenSource _borderBlurTransitionCts;
+    private CancellationTokenSource _backgroundBlurTransitionCts;
     private async void BorderPickerPopup_Opened(object sender, object e)
     {
+        _borderBlurTransitionCts?.Cancel();
+        _borderBlurTransitionCts = new CancellationTokenSource();
+        var token = _borderBlurTransitionCts.Token;
+
         BlurredBorderContainer.Visibility = Visibility.Collapsed;
         BlurredBorderContainertransition.Visibility = Visibility.Visible;
         BlurredBorderContainertransition.Opacity = 1;
@@ -344,17 +351,26 @@ public sealed partial class CellPersonalization : UserControl
         await EnsureBlurCacheAsync();
         ApplyCachedBlurToTarget(BorderPickerBorder, BlurredBorderBackgroundBrush);
 
-        _ = BlurTransition(BlurredBorderContainer, BlurredBorderContainertransition);
+        try
+        {
+            _ = BlurTransition(BlurredBorderContainer, BlurredBorderContainertransition, token);
+        }catch (OperationCanceledException) { }
     }
 
     private void BorderPickerPopup_Closed(object sender, object e)
     {
+        _borderBlurTransitionCts?.Cancel();
+
         BlurredBorderBackgroundBrush.ImageSource = null;
         BlurredBorderContainer.Opacity = 0;
     }
 
     private async void BackgroundPickerPopup_Opened(object sender, object e)
     {
+        _backgroundBlurTransitionCts?.Cancel();
+        _backgroundBlurTransitionCts = new CancellationTokenSource();
+        var token = _backgroundBlurTransitionCts.Token;
+
         BlurredBackgroundContainer.Visibility = Visibility.Collapsed;
         BlurredBackgroundContainertransition.Visibility = Visibility.Visible;
         BlurredBackgroundContainertransition.Opacity = 1;
@@ -365,12 +381,16 @@ public sealed partial class CellPersonalization : UserControl
 
         await EnsureBlurCacheAsync();
         ApplyCachedBlurToTarget(BackgroundPickerBorder, BlurredBackgroundBackgroundBrush);
-
-        _ = BlurTransition(BlurredBackgroundContainer, BlurredBackgroundContainertransition);
+        try
+        {
+            _ = BlurTransition(BlurredBackgroundContainer, BlurredBackgroundContainertransition, token);
+        }
+        catch (OperationCanceledException) { }
     }
 
     private void BackgroundPickerPopup_Closed(object sender, object e)
     {
+        _backgroundBlurTransitionCts?.Cancel();
         BlurredBackgroundBackgroundBrush.ImageSource = null;
         BlurredBackgroundContainer.Opacity = 0;
     }

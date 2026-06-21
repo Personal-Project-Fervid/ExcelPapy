@@ -250,11 +250,12 @@ public sealed partial class TextPersonalization : UserControl
         // à voir
     }
 
-    private async Task BlurTransition(FrameworkElement x, FrameworkElement y)
+    private async Task BlurTransition(FrameworkElement x, FrameworkElement y, CancellationToken token)
     {
         x.Visibility = Visibility.Visible;
         for (double i = 0; i < 1; i+= 0.05)
         {
+            token.ThrowIfCancellationRequested();
             y.Opacity = 1 - i;
             x.Opacity = i;
             await Task.Delay(50);
@@ -264,28 +265,45 @@ public sealed partial class TextPersonalization : UserControl
         y.Visibility = Visibility.Collapsed;
     }
 
+    private CancellationTokenSource _policeBlurTransitionCts;
+    private CancellationTokenSource _fontSizeBlurTransitionCts;
+    private CancellationTokenSource _policeColorBlurTransitionCts;
     private async void PolicePickerPopup_Opened(object sender, object e)
     {
+        _policeBlurTransitionCts?.Cancel();
+        _policeBlurTransitionCts = new CancellationTokenSource();
+        var token = _policeBlurTransitionCts.Token;
+
         BlurredPoliceContainer.Visibility = Visibility.Collapsed;
         BlurredPoliceContainertransition.Visibility = Visibility.Visible;
         BlurredPoliceContainertransition.Opacity = 1;
         BlurredPoliceContainer.Opacity = 0;
+
         PolicePickerBorder.UpdateLayout();
         await Task.Yield();
         await RefreshBlurCacheAsync();
         ApplyCachedBlurToTarget(PolicePickerBorder, BlurredBackgroundBrush);
-        
-        _ = BlurTransition(BlurredPoliceContainer, BlurredPoliceContainertransition);
+
+        try
+        {
+            await BlurTransition(BlurredPoliceContainer, BlurredPoliceContainertransition, token);
+        }catch (OperationCanceledException) { }
     }
 
     private void PolicePickerPopup_Closed(object sender, object e)
     {
+        _policeBlurTransitionCts?.Cancel();
+
         BlurredBackgroundBrush.ImageSource = null;
         BlurredPoliceContainer.Opacity = 0;
     }
 
     private async void FontSizePickerPopup_Opened(object sender, object e)
     {
+        _fontSizeBlurTransitionCts?.Cancel();
+        _fontSizeBlurTransitionCts = new CancellationTokenSource();
+        var token = _fontSizeBlurTransitionCts.Token;
+
         BlurredFontSizeContainer.Visibility = Visibility.Collapsed;
         BlurredFontSizeContainertransition.Visibility = Visibility.Visible;
         BlurredFontSizeContainertransition.Opacity = 1;
@@ -297,17 +315,27 @@ public sealed partial class TextPersonalization : UserControl
         await RefreshBlurCacheAsync();
         ApplyCachedBlurToTarget(FontSizePickerBorder, BlurredFontSizeBackgroundBrush);
 
-        _ = BlurTransition(BlurredFontSizeContainer, BlurredFontSizeContainertransition);
+        try
+        {
+            _ = BlurTransition(BlurredFontSizeContainer, BlurredFontSizeContainertransition, token);
+        }
+        catch (OperationCanceledException) { }
     }
 
     private void FontSizePickerPopup_Closed(object sender, object e)
     {
+        _fontSizeBlurTransitionCts?.Cancel();
+
         BlurredFontSizeBackgroundBrush.ImageSource = null;
         BlurredFontSizeContainer.Opacity = 0;
     }
 
     private async void PoliceColorPickerPopup_Opened(object sender, object e)
     {
+        _policeColorBlurTransitionCts?.Cancel();
+        _policeColorBlurTransitionCts = new CancellationTokenSource();
+        var token = _policeColorBlurTransitionCts.Token;
+
         BlurredPoliceColorContainer.Visibility = Visibility.Collapsed;
         BlurredPoliceColorContainertransition.Visibility = Visibility.Visible;
         BlurredPoliceColorContainertransition.Opacity = 1;
@@ -319,12 +347,17 @@ public sealed partial class TextPersonalization : UserControl
         await RefreshBlurCacheAsync();
         ApplyCachedBlurToTarget(PoliceColorPickerBorder, BlurredPoliceColorBackgroundBrush);
 
-
-        _ = BlurTransition(BlurredPoliceColorContainer, BlurredPoliceColorContainertransition);
+        try 
+        { 
+            _ = BlurTransition(BlurredPoliceColorContainer, BlurredPoliceColorContainertransition, token);
+        }
+        catch (OperationCanceledException) { }
     }
 
     private void PoliceColorPickerPopup_Closed(object sender, object e)
     {
+        _policeColorBlurTransitionCts?.Cancel();
+
         BlurredPoliceColorBackgroundBrush.ImageSource = null;
         BlurredPoliceColorContainer.Opacity = 0;
     }
