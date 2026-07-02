@@ -258,6 +258,8 @@ public sealed partial class Cellules : UserControl
                 (sender as UIElement)?.CapturePointer(e.Pointer);
                 _isDragging = true;
 
+                this.Focus(FocusState.Programmatic);
+
                 ShowMarquee(e.GetCurrentPoint(CellScrollViewer).Position);
 
                 e.Handled = true;
@@ -271,9 +273,6 @@ public sealed partial class Cellules : UserControl
 
         var vm = this.DataContext as MainViewModel;
         if (vm == null || _dragStartCell == null) return;
-
-        // Retirer le focus du TextBox actif
-        this.Focus(FocusState.Programmatic);
 
         // Position relative au ScrollViewer des cellules
         var point = e.GetCurrentPoint(CellScrollViewer).Position;

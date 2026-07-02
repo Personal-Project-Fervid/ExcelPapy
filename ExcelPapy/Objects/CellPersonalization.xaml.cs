@@ -26,7 +26,7 @@ public sealed partial class CellPersonalization : UserControl
     }
 
     private Brush _background;
-    public Brush Background
+    public new Brush Background
     {
         get => _background;
         set

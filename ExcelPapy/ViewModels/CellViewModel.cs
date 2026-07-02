@@ -56,4 +56,7 @@ public partial class CellViewModel : ObservableObject
 
     [ObservableProperty]
     private Brush _background = new SolidColorBrush(Microsoft.UI.Colors.FromARGB(0xFF, 0XF5, 0XF5, 0XF5));
+
+    [ObservableProperty]
+    private Brush _borderBrush = new SolidColorBrush(Microsoft.UI.Colors.FromARGB(0xFF, 0XBA, 0XBA, 0XBA));
 }

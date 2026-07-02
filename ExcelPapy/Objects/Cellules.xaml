@@ -107,7 +107,7 @@
                                     <DataTemplate x:DataType="local:CellViewModel">
 
                                         <Border x:Name="CellBorder"
-                                                BorderBrush="#BABABA"
+                                                BorderBrush="{Binding BorderBrush}"
                                                 BorderThickness="0,0,3,3"
                                                 Width="{Binding ColumnHeader.Width}"
                                                 Height="{Binding RowHeader.Height}"

@@ -249,6 +249,14 @@ public partial class MainViewModel : ObservableObject
         foreach (var row in Rows)
             foreach (var cell in row.Cells)
                 if (cell.IsSelected)
+                {
                     cell.Background = background;
+
+                    Brush noir = new SolidColorBrush(Microsoft.UI.Colors.Black);
+                    if (background != noir)
+                    {
+                        cell.BorderBrush = background;
+                    }
+                }
     }
 }
