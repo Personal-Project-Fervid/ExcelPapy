@@ -1,22 +1,45 @@
 using System.Collections.ObjectModel;
-using Microsoft.UI.Text;
-using SkiaSharp;
-using Windows.UI.Text;
+using System.ComponentModel;
+
 
 namespace ExcelPapy.ViewModels;
 
-public partial class MainViewModel
+public partial class MainViewModel : ObservableObject
 {
     public ObservableCollection<RowViewModel> Rows { get; } = new();
+
     public ObservableCollection<ColumnHeaderViewModel> ColumnHeaders { get; } = new();
     public ObservableCollection<RowHeaderViewModel> RowHeaders { get; } = new();
 
     private CellViewModel? _selectionStart;
 
+    public double TotalColumnsWidth
+    {
+        get
+        {
+            double total = 0;
+            foreach (var col in ColumnHeaders)
+            {
+                total += col.Width;
+            }
+            return total;
+        }
+    }
+
     public MainViewModel()
     {
         for (int c = 0; c < 26; c++)
-            ColumnHeaders.Add(new ColumnHeaderViewModel{Label=((char)('A' + c)).ToString()});
+        {
+            var column = new ColumnHeaderViewModel
+            {
+                Label = ((char)('A' + c)).ToString()
+            };
+
+            // On écoute les changements de largeur
+            column.PropertyChanged += Column_PropertyChanged;
+
+            ColumnHeaders.Add(column);
+        }
 
         // Créer une grille 100 x 26 (colonnes A-Z)
         for (int r = 0; r < 100; r++)
@@ -35,6 +58,14 @@ public partial class MainViewModel
                     IsSelected = false
                 });
             Rows.Add(row);
+        }
+    }
+
+    private void Column_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+    {
+        if (e.PropertyName == nameof(ColumnHeaderViewModel.Width))
+        {
+            OnPropertyChanged(nameof(TotalColumnsWidth));
         }
     }
 

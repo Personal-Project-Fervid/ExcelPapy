@@ -5,11 +5,7 @@
     xmlns:local="using:ExcelPapy.ViewModels"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:converters="using:ExcelPapy.Converters">
-
-    <UserControl.Resources>
-        <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
-    </UserControl.Resources>
+    xmlns:objet="using:ExcelPapy.Objects">
 
     <Grid>
 
@@ -44,7 +40,15 @@
                             </Border>
 
                             <!-- Zone de détection élargie centrée sur la bordure droite -->
-                            <Rectangle Width="40" Margin="20,0,-20,0" HorizontalAlignment="Right" Fill="Transparent" ManipulationMode="TranslateX" ManipulationDelta="OnColumnResize" PointerEntered="OnColResizePointerEntered" PointerExited="OnResizePointerExited"/>
+                            <Rectangle Width="40"
+                                       Margin="20,0,-20,0"
+                                       HorizontalAlignment="Right"
+                                       Fill="Transparent"
+                                       ManipulationMode="TranslateX"
+                                       ManipulationDelta="OnColumnResize"
+                                       ManipulationCompleted="OnColumnResizeCompleted"
+                                       PointerEntered="OnColResizePointerEntered"
+                                       PointerExited="OnResizePointerExited"/>
 
                         </Grid>
                     </DataTemplate>
@@ -66,7 +70,16 @@
                                 <TextBlock Text="{Binding Label}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="ExtraBold" FontSize="32" />
                             </Border>
                             <!-- Poignée bas pour redimensionner -->
-                            <Rectangle x:Name="RowResizeHandle" Height="40" Margin="0,20,0,-20" VerticalAlignment="Bottom" Fill="Transparent" ManipulationMode="TranslateY" ManipulationDelta="OnRowResize" PointerEntered="OnRowResizePointerEntered" PointerExited="OnResizePointerExited"/>
+                            <Rectangle x:Name="RowResizeHandle"
+                                       Height="40"
+                                       Margin="0,20,0,-20"
+                                       VerticalAlignment="Bottom"
+                                       Fill="Transparent"
+                                       ManipulationMode="TranslateY"
+                                       ManipulationDelta="OnRowResize"
+                                       ManipulationCompleted="OnRowResizeCompleted"
+                                       PointerEntered="OnRowResizePointerEntered"
+                                       PointerExited="OnResizePointerExited"/>
                         </Grid>
                     </DataTemplate>
                 </ItemsRepeater.ItemTemplate>
@@ -74,8 +87,8 @@
         </ScrollViewer>
 
 
-        <!-- Cellues-->
-        <ScrollViewer x:Name="CellScrollViewer" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Grid.Row="1" Grid.Column="1">
+        <!-- Cellules-->
+        <ScrollViewer x:Name="CellScrollViewer" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden" Grid.Row="1" Grid.Column="1" >
 
             <ItemsRepeater ItemsSource="{Binding Rows}">
                 <ItemsRepeater.Layout>
@@ -84,14 +97,15 @@
 
                 <ItemsRepeater.ItemTemplate>
                     <DataTemplate x:DataType="local:RowViewModel">
-                        <Grid Height="{Binding Cells[0].RowHeader.Height}">
-                            <ItemsRepeater ItemsSource="{Binding Cells}">
+                        <Grid>
+                            <ItemsRepeater ItemsSource="{Binding Cells}"  Width="{Binding TotalColumnsWidth}">
                                 <ItemsRepeater.Layout>
                                     <StackLayout Orientation="Horizontal" Spacing="0"/>
                                 </ItemsRepeater.Layout>
 
                                 <ItemsRepeater.ItemTemplate>
                                     <DataTemplate x:DataType="local:CellViewModel">
+                                        
                                         <Border x:Name="CellBorder"
                                                 BorderBrush="#BABABA"
                                                 BorderThickness="0,0,3,3"
@@ -101,6 +115,7 @@
                                                 PointerPressed="OnCellPointerPressed"
                                                 PointerMoved="OnCellPointerMoved"
                                                 PointerReleased="OnCellPointerReleased">
+                                            
                                             <Grid>
                                                 <TextBox x:Name="CellTextBox"
                                                          Text="{Binding Value, Mode=TwoWay}"
@@ -116,7 +131,14 @@
                                                          KeyDown="OnTextBoxKeyDown"
                                                          PointerPressed="OnTextBoxPointerPressed"
                                                          PointerMoved="OnTextBoxPointerMoved"/>
-                                                <Border x:Name="SelectionOverlay" IsHitTestVisible="False" BorderBrush="#EBC117" BorderThickness="{Binding SelectionBorderThickness}" Background="#80E8D268" Visibility="{Binding IsSelected, Converter={StaticResource BoolToVisibilityConverter}}" Margin="-3"/>
+                                                
+                                                <Border x:Name="SelectionOverlay"
+                                                        IsHitTestVisible="False"
+                                                        BorderBrush="#EBC117"
+                                                        BorderThickness="{Binding SelectionBorderThickness}"
+                                                        Background="#80E8D268"
+                                                        Visibility="{Binding IsSelected, Converter={StaticResource BoolToVisibilityConverter}}"
+                                                        Margin="-3"/>
                                             </Grid>
                                         </Border>
                                     </DataTemplate>
@@ -127,6 +149,74 @@
                 </ItemsRepeater.ItemTemplate>
             </ItemsRepeater>
         </ScrollViewer>
+
+
+
+        <Border Grid.Row="1" Grid.Column="1" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="100" Height="100" Margin="-65,-75,65,75" Background="#80E8CF8B" CornerRadius="15">
+
+            <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                <Canvas VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <Grid>
+                        <Rectangle Fill="#828282" Width="40" Height="40" RadiusX="8" RadiusY="8" />
+                        <Rectangle Fill="#A1A1A1" Width="32" Height="32" RadiusX="8" RadiusY="8" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                        <TextBlock Text="A" HorizontalAlignment="Center" VerticalAlignment="Top" HorizontalTextAlignment="Center" FontSize="18" FontWeight="Bold"/>
+                    </Grid>
+                </Canvas>
+
+                <Path Fill="Black" Margin="-55,9,55,-9">
+                    <Path.Data>
+                        <PathGeometry FillRule="EvenOdd">
+                            <PathFigure StartPoint="71,71" IsClosed="True">
+                                <ArcSegment Point="79,79" Size="4,4" IsLargeArc="True" SweepDirection="Counterclockwise"/>
+                                <LineSegment Point="92,50"/>
+                                <ArcSegment Point="80,40" Size="5,5" IsLargeArc="True" SweepDirection="Counterclockwise"/>
+                            </PathFigure>
+                        </PathGeometry>
+                    </Path.Data>
+                </Path>
+
+                <Path Fill="Black" Margin="-8,-3,8,3">
+                    <Path.Data>
+                        <PathGeometry FillRule="EvenOdd">
+                            <!-- Contour extérieur -->
+                            <PathFigure StartPoint="50,10" IsClosed="True">
+                                <ArcSegment Point="50,50" Size="20,20" IsLargeArc="True" SweepDirection="Clockwise"/>
+                                <ArcSegment Point="50,10" Size="20,20" IsLargeArc="True" SweepDirection="Clockwise"/>
+                            </PathFigure>
+                            <!-- Trou intérieur -->
+                            <PathFigure StartPoint="50,15" IsClosed="True">
+                                <ArcSegment Point="50,45" Size="15,15" IsLargeArc="True" SweepDirection="Clockwise"/>
+                                <ArcSegment Point="50,15" Size="15,15" IsLargeArc="True" SweepDirection="Clockwise"/>
+                            </PathFigure>
+                        </PathGeometry>
+                    </Path.Data>
+                </Path>
+
+                <Path Fill="Black" Margin="-8,-3,8,3">
+                    <Path.Data>
+                        <PathGeometry FillRule="EvenOdd">
+                            <PathFigure StartPoint="46,18" IsClosed="True">
+                                <ArcSegment Point="38,33" Size="10,10" IsLargeArc="False" SweepDirection="Counterclockwise"/>
+                                <LineSegment Point="40,35"/>
+                                <ArcSegment Point="50,20" Size="10,10" IsLargeArc="False" SweepDirection="Clockwise"/>
+                            </PathFigure>
+                        </PathGeometry>
+                    </Path.Data>
+                </Path>
+            </Grid>
+        </Border>
+
+
+
+
+        <objet:SliderCustom x:Name="HorizontalSlider" Grid.Row="1" Grid.Column="1" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="200" Margin="-60,-50,60,50" Minimum="0"/>
+
+        <objet:SliderCustom x:Name="VerticalSlider" Grid.Row="1" Grid.Column="1" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="175" Margin="40,-150,-40,150" RenderTransformOrigin="0.5,0.5" Minimum="0">
+            <objet:SliderCustom.RenderTransform>
+                <RotateTransform Angle="90"/>
+            </objet:SliderCustom.RenderTransform>
+        </objet:SliderCustom>
+
 
     </Grid>
 </UserControl>

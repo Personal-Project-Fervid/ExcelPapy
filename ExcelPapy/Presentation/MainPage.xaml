@@ -6,7 +6,7 @@
       xmlns:utu="using:Uno.Toolkit.UI"
       xmlns:um="using:Uno.Material">
 
-    <Grid x:Name="RootGrid">
+    <Grid x:Name="RootGrid" Background="#F5F5F5">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
@@ -48,6 +48,7 @@
         <!-- Cellules-->
             <local:Cellules x:Name="Cellules" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="10" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
 
+        <Border BorderThickness="3" BorderBrush="Black" Grid.Row="0" Grid.RowSpan="2" Grid.ColumnSpan="10" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />
         <Border BorderThickness="3" BorderBrush="Black" Grid.Row="1" Grid.ColumnSpan="10" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />
             
     </Grid>

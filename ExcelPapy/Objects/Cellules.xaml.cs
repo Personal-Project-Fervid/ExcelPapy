@@ -18,6 +18,21 @@ public sealed partial class Cellules : UserControl
         CellScrollViewer.ViewChanged += OnCellScrollChanged;
         HeaderScrollViewer.ViewChanged += OnHeaderScrollChanged;
         RowHeaderScrollViewer.ViewChanged += OnRowHeaderScrollChanged;
+
+        HorizontalSlider.ValueChanged += OnHorizontalSliderValueChanged;
+        VerticalSlider.ValueChanged += OnVerticalSliderValueChanged;
+
+        this.Loaded += (s, e) =>
+        {
+            AdjustScrollViewersAlignment();
+            UpdateSlidersFromScroll();
+        };
+
+        this.SizeChanged += (s, e) =>
+        {
+            AdjustScrollViewersAlignment();
+            UpdateSlidersFromScroll();
+        };
     }
 
     public void SetViewModel(MainViewModel vm)
@@ -25,67 +40,34 @@ public sealed partial class Cellules : UserControl
         this.DataContext = vm;
     }
 
-    private void OnColumnResize(object sender, ManipulationDeltaRoutedEventArgs e)
-    {
-        if (sender is Rectangle rect && rect.DataContext is ColumnHeaderViewModel col)
-        {
-            col.Width = Math.Max(50, col.Width + e.Delta.Translation.X);
-        }
-    }
-
     private DispatcherTimer _resizeTimer;
 
     private void OnRowResize(object sender, ManipulationDeltaRoutedEventArgs e)
     {
-        if (sender is Rectangle rect &&
-            rect.DataContext is RowHeaderViewModel row)
+        if (sender is Rectangle rect && rect.DataContext is RowHeaderViewModel row)
         {
             row.Height = Math.Max(30, row.Height + e.Delta.Translation.Y);
-
-            // Initialiser ou réinitialiser le timer pour mettre à jour le layout après la fin du redimensionnement
-            if (_resizeTimer == null)
-            {
-                _resizeTimer = new DispatcherTimer();
-                _resizeTimer.Interval = TimeSpan.FromMilliseconds(150);
-                _resizeTimer.Tick += async (s, args) =>
-                {
-                    _resizeTimer.Stop();
-
-                    // Forcer une recréation complète en vidant et repeuplan la collection
-                    var vm = this.DataContext as MainViewModel;
-                    if (vm != null)
-                    {
-                        // Sauvegarder les données
-                        var rowsData = vm.Rows.ToList();
-
-                        // Vider complètement les collections
-                        vm.Rows.Clear();
-
-                        // Attendre que le layout se vide
-                        await Task.Delay(50);
-
-                        // Re-ajouter tous les items
-                        foreach (var row in rowsData)
-                        {
-                            vm.Rows.Add(row);
-                        }
-
-                        // Réinitialiser le scroll à la position 0,0
-                        _isSyncing = true;
-                        CellScrollViewer.ChangeView(0, 0, null, false);
-                        RowHeaderScrollViewer.ChangeView(null, 0, null, false);
-                        HeaderScrollViewer.ChangeView(0, null, null, false);
-                        _isSyncing = false;
-                    }
-                };
-            }
-            else
-            {
-                _resizeTimer.Stop();
-            }
-
-            _resizeTimer.Start();
         }
+    }
+
+    private void OnRowResizeCompleted(object sender, ManipulationCompletedRoutedEventArgs e)
+    {
+        AdjustScrollViewersAlignment();
+        UpdateSlidersFromScroll();
+    }
+
+    private void OnColumnResize(object sender, ManipulationDeltaRoutedEventArgs e)
+    {
+        if (sender is Rectangle rect && rect.DataContext is ColumnHeaderViewModel column)
+        {
+            column.Width = Math.Max(50, column.Width + e.Delta.Translation.X);
+        }
+    }
+
+    private void OnColumnResizeCompleted(object sender, ManipulationCompletedRoutedEventArgs e)
+    {
+        AdjustScrollViewersAlignment();
+        UpdateSlidersFromScroll();
     }
 
 
@@ -115,6 +97,8 @@ public sealed partial class Cellules : UserControl
         HeaderScrollViewer.ChangeView(CellScrollViewer.HorizontalOffset, null, null, true);
         RowHeaderScrollViewer.ChangeView(null, CellScrollViewer.VerticalOffset, null, true);
 
+        UpdateSlidersFromScroll();
+
         _isSyncing = false;
     }
 
@@ -125,6 +109,8 @@ public sealed partial class Cellules : UserControl
         _isSyncing = true;
 
         CellScrollViewer.ChangeView(HeaderScrollViewer.HorizontalOffset, null, null, true);
+
+        UpdateSlidersFromScroll();
 
         _isSyncing = false;
     }
@@ -137,7 +123,69 @@ public sealed partial class Cellules : UserControl
 
         CellScrollViewer.ChangeView(null, RowHeaderScrollViewer.VerticalOffset, null, true);
 
+        UpdateSlidersFromScroll();
+
         _isSyncing = false;
+    }
+
+    private void UpdateSlidersFromScroll()
+    {
+        if (HorizontalSlider != null)
+        {
+            HorizontalSlider.Maximum = Math.Max(0, CellScrollViewer.ScrollableWidth);
+            HorizontalSlider.Value = CellScrollViewer.HorizontalOffset;
+        }
+
+        if (VerticalSlider != null)
+        {
+            VerticalSlider.Maximum = Math.Max(0, CellScrollViewer.ScrollableHeight);
+            VerticalSlider.Value = CellScrollViewer.VerticalOffset;
+        }
+    }
+
+    private void OnHorizontalSliderValueChanged(object sender, double value)
+    {
+        if (_isSyncing) return;
+        _isSyncing = true;
+
+        CellScrollViewer.ChangeView(value, null, null, true);
+        HeaderScrollViewer.ChangeView(value, null, null, true);
+
+        _isSyncing = false;
+    }
+
+    private void OnVerticalSliderValueChanged(object sender, double value)
+    {
+        if (_isSyncing) return;
+        _isSyncing = true;
+
+        CellScrollViewer.ChangeView(null, value, null, true);
+        RowHeaderScrollViewer.ChangeView(null, value, null, true);
+
+        _isSyncing = false;
+    }
+
+    private void AdjustScrollViewersAlignment()
+    {
+        // Réinitialiser les marges avant de mesurer pour éviter la boucle de rétroaction
+        HeaderScrollViewer.Margin = new Thickness(0);
+        RowHeaderScrollViewer.Margin = new Thickness(0);
+
+        // Forcer une mesure à jour avant de lire les ViewportWidth/Height
+        HeaderScrollViewer.UpdateLayout();
+        RowHeaderScrollViewer.UpdateLayout();
+        CellScrollViewer.UpdateLayout();
+
+        // Largeur du viewport des cellules vs largeur du viewport des en-têtes
+        double cellViewportWidth = CellScrollViewer.ViewportWidth;
+        double headerViewportWidth = HeaderScrollViewer.ViewportWidth;
+        double diffx = headerViewportWidth - cellViewportWidth;
+        HeaderScrollViewer.Margin = new Thickness(0, 0, Math.Max(0, diffx), 0);
+
+        double cellViewportHeight = CellScrollViewer.ViewportHeight;
+        double rowHeaderViewportHeight = RowHeaderScrollViewer.ViewportHeight;
+        double diffy = rowHeaderViewportHeight - cellViewportHeight;
+        RowHeaderScrollViewer.Margin = new Thickness(0, 0, 0, Math.Max(0, diffy));
     }
 
     private bool _isDragging = false;

@@ -7,4 +7,7 @@
   -->
   <ItemGroup>
   </ItemGroup>
+  <ItemGroup>
+    <PackageVersion Include="Syncfusion.Maui.Sliders" Version="33.2.15" />
+  </ItemGroup>
 </Project>
