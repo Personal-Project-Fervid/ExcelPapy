@@ -105,7 +105,7 @@
 
                                 <ItemsRepeater.ItemTemplate>
                                     <DataTemplate x:DataType="local:CellViewModel">
-                                        
+
                                         <Border x:Name="CellBorder"
                                                 BorderBrush="#BABABA"
                                                 BorderThickness="0,0,3,3"
@@ -115,7 +115,7 @@
                                                 PointerPressed="OnCellPointerPressed"
                                                 PointerMoved="OnCellPointerMoved"
                                                 PointerReleased="OnCellPointerReleased">
-                                            
+
                                             <Grid>
                                                 <TextBox x:Name="CellTextBox"
                                                          Text="{Binding Value, Mode=TwoWay}"
@@ -131,7 +131,7 @@
                                                          KeyDown="OnTextBoxKeyDown"
                                                          PointerPressed="OnTextBoxPointerPressed"
                                                          PointerMoved="OnTextBoxPointerMoved"/>
-                                                
+
                                                 <Border x:Name="SelectionOverlay"
                                                         IsHitTestVisible="False"
                                                         BorderBrush="#EBC117"
@@ -149,6 +149,21 @@
                 </ItemsRepeater.ItemTemplate>
             </ItemsRepeater>
         </ScrollViewer>
+
+        <Canvas x:Name="MarqueeOverlay"
+        Grid.Row="1" Grid.Column="1"
+        HorizontalAlignment="Stretch"
+        VerticalAlignment="Stretch"
+        IsHitTestVisible="False">
+            <Border x:Name="MarqueeRect"
+            Visibility="Collapsed"
+            BorderBrush="#EBC117"
+            BorderThickness="1.5"
+            Background="#40E8D268"
+            IsHitTestVisible="False"/>
+        </Canvas>
+
+
 
 
 
@@ -205,9 +220,6 @@
                 </Path>
             </Grid>
         </Border>
-
-
-
 
         <objet:SliderCustom x:Name="HorizontalSlider" Grid.Row="1" Grid.Column="1" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="200" Margin="-60,-50,60,50" Minimum="0"/>
 

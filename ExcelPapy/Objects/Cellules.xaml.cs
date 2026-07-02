@@ -1,14 +1,15 @@
 using ExcelPapy.ViewModels;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Shapes;
-
-// The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
+using Windows.Foundation;
 
 namespace ExcelPapy.Objects;
 
 public sealed partial class Cellules : UserControl
 {
     private bool _isSyncing = false;
+    private Point _marqueeStartPoint;
+    private CellViewModel? _dragEndCell = null;
 
     public Cellules()
     {
@@ -251,11 +252,13 @@ public sealed partial class Cellules : UserControl
                 // Mettre le point de départ de la sélection sur la cellule cliquée
                 vm?.SetSelectionStart(cell);
                 vm?.ClearSelection();
-                cell.IsSelected = true;
+                //cell.IsSelected = true;
 
                 // Capturer le pointeur pour recevoir PointerMoved hors de l'élément
                 (sender as UIElement)?.CapturePointer(e.Pointer);
                 _isDragging = true;
+
+                ShowMarquee(e.GetCurrentPoint(CellScrollViewer).Position);
 
                 e.Handled = true;
             }
@@ -274,6 +277,8 @@ public sealed partial class Cellules : UserControl
 
         // Position relative au ScrollViewer des cellules
         var point = e.GetCurrentPoint(CellScrollViewer).Position;
+
+        UpdateMarquee(point);
 
         // Position absolue dans le contenu scrollable
         double absX = point.X + CellScrollViewer.HorizontalOffset;
@@ -316,12 +321,14 @@ public sealed partial class Cellules : UserControl
             }
 
             // Appliquer la sélection par plage (du point de départ au curseur)
-            vm.SelectCell(cell, isShiftHeld: true);
+            _dragEndCell = cell;
         }
     }
 
     private void OnCellPointerReleased(object sender, PointerRoutedEventArgs e)
     {
+        HideMarquee();
+
         if (_isDragging && _dragStartCell != null)
         {
             var vm = this.DataContext as MainViewModel;
@@ -345,12 +352,44 @@ public sealed partial class Cellules : UserControl
                     vm?.SelectCell(_dragStartCell, isShift);
                 }
             }
+            else if (_dragEndCell != null)
+            {
+                // Drag terminé : appliquer la sélection de la plage entière en une fois
+                vm?.ClearSelection();
+                vm?.SelectCell(_dragEndCell, isShiftHeld: true);
+            }
         }
 
         _isDragging = false;
         _dragStartCell = null;
+        _dragEndCell = null;
         _hasDraggedToOtherCell = false;
         (sender as UIElement)?.ReleasePointerCapture(e.Pointer);
+    }
+
+    private void ShowMarquee(Point start)
+    {
+        _marqueeStartPoint = start;
+        MarqueeRect.Visibility = Visibility.Visible;
+        UpdateMarquee(start);
+    }
+
+    private void UpdateMarquee(Point current)
+    {
+        double left = Math.Min(_marqueeStartPoint.X, current.X);
+        double top = Math.Min(_marqueeStartPoint.Y, current.Y);
+        double width = Math.Abs(current.X - _marqueeStartPoint.X);
+        double height = Math.Abs(current.Y - _marqueeStartPoint.Y);
+
+        Canvas.SetLeft(MarqueeRect, left);
+        Canvas.SetTop(MarqueeRect, top);
+        MarqueeRect.Width = width;
+        MarqueeRect.Height = height;
+    }
+
+    private void HideMarquee()
+    {
+        MarqueeRect.Visibility = Visibility.Collapsed;
     }
 
     private void OnTextBoxKeyDown(object sender, KeyRoutedEventArgs e)
@@ -417,7 +456,7 @@ public sealed partial class Cellules : UserControl
                 vm?.DisableAllEditing();
                 vm?.SetSelectionStart(cell);
                 vm?.ClearSelection();
-                cell.IsSelected = true;
+                //cell.IsSelected = true;
 
                 // Obtenir la Border parent et capturer le pointeur dessus
                 var grid = VisualTreeHelper.GetParent(textBox) as Grid;
@@ -428,6 +467,8 @@ public sealed partial class Cellules : UserControl
                     textBox.ReleasePointerCapture(e.Pointer);
                     border.CapturePointer(e.Pointer);
                     _isDragging = true;
+
+                    ShowMarquee(e.GetCurrentPoint(CellScrollViewer).Position);
                 }
 
                 e.Handled = true;
