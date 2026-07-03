@@ -2,6 +2,7 @@ namespace ExcelPapy.Objects;
 
 public sealed partial class AppPersonalization : UserControl
 {
+
     public AppPersonalization()
     {
         this.InitializeComponent();

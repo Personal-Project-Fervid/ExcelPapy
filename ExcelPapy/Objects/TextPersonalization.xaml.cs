@@ -10,11 +10,22 @@ public sealed partial class TextPersonalization : UserControl
 {
     public FrameworkElement CaptureRoot {  get; set; }
 
-
     private byte[] _cachedBlurredFullImage;
     private int _cachedWidth;
     private int _cachedHeight;
     private bool _isBlurCacheReady = false;
+
+    private bool _isKeyDown = false;
+    public void setKeyDown(bool value)
+    {
+        _isKeyDown = value;
+        if (_isKeyDown)
+        {
+            PolicePickerPopup.IsOpen = false;
+            PoliceColorPickerPopup.IsOpen = false;
+            FontSizePickerPopup.IsOpen = false;
+        }
+    }
 
     private string? _policeCell;
     public string? PoliceCell
@@ -79,6 +90,7 @@ public sealed partial class TextPersonalization : UserControl
         PolicePickerBorder.Width = PolicePickerButton.ActualWidth;
         PolicePickerPopup.IsOpen = !PolicePickerPopup.IsOpen;
     }
+    
 
     private void OnPoliceSelected(object sender, RoutedEventArgs e)
     {

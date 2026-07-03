@@ -20,6 +20,17 @@ public sealed partial class CellPersonalization : UserControl
     private int _cachedHeight;
     private bool _isBlurCacheReady = false;
 
+    private bool _isKeyDown = false;
+    public void setKeyDown(bool value)
+    {
+        _isKeyDown = value;
+        if (_isKeyDown)
+        {
+            BorderPickerPopup.IsOpen = false;
+            BackgroundPickerPopup.IsOpen = false;
+        }
+    }
+
     public void SetViewModel(MainViewModel vm)
     {
         _mainViewModel = vm;

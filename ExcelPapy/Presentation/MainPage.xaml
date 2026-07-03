@@ -50,6 +50,14 @@
 
         <Border BorderThickness="3" BorderBrush="Black" Grid.Row="0" Grid.RowSpan="2" Grid.ColumnSpan="10" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />
         <Border BorderThickness="3" BorderBrush="Black" Grid.Row="1" Grid.ColumnSpan="10" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />
-            
+
+
+        <!-- Loupe -->
+        <local:MagnifyingGlass x:Name="MagnifyingGlass" Width="200" Height="200" IsHitTestVisible="False" Visibility="Collapsed">
+            <local:MagnifyingGlass.RenderTransform>
+                <TranslateTransform x:Name="MagnifyingGlassTransform"/>
+            </local:MagnifyingGlass.RenderTransform>
+        </local:MagnifyingGlass>
+
     </Grid>
 </Page>
