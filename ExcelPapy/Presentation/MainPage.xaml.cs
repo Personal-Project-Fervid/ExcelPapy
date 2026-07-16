@@ -3,7 +3,6 @@ using ExcelPapy.Objects;
 using ExcelPapy.ViewModels;
 using Microsoft.UI.Input;
 using Microsoft.UI.Xaml.Input;
-using Microsoft.UI.Xaml.Media.Imaging;
 using Windows.System;
 
 namespace ExcelPapy.Presentation;
@@ -60,7 +59,7 @@ public sealed partial class MainPage : Page
                 CellPersonalization.setKeyDown(true);
 
                 if(!_oneShot)
-                _ = CaptureAppAsync();
+                _ = MagnifyingGlass.CaptureAppAsync();
 
                 MagnifyingGlass.Visibility = Visibility.Visible;
                 MagnifyingGlassRectangle.Visibility = Visibility.Visible;
@@ -93,39 +92,6 @@ public sealed partial class MainPage : Page
                 _isCursorHidden = false;
             }
         }
-    }
-
-    private double _rasterizationScale = 1.0;
-    private RenderTargetBitmap? _snapshot;
-
-    public async Task CaptureAppAsync()
-    {
-        var elementToCapture = RootGrid ?? Window.Current.Content as FrameworkElement;
-        if (elementToCapture == null) return;
-
-        // Récupérer la rasterization scale actuelle
-        _rasterizationScale = elementToCapture.XamlRoot?.RasterizationScale ?? 1.0;
-
-        // Calculer la taille en pixels réels
-        var width = elementToCapture.ActualWidth;
-        var height = elementToCapture.ActualHeight;
-        if (width <= 0 || height <= 0) return;
-
-        int pxW = Math.Max(1, (int)Math.Round(width * _rasterizationScale));
-        int pxH = Math.Max(1, (int)Math.Round(height * _rasterizationScale));
-
-        _snapshot = new RenderTargetBitmap();
-        try
-        {
-            await _snapshot.RenderAsync(elementToCapture, pxW, pxH);
-        }
-        catch
-        {
-            // En cas d'échec, tenter une capture sans dimensions
-            _snapshot = new RenderTargetBitmap();
-            await _snapshot.RenderAsync(elementToCapture);
-        }
-        MagnifyingGlass.SetImage(_snapshot);
     }
 
     private void RootGrid_PointerMoved(object sender, PointerRoutedEventArgs e)

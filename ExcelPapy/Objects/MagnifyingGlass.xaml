@@ -6,10 +6,9 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006">
 
-    <Grid Width="250" Height="250">
-        <Grid x:Name="GlassRoot" Width="250" Height="250">
+    <Grid x:Name="GlassRoot" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
 
-            <Image x:Name="ViewContent" Width="1920" Height="1080" Stretch="None">
+        <Image x:Name="ViewContent" Width="3840" Height="2160" Stretch="None" >
                 <Image.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform x:Name="ZoomTransform"/>
@@ -18,11 +17,12 @@
                 </Image.RenderTransform>
             </Image>
 
-            <Ellipse Width="250" Height="250" Stroke="Black" StrokeThickness="3"/>
+            <Ellipse Width="250" Height="250"
+                 HorizontalAlignment="Left" VerticalAlignment="Top"
+                 Stroke="Black" StrokeThickness="3"/>
 
             <Grid.RenderTransform>
                 <TranslateTransform x:Name="GlassRootTransform"/>
             </Grid.RenderTransform>
         </Grid>
-    </Grid>
 </UserControl>

@@ -34,20 +34,6 @@ public sealed partial class MagnifyingGlass : UserControl
         UpdateMagnifyingGlassPosition();
     }
 
-    /*private void MagnifyingGlass_Loaded(object sender, RoutedEventArgs e)
-    {
-        if (CaptureRoot?.XamlRoot != null)
-        {
-            _rasterizationScale = CaptureRoot.XamlRoot.RasterizationScale;
-            CaptureRoot.XamlRoot.Changed += XamlRoot_Changed;
-        }
-        else if (Window.Current?.Content is FrameworkElement fe && fe.XamlRoot != null)
-        {
-            _rasterizationScale = fe.XamlRoot.RasterizationScale;
-            fe.XamlRoot.Changed += XamlRoot_Changed;
-        }
-    }*/
-
     private void MagnifyingGlass_Unloaded(object sender, RoutedEventArgs e)
     {
         if (CaptureRoot?.XamlRoot != null)
@@ -73,6 +59,8 @@ public sealed partial class MagnifyingGlass : UserControl
             }
         }
     }
+    private const double SuperSamplingFactor = 1.0; // ajustez selon perf/qualité souhaitée
+    private double _captureScale = 2.0; // rasterizationScale * SuperSamplingFactor
 
     public async Task CaptureAppAsync()
     {
@@ -81,14 +69,15 @@ public sealed partial class MagnifyingGlass : UserControl
 
         // Récupérer la rasterization scale actuelle
         _rasterizationScale = elementToCapture.XamlRoot?.RasterizationScale ?? 1.0;
+        _captureScale = _rasterizationScale * SuperSamplingFactor;
 
         // Calculer la taille en pixels réels
         var width = elementToCapture.ActualWidth;
         var height = elementToCapture.ActualHeight;
         if (width <= 0 || height <= 0) return;
 
-        int pxW = Math.Max(1, (int)Math.Round(width * _rasterizationScale));
-        int pxH = Math.Max(1, (int)Math.Round(height * _rasterizationScale));
+        int pxW = Math.Max(1, (int)Math.Round(width * _captureScale));
+        int pxH = Math.Max(1, (int)Math.Round(height * _captureScale));
 
         _snapshot = new RenderTargetBitmap();
         try
@@ -100,6 +89,7 @@ public sealed partial class MagnifyingGlass : UserControl
             // En cas d'échec, tenter une capture sans dimensions
             _snapshot = new RenderTargetBitmap();
             await _snapshot.RenderAsync(elementToCapture);
+            _captureScale = _rasterizationScale;
         }
 
         SetImage(_snapshot);
@@ -114,7 +104,7 @@ public sealed partial class MagnifyingGlass : UserControl
 
     private void ApplyZoom()
     {
-        double effectiveScale = _magnification / _rasterizationScale;
+        double effectiveScale = _magnification / _captureScale;
         ZoomTransform.ScaleX = effectiveScale;
         ZoomTransform.ScaleY = effectiveScale;
     }
@@ -147,30 +137,27 @@ public sealed partial class MagnifyingGlass : UserControl
     {
         _pointerPosition = e.GetCurrentPoint(CaptureRoot).Position;
 
-            UpdateMagnifyingGlassPosition();
+        UpdateMagnifyingGlassPosition();
         
     }
 
     private void UpdateMagnifyingGlassPosition()
     {
         //Centrer l'objet sur le curseur (ajustez l'offset selon vos besoins)
-        GlassRootTransform.X = _pointerPosition.X - 125;
-        GlassRootTransform.Y = _pointerPosition.Y - 125;
-        //EllipseTransform.X = _pointerPosition.X - (EllipseGlass.Width / 2);
-        //EllipseTransform.Y = _pointerPosition.Y - (EllipseGlass.Height / 2);
+        GlassRootTransform.X = _pointerPosition.X - GlassRadius;
+        GlassRootTransform.Y = _pointerPosition.Y - GlassRadius;
 
         UpdatePan(_pointerPosition);
     }
 
+    private const double GlassRadius = 125.0;
+
     public void UpdatePan(Point pointerPositionInCaptureRoot)
     {
-        double effectiveScale = _magnification / _rasterizationScale;
+        double effectiveScale = _magnification / _captureScale;
 
-        //PanTransform.X = -(pointerPositionInCaptureRoot.X * effectiveScale)+ EllipseGlass.Width / 2;
-        //PanTransform.Y = -(pointerPositionInCaptureRoot.Y * effectiveScale)+ EllipseGlass.Height / 2;
-
-        PanTransform.X = -(pointerPositionInCaptureRoot.X * effectiveScale) + GlassRoot.Width / 2;
-        PanTransform.Y = -(pointerPositionInCaptureRoot.Y * effectiveScale) + GlassRoot.Height / 2;
+        PanTransform.X = -(pointerPositionInCaptureRoot.X * effectiveScale) + GlassRadius;
+        PanTransform.Y = -(pointerPositionInCaptureRoot.Y * effectiveScale) + GlassRadius;
     }
 
     private void MagnifyingGlass_Loaded(object sender, RoutedEventArgs e)
