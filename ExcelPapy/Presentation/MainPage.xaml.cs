@@ -1,9 +1,9 @@
 using System.Diagnostics;
-using System.Runtime.InteropServices;
 using ExcelPapy.Objects;
 using ExcelPapy.ViewModels;
 using Microsoft.UI.Input;
 using Microsoft.UI.Xaml.Input;
+using Microsoft.UI.Xaml.Media.Imaging;
 using Windows.System;
 
 namespace ExcelPapy.Presentation;
@@ -11,15 +11,18 @@ namespace ExcelPapy.Presentation;
 public sealed partial class MainPage : Page
 {
     public MainViewModel ViewModel { get; } = new();
+
     public MainPage()
     {
         this.InitializeComponent();
         Cellules.SetViewModel(ViewModel);
         TextPersonalization.SetViewModel(ViewModel);
         CellPersonalization.SetViewModel(ViewModel);
+        MagnifyingGlass.SetViewModel(ViewModel);
 
         TextPersonalization.CaptureRoot = RootGrid;
         CellPersonalization.CaptureRoot = RootGrid;
+        MagnifyingGlass.CaptureRoot = RootGrid;
 
         RootGrid.PointerMoved += RootGrid_PointerMoved;
 
@@ -28,14 +31,14 @@ public sealed partial class MainPage : Page
         _timer.Start();
     }
 
-    [DllImport("user32.dll")]
-    private static extern int ShowCursor(bool bShow);
+    
 
     private readonly DispatcherTimer _timer = new DispatcherTimer();
     private Stopwatch _stopwatch = new Stopwatch();
     private bool _isKeyDown = false;
     private bool _isCursorHidden = false;
     private const int LongPressThreshold = 500;
+    private bool _oneShot = false;
 
     private void CheckKeyState(object? sender, object e)
     {
@@ -56,9 +59,19 @@ public sealed partial class MainPage : Page
                 TextPersonalization.setKeyDown(true);
                 CellPersonalization.setKeyDown(true);
 
+                if(!_oneShot)
+                _ = CaptureAppAsync();
+
                 MagnifyingGlass.Visibility = Visibility.Visible;
-                UpdateMagnifyingGlassPosition();
-                HideCursor();
+                MagnifyingGlassRectangle.Visibility = Visibility.Visible;
+                MagnifyingGlassRectangle.IsHitTestVisible = true;
+                _oneShot = true;
+
+                if (!_isCursorHidden)
+                {
+                    MagnifyingGlass.HideCursor();
+                    _isCursorHidden = true;
+                }
             }
         }
         else if (!isDown && _isKeyDown)
@@ -70,44 +83,54 @@ public sealed partial class MainPage : Page
             _isKeyDown = false;
             _stopwatch.Stop();
             MagnifyingGlass.Visibility = Visibility.Collapsed;
-            ShowCursorBack();
+            MagnifyingGlassRectangle.Visibility = Visibility.Collapsed;
+            MagnifyingGlassRectangle.IsHitTestVisible = false;
+            _oneShot = false;
+
+            if (_isCursorHidden)
+            {
+                MagnifyingGlass.ShowCursorBack();
+                _isCursorHidden = false;
+            }
         }
     }
 
-    private void HideCursor()
+    private double _rasterizationScale = 1.0;
+    private RenderTargetBitmap? _snapshot;
+
+    public async Task CaptureAppAsync()
     {
-        if (!_isCursorHidden)
-        {
-            ShowCursor(false);
-            _isCursorHidden = true;
-        }
-    }
+        var elementToCapture = RootGrid ?? Window.Current.Content as FrameworkElement;
+        if (elementToCapture == null) return;
 
-    private void ShowCursorBack()
-    {
-        if (_isCursorHidden)
-        {
-            ShowCursor(true);
-            _isCursorHidden = false;
-        }
-    }
+        // Récupérer la rasterization scale actuelle
+        _rasterizationScale = elementToCapture.XamlRoot?.RasterizationScale ?? 1.0;
 
-    private Windows.Foundation.Point _pointerPosition;
+        // Calculer la taille en pixels réels
+        var width = elementToCapture.ActualWidth;
+        var height = elementToCapture.ActualHeight;
+        if (width <= 0 || height <= 0) return;
+
+        int pxW = Math.Max(1, (int)Math.Round(width * _rasterizationScale));
+        int pxH = Math.Max(1, (int)Math.Round(height * _rasterizationScale));
+
+        _snapshot = new RenderTargetBitmap();
+        try
+        {
+            await _snapshot.RenderAsync(elementToCapture, pxW, pxH);
+        }
+        catch
+        {
+            // En cas d'échec, tenter une capture sans dimensions
+            _snapshot = new RenderTargetBitmap();
+            await _snapshot.RenderAsync(elementToCapture);
+        }
+        MagnifyingGlass.SetImage(_snapshot);
+    }
 
     private void RootGrid_PointerMoved(object sender, PointerRoutedEventArgs e)
     {
-        _pointerPosition = e.GetCurrentPoint(RootGrid).Position;
-
-        if (MagnifyingGlass.Visibility == Visibility.Visible)
-        {
-            UpdateMagnifyingGlassPosition();
-        }
-    }
-
-    private void UpdateMagnifyingGlassPosition()
-    {
-        // Centrer l'objet sur le curseur (ajustez l'offset selon vos besoins)
-        MagnifyingGlassTransform.X = _pointerPosition.X - (MagnifyingGlass.Width / 2);
-        MagnifyingGlassTransform.Y = _pointerPosition.Y - (MagnifyingGlass.Height / 2);
+        MagnifyingGlass.UpdatePointer(
+            e.GetCurrentPoint(RootGrid).Position);
     }
 }

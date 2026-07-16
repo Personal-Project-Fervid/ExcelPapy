@@ -53,11 +53,8 @@
 
 
         <!-- Loupe -->
-        <local:MagnifyingGlass x:Name="MagnifyingGlass" Width="200" Height="200" IsHitTestVisible="False" Visibility="Collapsed">
-            <local:MagnifyingGlass.RenderTransform>
-                <TranslateTransform x:Name="MagnifyingGlassTransform"/>
-            </local:MagnifyingGlass.RenderTransform>
-        </local:MagnifyingGlass>
+        <Rectangle x:Name="MagnifyingGlassRectangle" Grid.ColumnSpan="10" Grid.RowSpan="2" Fill="Transparent" IsHitTestVisible="False" Visibility="Collapsed"/>
+        <local:MagnifyingGlass x:Name="MagnifyingGlass" IsHitTestVisible="False" Visibility="Collapsed" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.ColumnSpan="10" Grid.RowSpan="2"/>
 
     </Grid>
 </Page>

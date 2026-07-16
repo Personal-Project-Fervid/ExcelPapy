@@ -465,10 +465,7 @@ public sealed partial class CellPersonalization : UserControl
             // Restaure l'opacité normale une fois le vrai flou appliqué
             // (au cas où le conteneur parent avait été ajusté pour le placeholder)
         }
-        catch (Exception ex)
-        {
-            System.Diagnostics.Debug.WriteLine($"Erreur application flou popup : {ex.Message}");
-        }
+        catch (Exception) { }
     }
 
     private byte[] ApplyGaussianBlur(byte[] bgraPixels, int width, int height, float blurRadius)
