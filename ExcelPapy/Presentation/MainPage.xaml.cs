@@ -18,6 +18,9 @@ public sealed partial class MainPage : Page
         TextPersonalization.SetViewModel(ViewModel);
         CellPersonalization.SetViewModel(ViewModel);
         MagnifyingGlass.SetViewModel(ViewModel);
+        AppPersonalization.SetViewModel(ViewModel);
+        AppPersonalization.SetTutorial(tutorial);
+        tutorial.SetViewModel(ViewModel);
 
         TextPersonalization.CaptureRoot = RootGrid;
         CellPersonalization.CaptureRoot = RootGrid;
@@ -57,8 +60,9 @@ public sealed partial class MainPage : Page
             {
                 TextPersonalization.setKeyDown(true);
                 CellPersonalization.setKeyDown(true);
+                AppPersonalization.setKeyDown(true);
 
-                if(!_oneShot)
+                if (!_oneShot)
                 _ = MagnifyingGlass.CaptureAppAsync();
 
                 MagnifyingGlass.Visibility = Visibility.Visible;

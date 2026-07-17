@@ -150,76 +150,9 @@
             </ItemsRepeater>
         </ScrollViewer>
 
-        <Canvas x:Name="MarqueeOverlay"
-        Grid.Row="1" Grid.Column="1"
-        HorizontalAlignment="Stretch"
-        VerticalAlignment="Stretch"
-        IsHitTestVisible="False">
-            <Border x:Name="MarqueeRect"
-            Visibility="Collapsed"
-            BorderBrush="#EBC117"
-            BorderThickness="1.5"
-            Background="#40E8D268"
-            IsHitTestVisible="False"/>
+        <Canvas x:Name="MarqueeOverlay" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" IsHitTestVisible="False">
+            <Border x:Name="MarqueeRect" Visibility="Collapsed" BorderBrush="#EBC117" BorderThickness="1.5" Background="#40E8D268" IsHitTestVisible="False"/>
         </Canvas>
-
-
-
-
-
-        <Border Grid.Row="1" Grid.Column="1" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="100" Height="100" Margin="-65,-75,65,75" Background="#80E8CF8B" CornerRadius="15">
-
-            <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-                <Canvas VerticalAlignment="Center" HorizontalAlignment="Center">
-                    <Grid>
-                        <Rectangle Fill="#828282" Width="40" Height="40" RadiusX="8" RadiusY="8" />
-                        <Rectangle Fill="#A1A1A1" Width="32" Height="32" RadiusX="8" RadiusY="8" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-                        <TextBlock Text="A" HorizontalAlignment="Center" VerticalAlignment="Top" HorizontalTextAlignment="Center" FontSize="18" FontWeight="Bold"/>
-                    </Grid>
-                </Canvas>
-
-                <Path Fill="Black" Margin="-55,9,55,-9">
-                    <Path.Data>
-                        <PathGeometry FillRule="EvenOdd">
-                            <PathFigure StartPoint="71,71" IsClosed="True">
-                                <ArcSegment Point="79,79" Size="4,4" IsLargeArc="True" SweepDirection="Counterclockwise"/>
-                                <LineSegment Point="92,50"/>
-                                <ArcSegment Point="80,40" Size="5,5" IsLargeArc="True" SweepDirection="Counterclockwise"/>
-                            </PathFigure>
-                        </PathGeometry>
-                    </Path.Data>
-                </Path>
-
-                <Path Fill="Black" Margin="-8,-3,8,3">
-                    <Path.Data>
-                        <PathGeometry FillRule="EvenOdd">
-                            <!-- Contour extérieur -->
-                            <PathFigure StartPoint="50,10" IsClosed="True">
-                                <ArcSegment Point="50,50" Size="20,20" IsLargeArc="True" SweepDirection="Clockwise"/>
-                                <ArcSegment Point="50,10" Size="20,20" IsLargeArc="True" SweepDirection="Clockwise"/>
-                            </PathFigure>
-                            <!-- Trou intérieur -->
-                            <PathFigure StartPoint="50,15" IsClosed="True">
-                                <ArcSegment Point="50,45" Size="15,15" IsLargeArc="True" SweepDirection="Clockwise"/>
-                                <ArcSegment Point="50,15" Size="15,15" IsLargeArc="True" SweepDirection="Clockwise"/>
-                            </PathFigure>
-                        </PathGeometry>
-                    </Path.Data>
-                </Path>
-
-                <Path Fill="Black" Margin="-8,-3,8,3">
-                    <Path.Data>
-                        <PathGeometry FillRule="EvenOdd">
-                            <PathFigure StartPoint="46,18" IsClosed="True">
-                                <ArcSegment Point="38,33" Size="10,10" IsLargeArc="False" SweepDirection="Counterclockwise"/>
-                                <LineSegment Point="40,35"/>
-                                <ArcSegment Point="50,20" Size="10,10" IsLargeArc="False" SweepDirection="Clockwise"/>
-                            </PathFigure>
-                        </PathGeometry>
-                    </Path.Data>
-                </Path>
-            </Grid>
-        </Border>
 
         <objet:SliderCustom x:Name="HorizontalSlider" Grid.Row="1" Grid.Column="1" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="200" Margin="-60,-50,60,50" Minimum="0"/>
 
@@ -228,7 +161,6 @@
                 <RotateTransform Angle="90"/>
             </objet:SliderCustom.RenderTransform>
         </objet:SliderCustom>
-
 
     </Grid>
 </UserControl>

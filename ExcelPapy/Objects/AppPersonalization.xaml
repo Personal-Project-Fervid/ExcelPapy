@@ -12,6 +12,9 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
@@ -23,12 +26,12 @@
                 <!-- Bouton qui affiche la sélection actuelle -->
                 <Button x:Name="BoldAppPickerButton" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="White" CornerRadius="15" BorderBrush="Black" BorderThickness="3" Click="OnBoldAppPickerClick">
                     <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Width="244" Height="26" Margin="-6,0,6,0">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Width="244" Height="26" Margin="0,0,0,0">
                             <TextBlock x:Name="SelectedBoldAppText" Text="G" FontSize="18" FontWeight="DemiBold" VerticalAlignment="Center"/>
                             <TextBlock Text=" app'" FontSize="18" FontWeight="DemiBold" VerticalAlignment="Center"/>
                         </StackPanel>
                         
-                        <Grid Height="24" Width="24" HorizontalAlignment="Right" Margin="6,0,-6,0">
+                        <Grid Height="24" Width="24" HorizontalAlignment="Right" Margin="0,0,0,0">
                             <Line X1="0" Y1="6" X2="12" Y2="18" Stroke="Black" StrokeThickness="3"/>
                             <Line X1="12" Y1="18" X2="12" Y2="19" Stroke="Black" StrokeThickness="3"/>
                             <Line X1="12" Y1="18" X2="23" Y2="6" Stroke="Black" StrokeThickness="3"/>
@@ -90,16 +93,16 @@
             </Grid>
 
             <!-- Police-->
-            <Grid Grid.Row="1" Grid.ColumnSpan="4" Margin="5">
+            <Grid Grid.Row="1" Grid.ColumnSpan="3" Margin="5">
                 <!-- Bouton qui affiche la sélection actuelle -->
                 <Button x:Name="PolicePickerButton" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="White" CornerRadius="15" BorderBrush="Black" BorderThickness="3" Click="OnPolicePickerClick" HorizontalContentAlignment="Left">
                     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Width="244" Height="26" Margin="6,0,-6,0">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Width="244" Height="26" Margin="0,0,0,0">
                             <TextBlock x:Name="SelectedPoliceText" Text="Police" FontSize="18" FontWeight="DemiBold" VerticalAlignment="Center" FontFamily="Segoe UI"/>
-                            <TextBlock Text=" de l'application" FontSize="18" FontWeight="DemiBold" VerticalAlignment="Center"/>
+                            <TextBlock Text=" app'" FontSize="18" FontWeight="DemiBold" VerticalAlignment="Center"/>
                         </StackPanel>
 
-                        <Grid Height="24" Width="24" HorizontalAlignment="Right" Margin="16,0,-16,0">
+                        <Grid Height="24" Width="24" HorizontalAlignment="Right" Margin="0,0,0,0">
                             <Line X1="0" Y1="6" X2="12" Y2="18" Stroke="Black" StrokeThickness="3"/>
                             <Line X1="12" Y1="18" X2="12" Y2="19" Stroke="Black" StrokeThickness="3"/>
                             <Line X1="12" Y1="18" X2="23" Y2="6" Stroke="Black" StrokeThickness="3"/>
@@ -141,6 +144,98 @@
                                     <TextBlock Text="Verdana" FontSize="18" FontWeight="DemiBold" VerticalAlignment="Center" FontFamily="Verdana"/>
                                 </StackPanel>
                             </Button>
+                        </StackPanel>
+                    </Border>
+                </Popup>
+            </Grid>
+
+            <!-- Loupe -->
+            <Grid Grid.Row="0" Grid.Column="3" Grid.ColumnSpan="3" Margin="5">
+                <!-- Bouton qui affiche la sélection actuelle -->
+                <Button x:Name="MagnifyingGlassPickerButton" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="White" CornerRadius="15" BorderBrush="Black" BorderThickness="3" Click="OnMagnifyingGlassPickerClick" HorizontalContentAlignment="Left">
+                    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Width="244" Height="26" Margin="0,0,0,0">
+                            <TextBlock x:Name="SelectedMagnifyingGlassText" Text="Loupe" FontSize="18" FontWeight="DemiBold" VerticalAlignment="Center" FontFamily="Segoe UI"/>
+                        </StackPanel>
+
+                        <Grid Height="24" Width="24" HorizontalAlignment="Right" Margin="0,0,0,0">
+                            <Line X1="0" Y1="6" X2="12" Y2="18" Stroke="Black" StrokeThickness="3"/>
+                            <Line X1="12" Y1="18" X2="12" Y2="19" Stroke="Black" StrokeThickness="3"/>
+                            <Line X1="12" Y1="18" X2="23" Y2="6" Stroke="Black" StrokeThickness="3"/>
+                        </Grid>
+                    </Grid>
+                </Button>
+
+                <!-- Popup avec les choix -->
+                <Popup x:Name="MagnifyingGlassPickerPopup" IsLightDismissEnabled="True" PlacementTarget="{Binding ElementName=MagnifyingGlassPickerButton}" DesiredPlacement="Bottom">
+                    <Border x:Name="MagnifyingGlassPickerBorder" Background="#E0F7F7F7" Margin="0,3,0,-3" BorderBrush="Black" BorderThickness="3" CornerRadius="15" MinWidth="{Binding ActualWidth, ElementName=MagnifyingGlassPickerButton}">
+                        <StackPanel Padding="5">
+
+                            <Button Click="OnMagnifyingGlassSelected" Tag="Segoe UI" Background="Transparent" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left">
+                                <StackPanel Orientation="Horizontal" Spacing="10">
+                                    <TextBlock Text="Segoe UI" FontSize="18" FontWeight="DemiBold" VerticalAlignment="Center" FontFamily="Segoe UI"/>
+                                </StackPanel>
+                            </Button>
+
+                            <Button Click="OnMagnifyingGlassSelected" Tag="Arial" Background="Transparent" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left">
+                                <StackPanel Orientation="Horizontal" Spacing="10">
+                                    <TextBlock Text="Arial" FontSize="18" FontWeight="DemiBold" VerticalAlignment="Center" FontFamily="Arial"/>
+                                </StackPanel>
+                            </Button>
+
+                            <Button Click="OnMagnifyingGlassSelected" Tag="Calibri" Background="Transparent" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left">
+                                <StackPanel Orientation="Horizontal" Spacing="10">
+                                    <TextBlock Text="Calibri" FontSize="18" FontWeight="DemiBold" VerticalAlignment="Center" FontFamily="Calibri"/>
+                                </StackPanel>
+                            </Button>
+
+                            <Button Click="OnMagnifyingGlassSelected" Tag="Times new roman" Background="Transparent" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left">
+                                <StackPanel Orientation="Horizontal" Spacing="10">
+                                    <TextBlock Text="Times New Roman" FontSize="18" FontWeight="DemiBold" VerticalAlignment="Center" FontFamily="Times New Roman"/>
+                                </StackPanel>
+                            </Button>
+
+                            <Button Click="OnMagnifyingGlassSelected" Tag="Verdana" Background="Transparent" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" >
+                                <StackPanel Orientation="Horizontal" Spacing="10">
+                                    <TextBlock Text="Verdana" FontSize="18" FontWeight="DemiBold" VerticalAlignment="Center" FontFamily="Verdana"/>
+                                </StackPanel>
+                            </Button>
+                        </StackPanel>
+                    </Border>
+                </Popup>
+            </Grid>
+
+            <!-- Tutoriel -->
+            <Grid Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="3" Margin="5">
+                <!-- Bouton qui affiche la sélection actuelle -->
+                <Button x:Name="TutorialPickerButton" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="White" CornerRadius="15" BorderBrush="Black" BorderThickness="3" Click="OnTutorialPickerClick" HorizontalContentAlignment="Left">
+                    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Width="244" Height="26" Margin="0,0,0,0">
+                            <TextBlock x:Name="SelectedTutorialText" Text="Tutoriel" FontSize="18" FontWeight="DemiBold" VerticalAlignment="Center" FontFamily="Segoe UI"/>
+                        </StackPanel>
+
+                        <Grid Height="24" Width="24" HorizontalAlignment="Right" Margin="0,0,0,0">
+                            <Line X1="0" Y1="6" X2="12" Y2="18" Stroke="Black" StrokeThickness="3"/>
+                            <Line X1="12" Y1="18" X2="12" Y2="19" Stroke="Black" StrokeThickness="3"/>
+                            <Line X1="12" Y1="18" X2="23" Y2="6" Stroke="Black" StrokeThickness="3"/>
+                        </Grid>
+                    </Grid>
+                </Button>
+
+                <!-- Popup avec les choix -->
+                <Popup x:Name="TutorialPickerPopup" IsLightDismissEnabled="True" PlacementTarget="{Binding ElementName=TutorialPickerButton}" DesiredPlacement="Bottom">
+                    <Border x:Name="TutorialPickerBorder" Background="#E0F7F7F7" Margin="0,3,0,-3" BorderBrush="Black" BorderThickness="3" CornerRadius="15" MinWidth="{Binding ActualWidth, ElementName=TutorialPickerButton}">
+
+                        <StackPanel Padding="5">
+
+                            <Button x:Name="All" Content="Tout sélectionner" Click="AllCheck"/>
+                            <CheckBox x:Name="Loupe" Content="Loupe" Tag="Loupe" IsChecked="True" Checked="TutorialCheck" Unchecked="TutorialUncheck"/>
+                            <CheckBox x:Name="Copier" Content="Copier" Tag="Copier" Checked="TutorialCheck" Unchecked="TutorialUncheck"/>
+                            <CheckBox x:Name="Coller" Content="Coller" Tag="Coller" Checked="TutorialCheck" Unchecked="TutorialUncheck"/>
+                            <CheckBox x:Name="Couper" Content="Couper" Tag="Couper" Checked="TutorialCheck" Unchecked="TutorialUncheck"/>
+                            <CheckBox x:Name="Retour" Content="Retour" Tag="Retour" Checked="TutorialCheck" Unchecked="TutorialUncheck"/>
+                            <CheckBox x:Name="Zoom" Content="Zoom" Tag="Zoom" Checked="TutorialCheck" Unchecked="TutorialUncheck"/>
+                            
                         </StackPanel>
                     </Border>
                 </Popup>

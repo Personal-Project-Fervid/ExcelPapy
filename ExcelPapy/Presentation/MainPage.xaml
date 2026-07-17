@@ -36,10 +36,10 @@
 
             
             <!-- Personnalisateur de l'application -->
-            <local:AppPersonalization x:Name="AppPersonalization" Margin="0,15,15,15" Width="300"/>
+            <local:AppPersonalization x:Name="AppPersonalization" Margin="0,15,15,15" Width="500"/>
             
             <!-- mémoire du fichier -->
-            <local:FilesModule x:Name="FilesModule" Margin="0,15,15,15" Width="300"/>
+            <local:FilesModule x:Name="FilesModule" Margin="0,15,15,15" Width="500"/>
 
 
         </StackPanel>
@@ -47,6 +47,9 @@
 
         <!-- Cellules-->
             <local:Cellules x:Name="Cellules" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="10" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
+
+        <!-- Tutoriel-->
+        <local:Tutorial x:Name="tutorial" Grid.Row="1" Grid.Column="8" Grid.ColumnSpan="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="-65,-75,65,75"/>
 
         <Border BorderThickness="3" BorderBrush="Black" Grid.Row="0" Grid.RowSpan="2" Grid.ColumnSpan="10" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />
         <Border BorderThickness="3" BorderBrush="Black" Grid.Row="1" Grid.ColumnSpan="10" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />
