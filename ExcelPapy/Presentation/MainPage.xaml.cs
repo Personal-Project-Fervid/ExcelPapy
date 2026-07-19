@@ -24,6 +24,8 @@ public sealed partial class MainPage : Page
 
         TextPersonalization.CaptureRoot = RootGrid;
         CellPersonalization.CaptureRoot = RootGrid;
+        AppPersonalization.CaptureRoot = RootGrid;
+        FilesModule.CaptureRoot = RootGrid;
         MagnifyingGlass.CaptureRoot = RootGrid;
 
         RootGrid.PointerMoved += RootGrid_PointerMoved;

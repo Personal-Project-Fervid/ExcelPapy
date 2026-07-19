@@ -15,16 +15,85 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <Button Content="Sauvegarder" Grid.ColumnSpan="3" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="White" CornerRadius="15" BorderBrush="Black" BorderThickness="3" HorizontalContentAlignment="Left" Margin="5"  FontWeight="DemiBold" FontSize="18"/>
+            <Border Grid.ColumnSpan="3" Background="White" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" CornerRadius="15" BorderThickness="3" BorderBrush="Black" Margin="5"/>
+            <Button Grid.ColumnSpan="3" Margin="11" CornerRadius="12" Style="{StaticResource ButtonPersonalizationArrow}">
+                <TextBlock Text="Sauvegarder" FontSize="18" FontWeight="DemiBold" VerticalAlignment="Center"  Margin="6,0,-6,0"/>
+            </Button>
 
-            <Button Content="Enregistrer Sous" Grid.ColumnSpan="3" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="White" CornerRadius="15" BorderBrush="Black" BorderThickness="3" HorizontalContentAlignment="Left" Margin="5" FontWeight="DemiBold" FontSize="18"/>
+            <Border Grid.ColumnSpan="3" Grid.Row="1" Background="White" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" CornerRadius="15" BorderThickness="3" BorderBrush="Black" Margin="5"/>
+            <Button Grid.ColumnSpan="3" Grid.Row="1" Margin="11" CornerRadius="12" Style="{StaticResource ButtonPersonalizationArrow}">
+                <TextBlock Text="Enregistrer Sous" FontSize="18" FontWeight="DemiBold" VerticalAlignment="Center"  Margin="6,0,-6,0"/>
 
+            </Button>
+
+            <Border Grid.ColumnSpan="3" Grid.Column="3" Background="White" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" CornerRadius="15" BorderThickness="3" BorderBrush="Black" Margin="5"/>
+            <Button Grid.ColumnSpan="3" Grid.Column="3" Margin="11" CornerRadius="12" Style="{StaticResource ButtonPersonalizationArrow}">
+                <TextBlock Text="Nouvelle Sauvegarde" FontSize="18" FontWeight="DemiBold" VerticalAlignment="Center"  Margin="6,0,-6,0"/>
+            </Button>
+
+            <!-- Sauvegarde -->
+            <Grid Grid.ColumnSpan="3" Grid.Column="3" Grid.Row="1" Margin="5">
+                <!-- Bouton qui affiche la sélection actuelle -->
+                <Border x:Name="SavePickerButton"  Background="White" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" CornerRadius="15" BorderThickness="3" BorderBrush="Black"/>
+
+                <Button Click="OnSavePickerClick" Margin="6,6,6,6" CornerRadius="12" Style="{StaticResource ButtonPersonalizationArrow}">
+                    <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Width="244" Height="26" Margin="6,0,-6,0">
+                            <TextBlock x:Name="SelectedSaveText" Text="Sauvegarde" FontSize="18" FontWeight="DemiBold" VerticalAlignment="Center"/>
+                        </StackPanel>
+
+                        <Grid Height="24" Width="24" HorizontalAlignment="Right" Margin="-8,0,8,0">
+                            <Line X1="0" Y1="6" X2="12" Y2="18" Stroke="Black" StrokeThickness="3"/>
+                            <Line X1="12" Y1="18" X2="12" Y2="19" Stroke="Black" StrokeThickness="3"/>
+                            <Line X1="12" Y1="18" X2="23" Y2="6" Stroke="Black" StrokeThickness="3"/>
+                        </Grid>
+                    </Grid>
+
+                </Button>
+
+                <!-- Popup avec les choix -->
+                <Popup x:Name="SavePickerPopup"
+                       IsLightDismissEnabled="True"
+                       PlacementTarget="{Binding ElementName=SavePickerButton}"
+                       DesiredPlacement="Bottom"
+                       Opened="SavePickerPopup_Opened"
+                       Closed="SavePickerPopup_Closed">
+
+                    <Border x:Name="SavePickerBorder"
+                            Margin="0,3,0,-3"
+                            BorderBrush="Black"
+                            BorderThickness="3"
+                            CornerRadius="15"
+                            MinWidth="{Binding ActualWidth, ElementName=SavePickerButton}">
+
+                        <Grid>
+                            <Border x:Name="BlurredSaveContainertransition" CornerRadius="13" Margin="-3" Background="#80FFFFFF"/>
+                            <Border x:Name="BlurredSaveContainer" CornerRadius="13" Margin="-3">
+                                <Border.Background>
+                                    <ImageBrush x:Name="BlurredSaveBackgroundBrush" Stretch="Fill" />
+                                </Border.Background>
+                            </Border>
+
+                            <Border Background="#A0FFFFFF" CornerRadius="13"/>
+
+                            <StackPanel Padding="5">
+                                <!-- Template Sauvegarde -->
+                                <Rectangle Fill="Red" Width="40" Height="40"/>
+
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                </Popup>
+            </Grid>
         </Grid>
     </Border>
 </UserControl>

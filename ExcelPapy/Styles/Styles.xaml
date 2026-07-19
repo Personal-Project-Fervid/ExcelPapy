@@ -265,4 +265,73 @@
         </Setter>
     </Style>
 
+    <Style x:Key="CheckBoxStyle" TargetType="CheckBox">
+        <Setter Property="Margin" Value="6,0,-6,0"/>
+        <Setter Property="FontSize" Value="16"/>
+        <Setter Property="FontWeight" Value="DemiBold"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="CheckBox">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CheckStates">
+                                <VisualState x:Name="Checked">
+                                    <VisualState.Setters>
+                                        <Setter Target="CheckInBorder.Background" Value="#C0E8D268"/>
+                                    </VisualState.Setters>
+                                </VisualState>
+                                <VisualState x:Name="Unchecked">
+                                    <VisualState.Setters>
+                                        <Setter Target="CheckInBorder.Background" Value="Transparent"/>
+                                    </VisualState.Setters>
+                                </VisualState>
+                            </VisualStateGroup>
+
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal"/>
+                                <VisualState x:Name="PointerOver">
+                                    <VisualState.Setters>
+                                        <Setter Target="CheckOutBorder.BorderBrush" Value="#C0E8D268"/>
+                                    </VisualState.Setters>
+                                </VisualState>
+                                <VisualState x:Name="Pressed">
+                                    <VisualState.Setters>
+                                        <Setter Target="CheckOutBorder.BorderBrush" Value="#C0827637"/>
+                                    </VisualState.Setters>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+
+                        <Border x:Name="CheckOutBorder"
+                                Width="28" Height="28"
+                                BorderThickness="3"
+                                CornerRadius="8"
+                                BorderBrush="Transparent"/>
+
+
+                        <Border Width="20" Height="20"
+                                CornerRadius="5"
+                                BorderBrush="Black" BorderThickness="2"
+                                Background="Transparent"/>
+
+                        <Border x:Name="CheckInBorder"
+                                Width="12" Height="12"
+                                CornerRadius="4"/>
+
+                        <ContentPresenter Grid.Column="1"
+                                      Content="{TemplateBinding Content}"
+                                      Margin="8,0,0,0"
+                                      VerticalAlignment="Center"/>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
 </ResourceDictionary>
