@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using ExcelPapy.ViewModels;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -22,6 +23,10 @@ namespace ExcelPapy.Objects;
 
 public sealed partial class FilesModule : UserControl
 {
+    public void SetViewModel(MainViewModel vm)
+    {
+        this.DataContext = vm;
+    }
     public FilesModule()
     {
         this.InitializeComponent();

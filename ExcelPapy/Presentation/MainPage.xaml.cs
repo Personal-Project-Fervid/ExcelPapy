@@ -14,13 +14,14 @@ public sealed partial class MainPage : Page
     public MainPage()
     {
         this.InitializeComponent();
+        AppPersonalization.SetViewModel(ViewModel);
+        AppPersonalization.SetTutorial(tutorial);
         Cellules.SetViewModel(ViewModel);
         TextPersonalization.SetViewModel(ViewModel);
         CellPersonalization.SetViewModel(ViewModel);
         MagnifyingGlass.SetViewModel(ViewModel);
-        AppPersonalization.SetViewModel(ViewModel);
-        AppPersonalization.SetTutorial(tutorial);
         tutorial.SetViewModel(ViewModel);
+        FilesModule.SetViewModel(ViewModel);
 
         TextPersonalization.CaptureRoot = RootGrid;
         CellPersonalization.CaptureRoot = RootGrid;

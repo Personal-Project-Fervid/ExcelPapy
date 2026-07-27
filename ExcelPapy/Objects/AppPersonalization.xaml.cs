@@ -8,6 +8,7 @@ namespace ExcelPapy.Objects;
 
 public sealed partial class AppPersonalization : UserControl
 {
+    private MainViewModel? _mainViewModel;
     public AppPersonalization()
     {
         this.InitializeComponent();
@@ -15,6 +16,7 @@ public sealed partial class AppPersonalization : UserControl
     public void SetViewModel(MainViewModel vm)
     {
         this.DataContext = vm;
+        _mainViewModel = vm;
     }
 
     private Tutorial _tutorial;
@@ -106,6 +108,7 @@ public sealed partial class AppPersonalization : UserControl
                 _ => new FontFamily("Arial")
             };
 
+            _mainViewModel?.ApplyAppPoliceToSelection(police ?? "Segoe UI");
             PolicePickerPopup.IsOpen = false;
         }
     }

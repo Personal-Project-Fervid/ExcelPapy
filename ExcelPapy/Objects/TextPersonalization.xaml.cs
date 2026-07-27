@@ -82,6 +82,7 @@ public sealed partial class TextPersonalization : UserControl
     private MainViewModel? _mainViewModel;
     public void SetViewModel(MainViewModel vm)
     {
+        this.DataContext = vm;
         _mainViewModel = vm;
     }
 

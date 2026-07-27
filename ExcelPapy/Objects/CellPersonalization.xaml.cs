@@ -33,6 +33,7 @@ public sealed partial class CellPersonalization : UserControl
 
     public void SetViewModel(MainViewModel vm)
     {
+        this.DataContext = vm;
         _mainViewModel = vm;
     }
 

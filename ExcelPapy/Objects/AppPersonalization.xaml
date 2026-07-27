@@ -29,8 +29,8 @@
                 <Button Click="OnBoldAppPickerClick" Margin="6,6,6,6" CornerRadius="12" Style="{StaticResource ButtonPersonalizationArrow}">
                     <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Width="244" Height="26" Margin="6,0,-6,0">
-                            <TextBlock x:Name="SelectedBoldAppText" Text="G" FontSize="18" FontWeight="DemiBold" VerticalAlignment="Center"/>
-                            <TextBlock Text=" app'" FontSize="18" FontWeight="DemiBold" VerticalAlignment="Center"/>
+                            <TextBlock x:Name="SelectedBoldAppText" Text="G" FontSize="18" FontWeight="DemiBold" VerticalAlignment="Center" FontFamily="{Binding AppView.FontApp}"/>
+                            <TextBlock Text=" app'" FontSize="18" FontWeight="DemiBold" VerticalAlignment="Center" FontFamily="{Binding AppView.FontApp}"/>
                         </StackPanel>
                         
                         <Grid Height="24" Width="24" HorizontalAlignment="Right" Margin="-8,0,8,0">
@@ -71,43 +71,43 @@
 
                                 <Button Click="OnBoldAppSelected" Tag="Light" Style="{StaticResource NumberFontSize}">
                                     <StackPanel Orientation="Horizontal" Spacing="10">
-                                        <TextBlock Text="G" FontSize="18" FontWeight="Light" VerticalAlignment="Center"/>
+                                        <TextBlock Text="G" FontSize="18" FontWeight="Light" VerticalAlignment="Center" FontFamily="{Binding AppView.FontApp}"/>
                                     </StackPanel>
                                 </Button>
 
                                 <Button Click="OnBoldAppSelected" Tag="Normal" Style="{StaticResource NumberFontSize}">
                                     <StackPanel Orientation="Horizontal" Spacing="10">
-                                        <TextBlock Text="G" FontSize="18" FontWeight="Normal" VerticalAlignment="Center"/>
+                                        <TextBlock Text="G" FontSize="18" FontWeight="Normal" VerticalAlignment="Center" FontFamily="{Binding AppView.FontApp}"/>
                                     </StackPanel>
                                 </Button>
 
                                 <Button Click="OnBoldAppSelected" Tag="DemiBold" Style="{StaticResource NumberFontSize}">
                                     <StackPanel Orientation="Horizontal" Spacing="10">
-                                        <TextBlock Text="G" FontSize="18" FontWeight="DemiBold" VerticalAlignment="Center"/>
+                                        <TextBlock Text="G" FontSize="18" FontWeight="DemiBold" VerticalAlignment="Center" FontFamily="{Binding AppView.FontApp}"/>
                                     </StackPanel>
                                 </Button>
 
                                 <Button Click="OnBoldAppSelected" Tag="Bold" Style="{StaticResource NumberFontSize}">
                                     <StackPanel Orientation="Horizontal" Spacing="10">
-                                        <TextBlock Text="G" FontSize="18" FontWeight="Bold" VerticalAlignment="Center"/>
+                                        <TextBlock Text="G" FontSize="18" FontWeight="Bold" VerticalAlignment="Center" FontFamily="{Binding AppView.FontApp}"/>
                                     </StackPanel>
                                 </Button>
 
                                 <Button Click="OnBoldAppSelected" Tag="ExtraBold" Style="{StaticResource NumberFontSize}">
                                     <StackPanel Orientation="Horizontal" Spacing="10">
-                                        <TextBlock Text="G" FontSize="18" FontWeight="ExtraBold" VerticalAlignment="Center"/>
+                                        <TextBlock Text="G" FontSize="18" FontWeight="ExtraBold" VerticalAlignment="Center" FontFamily="{Binding AppView.FontApp}"/>
                                     </StackPanel>
                                 </Button>
 
                                 <Button Click="OnBoldAppSelected" Tag="Black" Style="{StaticResource NumberFontSize}">
                                     <StackPanel Orientation="Horizontal" Spacing="10" >
-                                        <TextBlock Text="G" FontSize="18" FontWeight="Black" VerticalAlignment="Center"/>
+                                        <TextBlock Text="G" FontSize="18" FontWeight="Black" VerticalAlignment="Center" FontFamily="{Binding AppView.FontApp}"/>
                                     </StackPanel>
                                 </Button>
 
                                 <Button Click="OnBoldAppSelected" Tag="UltraBlack" Style="{StaticResource NumberFontSize}">
                                     <StackPanel Orientation="Horizontal" Spacing="10" >
-                                        <TextBlock Text="G" FontSize="18" FontWeight="UltraBlack" VerticalAlignment="Center"/>
+                                        <TextBlock Text="G" FontSize="18" FontWeight="UltraBlack" VerticalAlignment="Center" FontFamily="{Binding AppView.FontApp}"/>
                                     </StackPanel>
                                 </Button>
 
@@ -125,8 +125,7 @@
                 <Button Click="OnPolicePickerClick" Margin="6,6,6,6" CornerRadius="12" Style="{StaticResource ButtonPersonalizationArrow}">
                     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Width="244" Height="26" Margin="6,0,-6,0">
-                            <TextBlock x:Name="SelectedPoliceText" Text="Police" FontSize="18" FontWeight="DemiBold" VerticalAlignment="Center" FontFamily="Segoe UI"/>
-                            <TextBlock Text=" app'" FontSize="18" FontWeight="DemiBold" VerticalAlignment="Center"/>
+                            <TextBlock x:Name="SelectedPoliceText" Text="Police app'" FontSize="18" FontWeight="DemiBold" VerticalAlignment="Center" FontFamily="{Binding AppView.FontApp}"/>
                         </StackPanel>
 
                         <Grid Height="24" Width="24" HorizontalAlignment="Right" Margin="-8,0,8,0">
@@ -207,7 +206,7 @@
                 <Button Click="OnLanguagePickerClick" Margin="6,6,6,6" CornerRadius="12" Style="{StaticResource ButtonPersonalizationArrow}">
                     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Width="244" Height="26" Margin="6,0,-6,0">
-                            <TextBlock x:Name="SelectedLanguageText" Text="Français" FontSize="18" FontWeight="DemiBold" VerticalAlignment="Center" FontFamily="Segoe UI"/>
+                            <TextBlock x:Name="SelectedLanguageText" Text="Français" FontSize="18" FontWeight="DemiBold" VerticalAlignment="Center" FontFamily="{Binding AppView.FontApp}"/>
                         </StackPanel>
 
                         <Grid Height="24" Width="24" HorizontalAlignment="Right" Margin="-8,0,8,0">
@@ -275,7 +274,7 @@
                 <Button Click="OnTutorialPickerClick" Margin="6,6,6,6" CornerRadius="12" Style="{StaticResource ButtonPersonalizationArrow}">
                     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Width="244" Height="26" Margin="6,0,-6,0">
-                            <TextBlock x:Name="SelectedTutorialText" Text="Tutoriel" FontSize="18" FontWeight="DemiBold" VerticalAlignment="Center" FontFamily="Segoe UI"/>
+                            <TextBlock x:Name="SelectedTutorialText" Text="Tutoriel" FontSize="18" FontWeight="DemiBold" VerticalAlignment="Center" FontFamily="{Binding AppView.FontApp}"/>
                         </StackPanel>
 
                         <Grid Height="24" Width="24" HorizontalAlignment="Right" Margin="-8,0,8,0">
@@ -316,16 +315,16 @@
 
                                 <Button Click="AllCheck" Style="{StaticResource NumberFontSize}">
                                     <StackPanel Orientation="Horizontal" Spacing="10">
-                                        <TextBlock x:Name="All" Text="Tout sélectionner" FontSize="18" FontWeight="DemiBold" VerticalAlignment="Center" FontFamily="Segoe UI" Margin="4,0,-4,0"/>
+                                        <TextBlock x:Name="All" Text="Tout sélectionner" FontSize="18" FontWeight="DemiBold" VerticalAlignment="Center" FontFamily="{Binding AppView.FontApp}" Margin="4,0,-4,0"/>
                                     </StackPanel>
                                 </Button>
 
-                                <CheckBox x:Name="Loupe" Content="Loupe" Tag="Loupe" IsChecked="True" Checked="TutorialCheck" Unchecked="TutorialUncheck" Style="{StaticResource CheckBoxStyle}"/>
-                                <CheckBox x:Name="Retour" Content="Retour" Tag="Retour" Checked="TutorialCheck" Unchecked="TutorialUncheck" Style="{StaticResource CheckBoxStyle}"/>
-                                <CheckBox x:Name="Couper" Content="Couper" Tag="Couper" Checked="TutorialCheck" Unchecked="TutorialUncheck" Style="{StaticResource CheckBoxStyle}"/>
-                                <CheckBox x:Name="Copier" Content="Copier" Tag="Copier" Checked="TutorialCheck" Unchecked="TutorialUncheck" Style="{StaticResource CheckBoxStyle}"/>
-                                <CheckBox x:Name="Coller" Content="Coller" Tag="Coller" Checked="TutorialCheck" Unchecked="TutorialUncheck" Style="{StaticResource CheckBoxStyle}"/>
-                                <CheckBox x:Name="Zoom" Content="Zoom" Tag="Zoom" Checked="TutorialCheck" Unchecked="TutorialUncheck" Style="{StaticResource CheckBoxStyle}"/>
+                                <CheckBox x:Name="Loupe" Content="Loupe" Tag="Loupe" IsChecked="True" Checked="TutorialCheck" Unchecked="TutorialUncheck" FontFamily="{Binding AppView.FontApp}" Style="{StaticResource CheckBoxStyle}"/>
+                                <CheckBox x:Name="Retour" Content="Retour" Tag="Retour" Checked="TutorialCheck" Unchecked="TutorialUncheck" FontFamily="{Binding AppView.FontApp}" Style="{StaticResource CheckBoxStyle}"/>
+                                <CheckBox x:Name="Couper" Content="Couper" Tag="Couper" Checked="TutorialCheck" Unchecked="TutorialUncheck" FontFamily="{Binding AppView.FontApp}" Style="{StaticResource CheckBoxStyle}"/>
+                                <CheckBox x:Name="Copier" Content="Copier" Tag="Copier" Checked="TutorialCheck" Unchecked="TutorialUncheck" FontFamily="{Binding AppView.FontApp}" Style="{StaticResource CheckBoxStyle}"/>
+                                <CheckBox x:Name="Coller" Content="Coller" Tag="Coller" Checked="TutorialCheck" Unchecked="TutorialUncheck" FontFamily="{Binding AppView.FontApp}" Style="{StaticResource CheckBoxStyle}"/>
+                                <CheckBox x:Name="Zoom" Content="Zoom" Tag="Zoom" Checked="TutorialCheck" Unchecked="TutorialUncheck" FontFamily="{Binding AppView.FontApp}" Style="{StaticResource CheckBoxStyle}"/>
 
                             </StackPanel>
                         </Grid>

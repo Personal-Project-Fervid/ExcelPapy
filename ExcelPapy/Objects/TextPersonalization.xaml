@@ -116,7 +116,7 @@
                 </Button>
                 <Line Stroke="Black" StrokeThickness="3" X1="45" Y1="6" X2="45" Y2="40"/>
                 <Button Click="FontSizePersonalization" Width="45" Style="{StaticResource ButtonPersonalizationPopup}"/>
-                <TextBlock x:Name="SelectedFontSizeText" Text="" FontSize="18" FontWeight="Bold" VerticalAlignment="Center" Margin="-20,0,20,0" HorizontalAlignment="Center" IsHitTestVisible="False"/>
+                <TextBlock x:Name="SelectedFontSizeText" Text="" FontSize="18" FontWeight="Bold" VerticalAlignment="Center" Margin="-20,0,20,0" HorizontalAlignment="Center" IsHitTestVisible="False" FontFamily="{Binding AppView.FontApp}"/>
 
                 <!-- Popup avec les choix -->
                 <Popup x:Name="FontSizePickerPopup"
@@ -145,22 +145,22 @@
 
                             <StackPanel Padding="5" Spacing="2">
 
-                                <Button Click="OnFontSizeSelected" Tag="8" Content="8" Style="{StaticResource NumberFontSize}"/>
-                                <Button Click="OnFontSizeSelected" Tag="9" Content="9" Style="{StaticResource NumberFontSize}"/>
-                                <Button Click="OnFontSizeSelected" Tag="10" Content="10" Style="{StaticResource NumberFontSize}"/>
-                                <Button Click="OnFontSizeSelected" Tag="11" Content="11" Style="{StaticResource NumberFontSize}"/>
-                                <Button Click="OnFontSizeSelected" Tag="12" Content="12" Style="{StaticResource NumberFontSize}"/>
-                                <Button Click="OnFontSizeSelected" Tag="14" Content="14" Style="{StaticResource NumberFontSize}"/>
-                                <Button Click="OnFontSizeSelected" Tag="16" Content="16" Style="{StaticResource NumberFontSize}"/>
-                                <Button Click="OnFontSizeSelected" Tag="18" Content="18" Style="{StaticResource NumberFontSize}"/>
-                                <Button Click="OnFontSizeSelected" Tag="20" Content="20" Style="{StaticResource NumberFontSize}"/>
-                                <Button Click="OnFontSizeSelected" Tag="22" Content="22" Style="{StaticResource NumberFontSize}"/>
-                                <Button Click="OnFontSizeSelected" Tag="24" Content="24" Style="{StaticResource NumberFontSize}"/>
-                                <Button Click="OnFontSizeSelected" Tag="26" Content="16" Style="{StaticResource NumberFontSize}"/>
-                                <Button Click="OnFontSizeSelected" Tag="28" Content="28" Style="{StaticResource NumberFontSize}"/>
-                                <Button Click="OnFontSizeSelected" Tag="36" Content="36" Style="{StaticResource NumberFontSize}"/>
-                                <Button Click="OnFontSizeSelected" Tag="48" Content="48" Style="{StaticResource NumberFontSize}"/>
-                                <Button Click="OnFontSizeSelected" Tag="72" Content="72" Style="{StaticResource NumberFontSize}"/>
+                                <Button Click="OnFontSizeSelected" Tag="8" Content="8" FontFamily="{Binding AppView.FontApp}" Style="{StaticResource NumberFontSize}"/>
+                                <Button Click="OnFontSizeSelected" Tag="9" Content="9" FontFamily="{Binding AppView.FontApp}" Style="{StaticResource NumberFontSize}"/>
+                                <Button Click="OnFontSizeSelected" Tag="10" Content="10" FontFamily="{Binding AppView.FontApp}" Style="{StaticResource NumberFontSize}"/>
+                                <Button Click="OnFontSizeSelected" Tag="11" Content="11" FontFamily="{Binding AppView.FontApp}" Style="{StaticResource NumberFontSize}"/>
+                                <Button Click="OnFontSizeSelected" Tag="12" Content="12" FontFamily="{Binding AppView.FontApp}" Style="{StaticResource NumberFontSize}"/>
+                                <Button Click="OnFontSizeSelected" Tag="14" Content="14" FontFamily="{Binding AppView.FontApp}" Style="{StaticResource NumberFontSize}"/>
+                                <Button Click="OnFontSizeSelected" Tag="16" Content="16" FontFamily="{Binding AppView.FontApp}" Style="{StaticResource NumberFontSize}"/>
+                                <Button Click="OnFontSizeSelected" Tag="18" Content="18" FontFamily="{Binding AppView.FontApp}" Style="{StaticResource NumberFontSize}"/>
+                                <Button Click="OnFontSizeSelected" Tag="20" Content="20" FontFamily="{Binding AppView.FontApp}" Style="{StaticResource NumberFontSize}"/>
+                                <Button Click="OnFontSizeSelected" Tag="22" Content="22" FontFamily="{Binding AppView.FontApp}" Style="{StaticResource NumberFontSize}"/>
+                                <Button Click="OnFontSizeSelected" Tag="24" Content="24" FontFamily="{Binding AppView.FontApp}" Style="{StaticResource NumberFontSize}"/>
+                                <Button Click="OnFontSizeSelected" Tag="26" Content="16" FontFamily="{Binding AppView.FontApp}" Style="{StaticResource NumberFontSize}"/>
+                                <Button Click="OnFontSizeSelected" Tag="28" Content="28" FontFamily="{Binding AppView.FontApp}" Style="{StaticResource NumberFontSize}"/>
+                                <Button Click="OnFontSizeSelected" Tag="36" Content="36" FontFamily="{Binding AppView.FontApp}" Style="{StaticResource NumberFontSize}"/>
+                                <Button Click="OnFontSizeSelected" Tag="48" Content="48" FontFamily="{Binding AppView.FontApp}" Style="{StaticResource NumberFontSize}"/>
+                                <Button Click="OnFontSizeSelected" Tag="72" Content="72" FontFamily="{Binding AppView.FontApp}" Style="{StaticResource NumberFontSize}"/>
 
                             </StackPanel>
                         </Grid>
@@ -169,17 +169,17 @@
             </Grid>
 
             <!-- Bold -->
-            <Button Content="G" Click="BoldPersonalization" Grid.Row="1" FontWeight="Bold" Style="{StaticResource ButtonPersonalization}"/>
+            <Button Content="G" Click="BoldPersonalization" Grid.Row="1" FontWeight="Bold" FontFamily="{Binding AppView.FontApp}" Style="{StaticResource ButtonPersonalization}"/>
 
             <!-- Italique -->
             <Button Click="FontStylePersonalization" FontStyle="Italic" FontWeight="DemiBold" FontSize="36" Grid.Row="1" Grid.Column="1" Style="{StaticResource ButtonPersonalization}">
-                <TextBlock Text="I" Margin="0,-2,0,2"/>
+                <TextBlock Text="I" Margin="0,-2,0,2" FontFamily="{Binding AppView.FontApp}"/>
             </Button>
 
             <!-- Sous-ligné -->
             <Button Click="UnderlinePersonalization" Grid.Row="1" Grid.Column="2" Style="{StaticResource ButtonPersonalization}">
                 <Grid>
-                    <TextBlock Text="S" TextDecorations="Underline" FontSize="28" FontWeight="DemiBold" HorizontalTextAlignment="Center" Padding="0,0,0,0"/>
+                    <TextBlock Text="S" TextDecorations="Underline" FontSize="28" FontWeight="DemiBold" HorizontalTextAlignment="Center" Padding="0,0,0,0" FontFamily="{Binding AppView.FontApp}"/>
                     <Line X1="0" Y1="35" X2="20" Y2="35" Stroke="Black" StrokeThickness="3"/>
                 </Grid>
             </Button>
@@ -200,7 +200,7 @@
                 </Button>
                 <Line Stroke="Black" StrokeThickness="3" X1="94" Y1="6" X2="94" Y2="40"/>
                 <Button Click="PoliceColorPersonalization" Width="94" Style="{StaticResource ButtonPersonalizationPopup}" />
-                <TextBlock x:Name="SelectedPoliceColorText" Text="A" FontSize="28" FontWeight="DemiBold" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="20,1,-20,-1" IsHitTestVisible="False"/>
+                <TextBlock x:Name="SelectedPoliceColorText" Text="A" FontSize="28" FontWeight="DemiBold" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="20,1,-20,-1" IsHitTestVisible="False" FontFamily="{Binding AppView.FontApp}"/>
                 <Border x:Name="SelectedPoliceColorIcon" Width="20" Height="6" Background="Black" VerticalAlignment="Bottom" HorizontalAlignment="Left" BorderBrush="Black" BorderThickness="1" Margin="19,-9,-19,9" IsHitTestVisible="False"/>
 
                 <!-- Popup avec les choix -->

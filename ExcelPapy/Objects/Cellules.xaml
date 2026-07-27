@@ -36,7 +36,7 @@
                     <DataTemplate x:DataType="local:ColumnHeaderViewModel">
                         <Grid Width="{Binding Width}" IsHitTestVisible="True">
                             <Border Height="100" Background="#E0E0E0" BorderBrush="Black" BorderThickness="0,3,3,3">
-                                <TextBlock Text="{Binding Label}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="ExtraBold" FontSize="32"/>
+                                <TextBlock Text="{Binding Label}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="ExtraBold" FontSize="32" FontFamily="{Binding FontFamily}"/>
                             </Border>
 
                             <!-- Zone de détection élargie centrée sur la bordure droite -->
@@ -67,7 +67,7 @@
                     <DataTemplate x:DataType="local:RowHeaderViewModel">
                         <Grid Height="{Binding Height}" IsHitTestVisible="True">
                             <Border Width="100" Background="#E0E0E0" BorderBrush="Black" BorderThickness="3,0,3,3">
-                                <TextBlock Text="{Binding Label}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="ExtraBold" FontSize="32" />
+                                <TextBlock Text="{Binding Label}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="ExtraBold" FontSize="32" FontFamily="{Binding FontFamily}"/>
                             </Border>
                             <!-- Poignée bas pour redimensionner -->
                             <Rectangle x:Name="RowResizeHandle"

@@ -6,4 +6,7 @@ public partial class ColumnHeaderViewModel : ObservableObject
     private double _width = 200;
 
     public string Label { get; init; } = string.Empty;
+
+    [ObservableProperty]
+    private string _fontFamily = "Segoe UI";
 }

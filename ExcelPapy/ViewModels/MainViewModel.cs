@@ -12,6 +12,7 @@ public partial class MainViewModel : ObservableObject
     public ObservableCollection<RowHeaderViewModel> RowHeaders { get; } = new();
 
     private CellViewModel? _selectionStart;
+    public AppViewModel AppView { get; } = new();
 
     public double TotalColumnsWidth
     {
@@ -281,5 +282,16 @@ public partial class MainViewModel : ObservableObject
                         cell.BorderBrush = background;
                     }
                 }
+    }
+
+    public void ApplyAppPoliceToSelection(string fontFamily)
+    {
+        AppView.FontApp = fontFamily;
+
+        foreach (var col in ColumnHeaders)
+            col.FontFamily = fontFamily;
+
+        foreach (var row in RowHeaders)
+            row.FontFamily = fontFamily;
     }
 }
