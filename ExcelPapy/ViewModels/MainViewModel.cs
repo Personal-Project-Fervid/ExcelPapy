@@ -228,6 +228,29 @@ public partial class MainViewModel : ObservableObject
                 }
     }
 
+    public void ApplyFontUnderlineToSelection()
+    {
+        bool anySelected = false;
+        bool shouldUnderline = false;
+
+        // Si au moins une cellule sélectionnée n'est pas soulignée, on souligne tout le groupe
+        foreach (var row in Rows)
+            foreach (var cell in row.Cells)
+                if (cell.IsSelected)
+                {
+                    anySelected = true;
+                    if (!cell.FontUnderline)
+                        shouldUnderline = true;
+                }
+
+        if (!anySelected) return;
+
+        foreach (var row in Rows)
+            foreach (var cell in row.Cells)
+                if (cell.IsSelected)
+                    cell.FontUnderline = shouldUnderline;
+    }
+
     public void ApplyVerticalAlignmentToSelection(string VerticalAlignment)
     {
         foreach (var row in Rows)

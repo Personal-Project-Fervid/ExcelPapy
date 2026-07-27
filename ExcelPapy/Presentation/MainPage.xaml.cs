@@ -81,7 +81,6 @@ public sealed partial class MainPage : Page
         }
         else if (!isDown && _isKeyDown)
         {
-            // Vient d'être relâchée
             TextPersonalization.setKeyDown(false);
             CellPersonalization.setKeyDown(false);
 

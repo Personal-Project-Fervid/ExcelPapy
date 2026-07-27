@@ -130,7 +130,18 @@
                                                          IsReadOnly="True" IsHitTestVisible="False"
                                                          KeyDown="OnTextBoxKeyDown"
                                                          PointerPressed="OnTextBoxPointerPressed"
-                                                         PointerMoved="OnTextBoxPointerMoved"/>
+                                                         PointerMoved="OnTextBoxPointerMoved"
+                                                         SizeChanged="OnCellTextBoxSizeChanged"
+                                                         Loaded="OnCellTextBoxLoaded"/>
+
+                                                <Border x:Name="UnderlineIndicator"
+                                                        IsHitTestVisible="False"
+                                                        Height="2"
+                                                        Background="{Binding Foreground}"
+                                                        VerticalAlignment="{Binding VerticalAlignment}"
+                                                        HorizontalAlignment="{Binding HorizontalAlignment}"
+                                                        Margin="{Binding UnderlineMargin}"
+                                                        Visibility="{Binding FontUnderline, Converter={StaticResource BoolToVisibilityConverter}}"/>
 
                                                 <Border x:Name="SelectionOverlay"
                                                         IsHitTestVisible="False"

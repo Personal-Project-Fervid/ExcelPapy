@@ -44,9 +44,25 @@ public partial class CellViewModel : ObservableObject
     [ObservableProperty]
     private string _fontStyle = "Normal";
 
-    //À voir
     [ObservableProperty]
     private bool _fontUnderline = false;
+
+    public Thickness UnderlineMargin
+    {
+        get
+        {
+            return VerticalAlignment switch
+            {
+                "Top" => new Thickness(6, FontSize * 1.2, 6, 0),
+                "Center" => new Thickness(6, 0, 6, -(FontSize)),
+                "Bottom" => new Thickness(6, 0, 6, 4),
+                _ => new Thickness(6, 0, 6, 4)
+            };
+        }
+    }
+
+    partial void OnVerticalAlignmentChanged(string value) => OnPropertyChanged(nameof(UnderlineMargin));
+    partial void OnFontSizeChanged(double value) => OnPropertyChanged(nameof(UnderlineMargin));
 
     [ObservableProperty]
     private string _verticalAlignment = "Center";

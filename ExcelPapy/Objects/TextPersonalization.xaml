@@ -47,7 +47,7 @@
                        DesiredPlacement="Bottom"
                        Opened="PolicePickerPopup_Opened"
                        Closed="PolicePickerPopup_Closed">
-                    
+
                     <Border x:Name="PolicePickerBorder"
                             Margin="0,3,0,-3"
                             BorderBrush="Black"
@@ -95,7 +95,7 @@
                                     </StackPanel>
                                 </Button>
                             </StackPanel>
-                            
+
                         </Grid>
                     </Border>
                 </Popup>
@@ -125,7 +125,7 @@
                        DesiredPlacement="Bottom"
                        Opened="FontSizePickerPopup_Opened"
                        Closed="FontSizePickerPopup_Closed">
-                    
+
                     <Border x:Name="FontSizePickerBorder"
                             Margin="0,3,0,-3"
                             BorderBrush="Black"
@@ -210,7 +210,7 @@
                        DesiredPlacement="Bottom"
                        Opened="PoliceColorPickerPopup_Opened"
                        Closed="PoliceColorPickerPopup_Closed">
-                    
+
                     <Border x:Name="PoliceColorPickerBorder"
                             Margin="0,3,0,-3"
                             BorderBrush="Black"
@@ -292,5 +292,4 @@
             </Grid>
         </Grid>
     </Border>
-
 </UserControl>

@@ -474,4 +474,38 @@ public sealed partial class Cellules : UserControl
             }
         }
     }
+
+    private void OnCellTextBoxLoaded(object sender, RoutedEventArgs e)
+    {
+        if (sender is TextBox textBox)
+            SyncUnderlineWidth(textBox);
+    }
+
+    private void OnCellTextBoxSizeChanged(object sender, SizeChangedEventArgs e)
+    {
+        if (sender is TextBox textBox)
+            SyncUnderlineWidth(textBox);
+    }
+
+    private void SyncUnderlineWidth(TextBox textBox)
+    {
+        var underline = FindSiblingElement(textBox, "UnderlineIndicator") as Border;
+        if (underline != null)
+        {
+            underline.Width = Math.Max(0, textBox.ActualWidth - textBox.Padding.Left - textBox.Padding.Right);
+        }
+    }
+
+    private FrameworkElement? FindSiblingElement(FrameworkElement element, string name)
+    {
+        if (VisualTreeHelper.GetParent(element) is Panel parent)
+        {
+            foreach (var child in parent.Children)
+            {
+                if (child is FrameworkElement fe && fe.Name == name)
+                    return fe;
+            }
+        }
+        return null;
+    }
 }

@@ -253,13 +253,12 @@ public sealed partial class TextPersonalization : UserControl
 
     public void FontStylePersonalization(object sender, RoutedEventArgs e)
     {
-
         _mainViewModel?.ApplyFontStyleToSelection();
     }
 
     public void UnderlinePersonalization(object sender, RoutedEventArgs e)
     {
-        // à voir
+        _mainViewModel?.ApplyFontUnderlineToSelection();
     }
 
     private async Task BlurTransition(FrameworkElement x, FrameworkElement y, CancellationToken token)
