@@ -12,4 +12,7 @@ public partial class RowHeaderViewModel : ObservableObject
 
     [ObservableProperty]
     private FontFamily _fontFamily = new FontFamily("Segoe UI");
+
+    [ObservableProperty]
+    private string _fontWeight = "ExtraBold";
 }

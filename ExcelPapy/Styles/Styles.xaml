@@ -3,7 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:primitives="using:Microsoft.UI.Xaml.Controls.Primitives">
 
-    <!-- Font -->
+    <!-- Fonts -->
     <FontFamily x:Key="Fraunces">ms-appx:///Assets/Fonts/Fraunces-VariableFont_SOFT,WONK,opsz,wght.ttf#Fraunces</FontFamily>
     <FontFamily x:Key="Inter">ms-appx:///Assets/Fonts/Inter-VariableFont_opsz,wght.ttf#Inter</FontFamily>
     <FontFamily x:Key="LexendDeca">ms-appx:///Assets/Fonts/LexendDeca-VariableFont_wght.ttf#LexendDeca</FontFamily>

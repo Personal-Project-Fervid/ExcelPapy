@@ -9,4 +9,7 @@ public partial class ColumnHeaderViewModel : ObservableObject
 
     [ObservableProperty]
     private FontFamily _fontFamily = new FontFamily("Segoe UI");
+
+    [ObservableProperty]
+    private string _fontWeight = "ExtraBold";
 }

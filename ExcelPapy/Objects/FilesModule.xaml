@@ -26,18 +26,18 @@
 
             <Border Grid.ColumnSpan="3" Background="White" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" CornerRadius="15" BorderThickness="3" BorderBrush="Black" Margin="5"/>
             <Button Grid.ColumnSpan="3" Margin="11" CornerRadius="12" Style="{StaticResource ButtonPersonalizationArrow}">
-                <TextBlock Text="Sauvegarder" FontSize="18" FontWeight="DemiBold" VerticalAlignment="Center"  Margin="6,0,-6,0" FontFamily="{Binding AppView.FontApp}"/>
+                <TextBlock Text="Sauvegarder" FontSize="18" FontWeight="{Binding AppView.WeightApp}" VerticalAlignment="Center"  Margin="6,0,-6,0" FontFamily="{Binding AppView.FontApp}"/>
             </Button>
 
             <Border Grid.ColumnSpan="3" Grid.Row="1" Background="White" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" CornerRadius="15" BorderThickness="3" BorderBrush="Black" Margin="5"/>
             <Button Grid.ColumnSpan="3" Grid.Row="1" Margin="11" CornerRadius="12" Style="{StaticResource ButtonPersonalizationArrow}">
-                <TextBlock Text="Enregistrer Sous" FontSize="18" FontWeight="DemiBold" VerticalAlignment="Center"  Margin="6,0,-6,0" FontFamily="{Binding AppView.FontApp}"/>
+                <TextBlock Text="Enregistrer Sous" FontSize="18" FontWeight="{Binding AppView.WeightApp}" VerticalAlignment="Center"  Margin="6,0,-6,0" FontFamily="{Binding AppView.FontApp}"/>
 
             </Button>
 
             <Border Grid.ColumnSpan="3" Grid.Column="3" Background="White" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" CornerRadius="15" BorderThickness="3" BorderBrush="Black" Margin="5"/>
             <Button Grid.ColumnSpan="3" Grid.Column="3" Margin="11" CornerRadius="12" Style="{StaticResource ButtonPersonalizationArrow}">
-                <TextBlock Text="Nouvelle Sauvegarde" FontSize="18" FontWeight="DemiBold" VerticalAlignment="Center"  Margin="6,0,-6,0" FontFamily="{Binding AppView.FontApp}"/>
+                <TextBlock Text="Nouvelle Sauvegarde" FontSize="18" FontWeight="{Binding AppView.WeightApp}" VerticalAlignment="Center"  Margin="6,0,-6,0" FontFamily="{Binding AppView.FontApp}"/>
             </Button>
 
             <!-- Sauvegarde -->
@@ -48,7 +48,7 @@
                 <Button Click="OnSavePickerClick" Margin="6,6,6,6" CornerRadius="12" Style="{StaticResource ButtonPersonalizationArrow}">
                     <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Width="244" Height="26" Margin="6,0,-6,0">
-                            <TextBlock x:Name="SelectedSaveText" Text="Sauvegarde" FontSize="18" FontWeight="DemiBold" VerticalAlignment="Center" FontFamily="{Binding AppView.FontApp}"/>
+                            <TextBlock x:Name="SelectedSaveText" Text="Sauvegarde" FontSize="18" FontWeight="{Binding AppView.WeightApp}" VerticalAlignment="Center" FontFamily="{Binding AppView.FontApp}"/>
                         </StackPanel>
 
                         <Grid Height="24" Width="24" HorizontalAlignment="Right" Margin="-8,0,8,0">

@@ -1,8 +1,6 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using ExcelPapy.Objects;
-using System.Linq;
-
 
 namespace ExcelPapy.ViewModels;
 
@@ -270,12 +268,20 @@ public partial class MainViewModel : ObservableObject
                     cell.HorizontalAlignment = HorizontalAlignment;
     }
 
+    private static readonly Windows.UI.Color CouleurGris = Microsoft.UI.Colors.FromARGB(0xFF, 0xBA, 0xBA, 0xBA);
+    private static readonly Windows.UI.Color CouleurNoir = Microsoft.UI.Colors.Black;
+
+    private static bool BrushHasColor(Brush brush, Windows.UI.Color color)
+    {
+        return brush is SolidColorBrush scb && scb.Color == color;
+    }
+
     public void ApplyBackgroundToSelection(Brush? background)
     {
         if (background == null) 
             return;
 
-        Brush noir = new SolidColorBrush(Microsoft.UI.Colors.Black);
+        bool backgroundIsBlack = BrushHasColor(background, CouleurNoir);
 
         foreach (var row in Rows)
             foreach (var cell in row.Cells)
@@ -283,12 +289,16 @@ public partial class MainViewModel : ObservableObject
                 {
                     cell.Background = background;
 
-                    if (background != noir)
+                    if (!backgroundIsBlack)
                     {
-                        cell.BorderBrushTop = background;
-                        cell.BorderBrushLeft = background;
-                        cell.BorderBrushRight = background;
-                        cell.BorderBrushBottom = background;
+                        if (BrushHasColor(cell.BorderBrushTop, CouleurGris))
+                            cell.BorderBrushTop = background;
+                        if (BrushHasColor(cell.BorderBrushLeft, CouleurGris))
+                            cell.BorderBrushLeft = background;
+                        if (BrushHasColor(cell.BorderBrushRight, CouleurGris))
+                            cell.BorderBrushRight = background;
+                        if (BrushHasColor(cell.BorderBrushBottom, CouleurGris))
+                            cell.BorderBrushBottom = background;
                     }
                 }
     }
@@ -304,7 +314,20 @@ public partial class MainViewModel : ObservableObject
             row.FontFamily = AppFonts.Resolve(policeKey);
     }
 
+    public void ApplyWeightAppToSelection(string weightKey)
+    {
+        AppView.WeightApp = weightKey;
+
+        foreach (var col in ColumnHeaders)
+            col.FontWeight = weightKey;
+
+
+        foreach (var row in RowHeaders)
+            row.FontWeight = weightKey;
+    }
+
     private static readonly Brush BorderColorNoir = new SolidColorBrush(Microsoft.UI.Colors.Black);
+    private static readonly Brush BorderColorGris = new SolidColorBrush(Microsoft.UI.Colors.FromARGB(0xFF, 0xBA, 0xBA, 0xBA));
     private const double EpaisseurBordure = 3;
 
     public void ApplyBorderToSelection(string borderType)
@@ -318,41 +341,45 @@ public partial class MainViewModel : ObservableObject
             case "None":
                 foreach (var c in selectedCells)
                 {
-                    SetTopBorder(c, 0);
-                    SetLeftBorder(c, 0);
-                    SetRightBorder(c, 0);
-                    SetBottomBorder(c, 0);
+                    SetTopBorder(c, EpaisseurBordure, BorderColorGris);
+                    SetLeftBorder(c, EpaisseurBordure, BorderColorGris);
+                    SetRightBorder(c, EpaisseurBordure, BorderColorGris);
+                    SetBottomBorder(c, EpaisseurBordure, BorderColorGris);
                 }
                 break;
 
             case "All":
                 foreach (var c in selectedCells)
                 {
-                    SetTopBorder(c, EpaisseurBordure);
-                    SetLeftBorder(c, EpaisseurBordure);
-                    SetRightBorder(c, EpaisseurBordure);
-                    SetBottomBorder(c, EpaisseurBordure);
+                    SetTopBorder(c, EpaisseurBordure, BorderColorNoir);
+                    SetLeftBorder(c, EpaisseurBordure, BorderColorNoir);
+                    SetRightBorder(c, EpaisseurBordure, BorderColorNoir);
+                    SetBottomBorder(c, EpaisseurBordure, BorderColorNoir);
                 }
                 break;
 
             case "Top":
-                foreach (var c in selectedCells)
-                    SetTopBorder(c, EpaisseurBordure);
+                int rMin = selectedCells.Min(c => c.Row);
+                foreach (var c in selectedCells.Where(c => c.Row == rMin))
+                    SetTopBorder(c, EpaisseurBordure, BorderColorNoir);
                 break;
 
             case "Left":
-                foreach (var c in selectedCells)
-                    SetLeftBorder(c, EpaisseurBordure);
+                int cMin = selectedCells.Min(c => c.Column);
+                foreach (var c in selectedCells.Where(c => c.Column == cMin))
+                    SetLeftBorder(c, EpaisseurBordure, BorderColorNoir);
                 break;
 
             case "Right":
-                foreach (var c in selectedCells)
-                    SetRightBorder(c, EpaisseurBordure);
+                int cMax = selectedCells.Max(c => c.Column);
+                foreach (var c in selectedCells.Where(c => c.Column == cMax))
+                    SetRightBorder(c, EpaisseurBordure, BorderColorNoir);
                 break;
 
             case "Bottom":
-                foreach (var c in selectedCells)
-                    SetBottomBorder(c, EpaisseurBordure);
+                int rMax = selectedCells.Max(c => c.Row);
+                foreach (var c in selectedCells.Where(c => c.Row == rMax))
+                    SetBottomBorder(c, EpaisseurBordure, BorderColorNoir);
                 break;
 
             case "Outer":
@@ -363,57 +390,119 @@ public partial class MainViewModel : ObservableObject
 
                 foreach (var c in selectedCells)
                 {
-                    if (c.Row == rowMin) SetTopBorder(c, EpaisseurBordure);
-                    if (c.Row == rowMax) SetBottomBorder(c, EpaisseurBordure);
-                    if (c.Column == colMin) SetLeftBorder(c, EpaisseurBordure);
-                    if (c.Column == colMax) SetRightBorder(c, EpaisseurBordure);
+                    if (c.Row == rowMin) SetTopBorder(c, EpaisseurBordure, BorderColorNoir);
+                    if (c.Row == rowMax) SetBottomBorder(c, EpaisseurBordure, BorderColorNoir);
+                    if (c.Column == colMin) SetLeftBorder(c, EpaisseurBordure, BorderColorNoir);
+                    if (c.Column == colMax) SetRightBorder(c, EpaisseurBordure, BorderColorNoir);
                 }
                 break;
         }
+
+        RecomputeAllCorners();
     }
 
-    private void SetTopBorder(CellViewModel cell, double thickness)
+    private void SetTopBorder(CellViewModel cell, double thickness, Brush ColorBorder)
     {
         if (cell.Row > 0)
         {
             // Le "haut" visuel appartient au "bas" de la cellule du dessus
             var above = Rows[cell.Row - 1].Cells[cell.Column];
             above.BorderThicknessBottom = thickness;
-            if (thickness > 0) above.BorderBrushBottom = BorderColorNoir;
+            above.BorderBrushBottom = ColorBorder;
         }
         else
         {
             cell.BorderThicknessTop = thickness;
-            if (thickness > 0) cell.BorderBrushTop = BorderColorNoir;
+            cell.BorderBrushTop = ColorBorder;
         }
     }
 
-    private void SetLeftBorder(CellViewModel cell, double thickness)
+    private void SetLeftBorder(CellViewModel cell, double thickness, Brush ColorBorder)
     {
         if (cell.Column > 0)
         {
             // Le "gauche" visuel appartient au "droit" de la cellule de gauche
             var left = Rows[cell.Row].Cells[cell.Column - 1];
             left.BorderThicknessRight = thickness;
-            if (thickness > 0) left.BorderBrushRight = BorderColorNoir;
+            left.BorderBrushRight = ColorBorder;
         }
         else
         {
             cell.BorderThicknessLeft = thickness;
-            if (thickness > 0) cell.BorderBrushLeft = BorderColorNoir;
+            cell.BorderBrushLeft = ColorBorder;
         }
     }
 
-    private void SetRightBorder(CellViewModel cell, double thickness)
+    private void SetRightBorder(CellViewModel cell, double thickness, Brush ColorBorder)
     {
         cell.BorderThicknessRight = thickness;
-        if (thickness > 0) cell.BorderBrushRight = BorderColorNoir;
+        cell.BorderBrushRight = ColorBorder;
     }
 
-    private void SetBottomBorder(CellViewModel cell, double thickness)
+    private void SetBottomBorder(CellViewModel cell, double thickness, Brush ColorBorder)
     {
         cell.BorderThicknessBottom = thickness;
-        if (thickness > 0) cell.BorderBrushBottom = BorderColorNoir;
+        cell.BorderBrushBottom = ColorBorder;
     }
-    
+
+    private static readonly Brush TransparentBrush = new SolidColorBrush(Microsoft.UI.Colors.Transparent);
+
+    // Recalcule les 4 coins de TOUTES les cellules en tenant compte
+    // des bordures "empruntées" aux voisins (Top -> voisin du dessus, Left -> voisin de gauche)
+    private void RecomputeAllCorners()
+    {
+        int rowCount = Rows.Count;
+        int colCount = ColumnHeaders.Count;
+
+        for (int r = 0; r < rowCount; r++)
+        {
+            for (int c = 0; c < colCount; c++)
+            {
+                var cell = Rows[r].Cells[c];
+
+                // Segment vertical au-dessus du point (propre bordure droite de la cellule)
+                bool vertAbove = cell.BorderThicknessRight > 0 && IsBlack(cell.BorderBrushRight);
+
+                // Segment vertical en dessous du point (bordure droite de la cellule du bas)
+                bool vertBelow = false;
+                if (r + 1 < rowCount)
+                {
+                    var below = Rows[r + 1].Cells[c];
+                    vertBelow = below.BorderThicknessRight > 0 && IsBlack(below.BorderBrushRight);
+                }
+
+                // Segment horizontal à gauche du point (propre bordure basse de la cellule)
+                bool horizLeft = cell.BorderThicknessBottom > 0 && IsBlack(cell.BorderBrushBottom);
+
+                // Segment horizontal à droite du point (bordure basse de la cellule de droite)
+                bool horizRight = false;
+                if (c + 1 < colCount)
+                {
+                    var right = Rows[r].Cells[c + 1];
+                    horizRight = right.BorderThicknessBottom > 0 && IsBlack(right.BorderBrushBottom);
+                }
+
+                bool hasVertical = vertAbove || vertBelow;
+                bool hasHorizontal = horizLeft || horizRight;
+                bool isIntersection = hasVertical && hasHorizontal;
+
+                bool horizontalContinues = horizLeft && horizRight;
+                bool verticalContinues = vertAbove && vertBelow;
+
+                bool showCorner = isIntersection || horizontalContinues || verticalContinues;
+
+                cell.CornerBottomRight = showCorner ? BorderColorNoir : TransparentBrush;
+            }
+        }
+    }
+
+    private static bool IsBlack(Brush brush)
+    {
+        return brush is SolidColorBrush scb &&
+               scb.Color.A == 255 &&
+               scb.Color.R == 0 &&
+               scb.Color.G == 0 &&
+               scb.Color.B == 0;
+    }
+
 }

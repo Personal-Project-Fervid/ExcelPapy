@@ -73,6 +73,8 @@ public sealed partial class AppPersonalization : UserControl
                 _ => Microsoft.UI.Text.FontWeights.DemiBold
             };
 
+            _mainViewModel?.ApplyWeightAppToSelection(boldApp ?? "DemiBold");
+
             BoldAppPickerPopup.IsOpen = false;
         }
     }

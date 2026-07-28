@@ -217,22 +217,18 @@ public sealed partial class Cellules : UserControl
                 cell.IsSelected = false;
 
                 // Chercher la TextBox et la focus
-                if (el is Border border)
+                if (el is Grid grid)
                 {
-                    var grid = border.Child as Grid;
-                    if (grid != null)
+                    foreach (var child in grid.Children)
                     {
-                        foreach (var child in grid.Children)
+                        if (child is TextBox textBox)
                         {
-                            if (child is TextBox textBox)
-                            {
-                                // Activer la TextBox pour l'édition
-                                textBox.IsReadOnly = false;
-                                textBox.IsHitTestVisible = true;
-                                textBox.Focus(FocusState.Programmatic);
-                                textBox.SelectAll();
-                                break;
-                            }
+                            // Activer la TextBox pour l'édition
+                            textBox.IsReadOnly = false;
+                            textBox.IsHitTestVisible = true;
+                            textBox.Focus(FocusState.Programmatic);
+                            textBox.SelectAll();
+                            break;
                         }
                     }
                 }
@@ -457,12 +453,11 @@ public sealed partial class Cellules : UserControl
 
                 // Obtenir la Border parent et capturer le pointeur dessus
                 var grid = VisualTreeHelper.GetParent(textBox) as Grid;
-                var border = VisualTreeHelper.GetParent(grid) as Border;
 
-                if (border != null)
+                if (grid != null)
                 {
                     textBox.ReleasePointerCapture(e.Pointer);
-                    border.CapturePointer(e.Pointer);
+                    grid.CapturePointer(e.Pointer);
                     _isDragging = true;
 
                     ShowMarquee(e.GetCurrentPoint(CellScrollViewer).Position);

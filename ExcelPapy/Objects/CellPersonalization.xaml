@@ -103,7 +103,7 @@
                     <Canvas x:Name="SelectedBorderIcon" Width="24" Height="24" VerticalAlignment="Center" HorizontalAlignment="Center">
                         <!-- Mis à jour par code-behind selon la sélection -->
                     </Canvas>
-                    <TextBlock x:Name="SelectedBorderText" Text="Bordure..." FontSize="18" FontWeight="Bold" VerticalAlignment="Center" FontFamily="{Binding AppView.FontApp}"/>
+                    <TextBlock x:Name="SelectedBorderText" Text="Bordure..." FontSize="18" FontWeight="{Binding AppView.WeightApp}" VerticalAlignment="Center" FontFamily="{Binding AppView.FontApp}"/>
                 </StackPanel>
 
                 <!-- Popup avec les choix -->
@@ -143,7 +143,7 @@
                                             <Line X1="12" X2="12" Y1="0" Y2="24" Stroke="Black" StrokeThickness="2" StrokeDashArray="2,3"/>
                                             <Line X1="24" X2="24" Y1="0" Y2="24" Stroke="Black" StrokeThickness="2" StrokeDashArray="2,3"/>
                                         </Canvas>
-                                        <TextBlock Text="Bordure supérieure" FontSize="18" FontWeight="Bold" VerticalAlignment="Center" FontFamily="{Binding AppView.FontApp}"/>
+                                        <TextBlock Text="Bordure supérieure" FontSize="18" FontWeight="{Binding AppView.WeightApp}" VerticalAlignment="Center" FontFamily="{Binding AppView.FontApp}"/>
                                     </StackPanel>
                                 </Button>
 
@@ -157,7 +157,7 @@
                                             <Line X1="12" X2="12" Y1="0" Y2="24" Stroke="Black" StrokeThickness="2" StrokeDashArray="2,3"/>
                                             <Line X1="24" X2="24" Y1="0" Y2="24" Stroke="Black" StrokeThickness="2" StrokeDashArray="2,3"/>
                                         </Canvas>
-                                        <TextBlock Text="Bordure gauche" FontSize="18" FontWeight="Bold" VerticalAlignment="Center" FontFamily="{Binding AppView.FontApp}"/>
+                                        <TextBlock Text="Bordure gauche" FontSize="18" FontWeight="{Binding AppView.WeightApp}" VerticalAlignment="Center" FontFamily="{Binding AppView.FontApp}"/>
                                     </StackPanel>
                                 </Button>
 
@@ -171,7 +171,7 @@
                                             <Line X1="12" X2="12" Y1="0" Y2="24" Stroke="Black" StrokeThickness="2" StrokeDashArray="2,3"/>
                                             <Line X1="24" X2="24" Y1="0" Y2="24" Stroke="Black" StrokeThickness="2"/>
                                         </Canvas>
-                                        <TextBlock Text="Bordure droite" FontSize="18" FontWeight="Bold" VerticalAlignment="Center" FontFamily="{Binding AppView.FontApp}"/>
+                                        <TextBlock Text="Bordure droite" FontSize="18" FontWeight="{Binding AppView.WeightApp}" VerticalAlignment="Center" FontFamily="{Binding AppView.FontApp}"/>
                                     </StackPanel>
                                 </Button>
 
@@ -185,7 +185,7 @@
                                             <Line X1="12" X2="12" Y1="0" Y2="24" Stroke="Black" StrokeThickness="2" StrokeDashArray="2,3"/>
                                             <Line X1="24" X2="24" Y1="0" Y2="24" Stroke="Black" StrokeThickness="2" StrokeDashArray="2,3"/>
                                         </Canvas>
-                                        <TextBlock Text="Bordure inférieure" FontSize="18" FontWeight="Bold" VerticalAlignment="Center" FontFamily="{Binding AppView.FontApp}"/>
+                                        <TextBlock Text="Bordure inférieure" FontSize="18" FontWeight="{Binding AppView.WeightApp}" VerticalAlignment="Center" FontFamily="{Binding AppView.FontApp}"/>
                                     </StackPanel>
                                 </Button>
 
@@ -199,7 +199,7 @@
                                             <Line X1="12" X2="12" Y1="0" Y2="24" Stroke="Black" StrokeThickness="2" StrokeDashArray="2,3"/>
                                             <Line X1="24" X2="24" Y1="0" Y2="24" Stroke="Black" StrokeThickness="2" StrokeDashArray="2,3"/>
                                         </Canvas>
-                                        <TextBlock Text="Aucune Bordure" FontSize="18" FontWeight="Bold" VerticalAlignment="Center" FontFamily="{Binding AppView.FontApp}"/>
+                                        <TextBlock Text="Aucune Bordure" FontSize="18" FontWeight="{Binding AppView.WeightApp}" VerticalAlignment="Center" FontFamily="{Binding AppView.FontApp}"/>
                                     </StackPanel>
                                 </Button>
 
@@ -213,7 +213,7 @@
                                             <Line X1="12" X2="12" Y1="0" Y2="24" Stroke="Black" StrokeThickness="2"/>
                                             <Line X1="24" X2="24" Y1="0" Y2="24" Stroke="Black" StrokeThickness="2"/>
                                         </Canvas>
-                                        <TextBlock Text="Toutes les Bordures" FontSize="18" FontWeight="Bold" VerticalAlignment="Center" FontFamily="{Binding AppView.FontApp}"/>
+                                        <TextBlock Text="Toutes les Bordures" FontSize="18" FontWeight="{Binding AppView.WeightApp}" VerticalAlignment="Center" FontFamily="{Binding AppView.FontApp}"/>
                                     </StackPanel>
                                 </Button>
 
@@ -227,7 +227,7 @@
                                             <Line X1="12" X2="12" Y1="0" Y2="24" Stroke="Black" StrokeThickness="2" StrokeDashArray="2,3"/>
                                             <Line X1="24" X2="24" Y1="0" Y2="24" Stroke="Black" StrokeThickness="2"/>
                                         </Canvas>
-                                        <TextBlock Text="Bordures Extérieures" FontSize="18" FontWeight="Bold" VerticalAlignment="Center" FontFamily="{Binding AppView.FontApp}"/>
+                                        <TextBlock Text="Bordures Extérieures" FontSize="18" FontWeight="{Binding AppView.WeightApp}" VerticalAlignment="Center" FontFamily="{Binding AppView.FontApp}"/>
                                     </StackPanel>
                                 </Button>
 
@@ -254,7 +254,7 @@
                 
                 <StackPanel Orientation="Horizontal" Spacing="10" HorizontalAlignment="Left" Width="244" Height="26" Margin="20,0,-20,0" IsHitTestVisible="False">
                     <Border x:Name="SelectedBackgroundIcon" Width="24" Height="24" Background="White" HorizontalAlignment="Left" BorderBrush="Black" BorderThickness="1"/>
-                    <TextBlock x:Name="SelectedBackgroundText" Text="Background..." FontSize="18" FontWeight="Bold" VerticalAlignment="Center" FontFamily="{Binding AppView.FontApp}"/>
+                    <TextBlock x:Name="SelectedBackgroundText" Text="Background..." FontSize="18" FontWeight="{Binding AppView.WeightApp}" VerticalAlignment="Center" FontFamily="{Binding AppView.FontApp}"/>
                 </StackPanel>
 
                 <!-- Popup avec les choix -->

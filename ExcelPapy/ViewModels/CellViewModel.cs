@@ -100,4 +100,9 @@ public partial class CellViewModel : ObservableObject
 
     [ObservableProperty]
     private Brush _borderBrushBottom = GreyBorder;
+
+    private static readonly Brush TransparentBrush = new SolidColorBrush(Microsoft.UI.Colors.Transparent);
+
+    [ObservableProperty]
+    private Brush _cornerBottomRight = TransparentBrush;
 }

@@ -36,7 +36,7 @@
                     <DataTemplate x:DataType="local:ColumnHeaderViewModel">
                         <Grid Width="{Binding Width}" IsHitTestVisible="True">
                             <Border Height="100" Background="#E0E0E0" BorderBrush="Black" BorderThickness="0,3,3,3">
-                                <TextBlock Text="{Binding Label}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="ExtraBold" FontSize="32" FontFamily="{Binding FontFamily}"/>
+                                <TextBlock Text="{Binding Label}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="{Binding FontWeight}" FontSize="32" FontFamily="{Binding FontFamily}"/>
                             </Border>
 
                             <!-- Zone de détection élargie centrée sur la bordure droite -->
@@ -67,7 +67,7 @@
                     <DataTemplate x:DataType="local:RowHeaderViewModel">
                         <Grid Height="{Binding Height}" IsHitTestVisible="True">
                             <Border Width="100" Background="#E0E0E0" BorderBrush="Black" BorderThickness="3,0,3,3">
-                                <TextBlock Text="{Binding Label}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="ExtraBold" FontSize="32" FontFamily="{Binding FontFamily}"/>
+                                <TextBlock Text="{Binding Label}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="{Binding FontWeight}" FontSize="32" FontFamily="{Binding FontFamily}"/>
                             </Border>
                             <!-- Poignée bas pour redimensionner -->
                             <Rectangle x:Name="RowResizeHandle"
@@ -140,14 +140,7 @@
                                                         Margin="{Binding UnderlineMargin}"
                                                         Visibility="{Binding FontUnderline, Converter={StaticResource BoolToVisibilityConverter}}"/>
 
-                                            <Border x:Name="SelectionOverlay"
-                                                        IsHitTestVisible="False"
-                                                        BorderBrush="#EBC117"
-                                                        BorderThickness="{Binding SelectionBorderThickness}"
-                                                        Background="#80E8D268"
-                                                        Visibility="{Binding IsSelected, Converter={StaticResource BoolToVisibilityConverter}}"
-                                                        Margin="-3"/>
-
+                                            
                                             <Rectangle Fill="{Binding BorderBrushTop}" Height="{Binding BorderThicknessTop}"
                                                 VerticalAlignment="Top" HorizontalAlignment="Stretch" IsHitTestVisible="False"/>
                                             <Rectangle Fill="{Binding BorderBrushBottom}" Height="{Binding BorderThicknessBottom}"
@@ -156,6 +149,17 @@
                                                 HorizontalAlignment="Left" VerticalAlignment="Stretch" IsHitTestVisible="False"/>
                                             <Rectangle Fill="{Binding BorderBrushRight}" Width="{Binding BorderThicknessRight}"
                                                 HorizontalAlignment="Right" VerticalAlignment="Stretch" IsHitTestVisible="False"/>
+                                            <Rectangle Fill="{Binding CornerBottomRight}" Width="3" Height="3"
+                                                HorizontalAlignment="Right" VerticalAlignment="Bottom" IsHitTestVisible="False"/>
+
+                                            <Border x:Name="SelectionOverlay"
+                                                IsHitTestVisible="False"
+                                                BorderBrush="#EBC117"
+                                                BorderThickness="{Binding SelectionBorderThickness}"
+                                                Background="#40E8D268"
+                                                Visibility="{Binding IsSelected, Converter={StaticResource BoolToVisibilityConverter}}"
+                                                Margin="-6,-6,3,3"/>
+
 
                                         </Grid>
                                     </DataTemplate>
