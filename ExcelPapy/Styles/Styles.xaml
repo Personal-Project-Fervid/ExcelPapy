@@ -3,8 +3,16 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:primitives="using:Microsoft.UI.Xaml.Controls.Primitives">
 
-    
-    
+    <!-- Font -->
+    <FontFamily x:Key="Fraunces">ms-appx:///Assets/Fonts/Fraunces-VariableFont_SOFT,WONK,opsz,wght.ttf#Fraunces</FontFamily>
+    <FontFamily x:Key="Inter">ms-appx:///Assets/Fonts/Inter-VariableFont_opsz,wght.ttf#Inter</FontFamily>
+    <FontFamily x:Key="LexendDeca">ms-appx:///Assets/Fonts/LexendDeca-VariableFont_wght.ttf#LexendDeca</FontFamily>
+    <FontFamily x:Key="Nabla">ms-appx:///Assets/Fonts/Nabla-Regular-VariableFont_EDPT,EHLT.ttf#Nabla</FontFamily>
+    <FontFamily x:Key="NotoSans">ms-appx:///Assets/Fonts/NotoSans-VariableFont_wdht,wght.ttf#NotoSans</FontFamily>
+    <FontFamily x:Key="Rubik">ms-appx:///Assets/Fonts/Rubik-VariableFont_wght.ttf#Rubik</FontFamily>
+    <FontFamily x:Key="ScienceGothic">ms-appx:///Assets/Fonts/ScienceGothic-VariableFont_CTRS,slnt,wdht,wght.ttf#ScienceGothic</FontFamily>
+    <FontFamily x:Key="TiltWarp">ms-appx:///Assets/Fonts/TiltWarp-Regular-VariableFont_XROT,YROT.ttf#TiltWarp</FontFamily>
+
     <!-- Texte cellules -->
     <Style x:Key="CellTextStyle" TargetType="TextBox">
         <Setter Property="BorderThickness" Value="0"/>

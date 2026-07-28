@@ -91,23 +91,18 @@ public sealed partial class AppPersonalization : UserControl
             SelectedPoliceText.Text = police switch
             {
                 "Segoe UI" => "Police",
-                "Arial" => "Police",
-                "Calibri" => "Police",
-                "Times new roman" => "Police",
-                "Verdana" => "Police",
+                "Fraunces" => "Police",
+                "Inter" => "Police",
+                "LexendDeca" => "Police",
+                "Nabla" => "Police",
+                "NotoSans" => "Police",
+                "Rubik" => "Police",
+                "ScienceGothic" => "Police",
+                "TiltWarp" => "Police",
                 _ => "Police"
             };
 
-            SelectedPoliceText.FontFamily = police switch
-            {
-                "Segoe UI" => new FontFamily("Segoe UI"),
-                "Arial" => new FontFamily("Arial"),
-                "Calibri" => new FontFamily("Calibri"),
-                "Times new roman" => new FontFamily("Times New Roman"),
-                "Verdana" => new FontFamily("Verdana"),
-                _ => new FontFamily("Arial")
-            };
-
+            SelectedPoliceText.FontFamily = AppFonts.Resolve(police);
             _mainViewModel?.ApplyAppPoliceToSelection(police ?? "Segoe UI");
             PolicePickerPopup.IsOpen = false;
         }

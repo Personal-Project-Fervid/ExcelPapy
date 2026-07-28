@@ -11,5 +11,5 @@ public partial class RowHeaderViewModel : ObservableObject
     public string Label { get; init; } = string.Empty;
 
     [ObservableProperty]
-    private string _fontFamily = "Segoe UI";
+    private FontFamily _fontFamily = new FontFamily("Segoe UI");
 }

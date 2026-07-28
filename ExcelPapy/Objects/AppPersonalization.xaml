@@ -143,7 +143,7 @@
                        DesiredPlacement="Bottom"
                        Opened="PolicePickerPopup_Opened"
                        Closed="PolicePickerPopup_Closed">
-                    
+
                     <Border x:Name="PolicePickerBorder"
                             Margin="0,3,0,-3"
                             BorderBrush="Black"
@@ -169,29 +169,54 @@
                                     </StackPanel>
                                 </Button>
 
-                                <Button Click="OnPoliceSelected" Tag="Arial" Style="{StaticResource NumberFontSize}">
+                                <Button Click="OnPoliceSelected" Tag="Fraunces" Style="{StaticResource NumberFontSize}">
                                     <StackPanel Orientation="Horizontal" Spacing="10">
-                                        <TextBlock Text="Arial" FontSize="18" FontWeight="DemiBold" VerticalAlignment="Center" FontFamily="Arial"/>
+                                        <TextBlock Text="Fraunces" FontSize="18" FontWeight="DemiBold" VerticalAlignment="Center" FontFamily="{StaticResource Fraunces}"/>
                                     </StackPanel>
                                 </Button>
 
-                                <Button Click="OnPoliceSelected" Tag="Calibri" Style="{StaticResource NumberFontSize}">
+                                <Button Click="OnPoliceSelected" Tag="Inter" Style="{StaticResource NumberFontSize}">
                                     <StackPanel Orientation="Horizontal" Spacing="10">
-                                        <TextBlock Text="Calibri" FontSize="18" FontWeight="DemiBold" VerticalAlignment="Center" FontFamily="Calibri"/>
+                                        <TextBlock Text="Inter" FontSize="18" FontWeight="DemiBold" VerticalAlignment="Center" FontFamily="{StaticResource Inter}"/>
                                     </StackPanel>
                                 </Button>
 
-                                <Button Click="OnPoliceSelected" Tag="Times new roman" Style="{StaticResource NumberFontSize}">
+                                <Button Click="OnPoliceSelected" Tag="LexendDeca" Style="{StaticResource NumberFontSize}">
                                     <StackPanel Orientation="Horizontal" Spacing="10">
-                                        <TextBlock Text="Times New Roman" FontSize="18" FontWeight="DemiBold" VerticalAlignment="Center" FontFamily="Times New Roman"/>
+                                        <TextBlock Text="Lexend Deca" FontSize="18" FontWeight="DemiBold" VerticalAlignment="Center" FontFamily="{StaticResource LexendDeca}"/>
                                     </StackPanel>
                                 </Button>
 
-                                <Button Click="OnPoliceSelected" Tag="Verdana" Style="{StaticResource NumberFontSize}">
+                                <Button Click="OnPoliceSelected" Tag="Nabla" Style="{StaticResource NumberFontSize}">
                                     <StackPanel Orientation="Horizontal" Spacing="10">
-                                        <TextBlock Text="Verdana" FontSize="18" FontWeight="DemiBold" VerticalAlignment="Center" FontFamily="Verdana"/>
+                                        <TextBlock Text="Nabla" FontSize="18" FontWeight="DemiBold" VerticalAlignment="Center" FontFamily="{StaticResource Nabla}"/>
                                     </StackPanel>
                                 </Button>
+
+                                <Button Click="OnPoliceSelected" Tag="NotoSans" Style="{StaticResource NumberFontSize}">
+                                    <StackPanel Orientation="Horizontal" Spacing="10">
+                                        <TextBlock Text="Noto Sans" FontSize="18" FontWeight="DemiBold" VerticalAlignment="Center" FontFamily="{StaticResource NotoSans}"/>
+                                    </StackPanel>
+                                </Button>
+
+                                <Button Click="OnPoliceSelected" Tag="Rubik" Style="{StaticResource NumberFontSize}">
+                                    <StackPanel Orientation="Horizontal" Spacing="10">
+                                        <TextBlock Text="Rubik" FontSize="18" FontWeight="DemiBold" VerticalAlignment="Center" FontFamily="{StaticResource Rubik}"/>
+                                    </StackPanel>
+                                </Button>
+
+                                <Button Click="OnPoliceSelected" Tag="ScienceGothic" Style="{StaticResource NumberFontSize}">
+                                    <StackPanel Orientation="Horizontal" Spacing="10">
+                                        <TextBlock Text="Science Gothic" FontSize="18" FontWeight="DemiBold" VerticalAlignment="Center" FontFamily="{StaticResource ScienceGothic}"/>
+                                    </StackPanel>
+                                </Button>
+
+                                <Button Click="OnPoliceSelected" Tag="TiltWarp" Style="{StaticResource NumberFontSize}">
+                                    <StackPanel Orientation="Horizontal" Spacing="10">
+                                        <TextBlock Text="Tilt Warp" FontSize="18" FontWeight="DemiBold" VerticalAlignment="Center" FontFamily="{StaticResource TiltWarp}"/>
+                                    </StackPanel>
+                                </Button>
+
                             </StackPanel>
                         </Grid>
                     </Border>

@@ -1,5 +1,6 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using ExcelPapy.Objects;
 
 
 namespace ExcelPapy.ViewModels;
@@ -284,14 +285,14 @@ public partial class MainViewModel : ObservableObject
                 }
     }
 
-    public void ApplyAppPoliceToSelection(string fontFamily)
+    public void ApplyAppPoliceToSelection(string policeKey)
     {
-        AppView.FontApp = fontFamily;
+        AppView.FontApp = AppFonts.Resolve(policeKey);
 
         foreach (var col in ColumnHeaders)
-            col.FontFamily = fontFamily;
+            col.FontFamily = AppFonts.Resolve(policeKey);
 
         foreach (var row in RowHeaders)
-            row.FontFamily = fontFamily;
+            row.FontFamily = AppFonts.Resolve(policeKey);
     }
 }
