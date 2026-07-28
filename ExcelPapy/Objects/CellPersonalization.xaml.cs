@@ -13,12 +13,11 @@ public sealed partial class CellPersonalization : UserControl
 {
 
     private MainViewModel? _mainViewModel;
-    public FrameworkElement CaptureRoot { get; set; }
+    public FrameworkElement? CaptureRoot { get; set; }
 
-    private byte[] _cachedBlurredFullImage;
+    private byte[]? _cachedBlurredFullImage;
     private int _cachedWidth;
     private int _cachedHeight;
-    private bool _isBlurCacheReady = false;
 
     private bool _isKeyDown = false;
     public void setKeyDown(bool value)
@@ -37,8 +36,8 @@ public sealed partial class CellPersonalization : UserControl
         _mainViewModel = vm;
     }
 
-    private Brush _background;
-    public new Brush Background
+    private Brush? _background;
+    public new Brush? Background
     {
         get => _background;
         set
@@ -344,8 +343,8 @@ public sealed partial class CellPersonalization : UserControl
         y.Visibility = Visibility.Collapsed;
     }
 
-    private CancellationTokenSource _borderBlurTransitionCts;
-    private CancellationTokenSource _backgroundBlurTransitionCts;
+    private CancellationTokenSource _borderBlurTransitionCts = new();
+    private CancellationTokenSource _backgroundBlurTransitionCts = new();
     private async void BorderPickerPopup_Opened(object sender, object e)
     {
         _borderBlurTransitionCts?.Cancel();
@@ -414,14 +413,11 @@ public sealed partial class CellPersonalization : UserControl
     {
         try
         {
-            var elementToCapture = CaptureRoot
-                ?? Window.Current.Content as FrameworkElement;
+            FrameworkElement? elementToCapture = CaptureRoot
+                ?? Window.Current?.Content as FrameworkElement;
 
             if (elementToCapture == null)
-            {
-                System.Diagnostics.Debug.WriteLine("Aucune racine de capture disponible.");
                 return;
-            }
 
             var renderTarget = new RenderTargetBitmap();
             await renderTarget.RenderAsync(elementToCapture);
@@ -435,7 +431,6 @@ public sealed partial class CellPersonalization : UserControl
             _cachedBlurredFullImage = ApplyGaussianBlur(pixels, width, height, blurRadius);
             _cachedWidth = width;
             _cachedHeight = height;
-            _isBlurCacheReady = true;
         }
         catch (Exception ex)
         {
@@ -448,10 +443,10 @@ public sealed partial class CellPersonalization : UserControl
         
         try
         {
-            var elementToCapture = CaptureRoot
-                ?? Window.Current.Content as FrameworkElement;
+            FrameworkElement? elementToCapture = CaptureRoot
+                ?? Window.Current?.Content as FrameworkElement;
 
-            var croppedBytes = CropToElement(_cachedBlurredFullImage, _cachedWidth, _cachedHeight, target, elementToCapture);
+            var croppedBytes = CropToElement(_cachedBlurredFullImage ?? new byte[0], _cachedWidth, _cachedHeight, target, elementToCapture);
 
             var bitmapImage = new BitmapImage();
             using (var stream = new InMemoryRandomAccessStream())
@@ -489,7 +484,7 @@ public sealed partial class CellPersonalization : UserControl
         return data.ToArray();
     }
 
-    private byte[] CropToElement(byte[] pngBytes, int sourceWidth, int sourceHeight, FrameworkElement target, FrameworkElement captureRoot)
+    private byte[] CropToElement(byte[] pngBytes, int sourceWidth, int sourceHeight, FrameworkElement target, FrameworkElement? captureRoot)
     {
         // Calcule la position de l'élément cible par rapport à la racine capturée
         var transform = target.TransformToVisual(captureRoot);

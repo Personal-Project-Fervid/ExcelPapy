@@ -269,15 +269,18 @@ public partial class MainViewModel : ObservableObject
                     cell.HorizontalAlignment = HorizontalAlignment;
     }
 
-    public void ApplyBackgroundToSelection(Brush background)
+    public void ApplyBackgroundToSelection(Brush? background)
     {
+        if (background == null) 
+            return;
+
         foreach (var row in Rows)
             foreach (var cell in row.Cells)
                 if (cell.IsSelected)
                 {
                     cell.Background = background;
 
-                    Brush noir = new SolidColorBrush(Microsoft.UI.Colors.Black);
+                    Brush? noir = new SolidColorBrush(Microsoft.UI.Colors.Black);
                     if (background != noir)
                     {
                         cell.BorderBrush = background;

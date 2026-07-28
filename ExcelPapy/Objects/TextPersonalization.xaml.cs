@@ -8,12 +8,11 @@ namespace ExcelPapy.Objects;
 
 public sealed partial class TextPersonalization : UserControl
 {
-    public FrameworkElement CaptureRoot {  get; set; }
+    public FrameworkElement? CaptureRoot {  get; set; }
 
-    private byte[] _cachedBlurredFullImage;
+    private byte[]? _cachedBlurredFullImage;
     private int _cachedWidth;
     private int _cachedHeight;
-    private bool _isBlurCacheReady = false;
 
     private bool _isKeyDown = false;
     public void setKeyDown(bool value)
@@ -162,6 +161,8 @@ public sealed partial class TextPersonalization : UserControl
 
             FontSizeCell = fontSize;
 
+            if (FontSizeCell is null)
+                return;
 
             var x = double.Parse(FontSizeCell);
             _mainViewModel?.ApplyFontSizeToSelection(x);
@@ -237,6 +238,9 @@ public sealed partial class TextPersonalization : UserControl
 
     public void FontSizePersonalization(object sender, RoutedEventArgs e)
     {
+        if(FontSizeCell == null) 
+            return;
+
         double fontSize = double.Parse(FontSizeCell);
         _mainViewModel?.ApplyFontSizeToSelection(fontSize);
     }
@@ -277,9 +281,9 @@ public sealed partial class TextPersonalization : UserControl
         y.Visibility = Visibility.Collapsed;
     }
 
-    private CancellationTokenSource _policeBlurTransitionCts;
-    private CancellationTokenSource _fontSizeBlurTransitionCts;
-    private CancellationTokenSource _policeColorBlurTransitionCts;
+    private CancellationTokenSource _policeBlurTransitionCts = new();
+    private CancellationTokenSource _fontSizeBlurTransitionCts = new();
+    private CancellationTokenSource _policeColorBlurTransitionCts = new();
     private async void PolicePickerPopup_Opened(object sender, object e)
     {
         _policeBlurTransitionCts?.Cancel();
@@ -382,8 +386,8 @@ public sealed partial class TextPersonalization : UserControl
         
         try
         {
-            var elementToCapture = CaptureRoot
-                ?? Window.Current.Content as FrameworkElement;
+            FrameworkElement? elementToCapture = CaptureRoot
+                ?? Window.Current?.Content as FrameworkElement;
 
             System.Diagnostics.Debug.WriteLine($"[BLUR] CaptureRoot = {CaptureRoot?.GetType().Name ?? "NULL"}");
             System.Diagnostics.Debug.WriteLine($"[BLUR] elementToCapture = {elementToCapture?.GetType().Name ?? "NULL"}");
@@ -406,7 +410,6 @@ public sealed partial class TextPersonalization : UserControl
             _cachedBlurredFullImage = ApplyGaussianBlur(pixels, width, height, blurRadius);
             _cachedWidth = width;
             _cachedHeight = height;
-            _isBlurCacheReady = true;
         }
         catch (Exception ex)
         {
@@ -420,10 +423,10 @@ public sealed partial class TextPersonalization : UserControl
 
         try
         {
-            var elementToCapture = CaptureRoot
-                ?? Window.Current.Content as FrameworkElement;
+            FrameworkElement? elementToCapture = CaptureRoot
+                ?? Window.Current?.Content as FrameworkElement;
 
-            var croppedBytes = CropToElement(_cachedBlurredFullImage, _cachedWidth, _cachedHeight, target, elementToCapture);
+            var croppedBytes = CropToElement(_cachedBlurredFullImage ?? new byte[0], _cachedWidth, _cachedHeight, target, elementToCapture);
 
             var bitmapImage = new BitmapImage();
             using (var stream = new InMemoryRandomAccessStream())
@@ -464,7 +467,7 @@ public sealed partial class TextPersonalization : UserControl
         return data.ToArray();
     }
 
-    private byte[] CropToElement(byte[] pngBytes, int sourceWidth, int sourceHeight, FrameworkElement target, FrameworkElement captureRoot)
+    private byte[] CropToElement(byte[] pngBytes, int sourceWidth, int sourceHeight, FrameworkElement target, FrameworkElement? captureRoot)
     {
         // Calcule la position de l'élément cible par rapport à la racine capturée
         var transform = target.TransformToVisual(captureRoot);

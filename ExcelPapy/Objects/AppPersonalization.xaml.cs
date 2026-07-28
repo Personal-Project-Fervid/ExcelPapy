@@ -19,7 +19,7 @@ public sealed partial class AppPersonalization : UserControl
         _mainViewModel = vm;
     }
 
-    private Tutorial _tutorial;
+    private Tutorial _tutorial = new();
     public void SetTutorial(Tutorial tutorial)
     {
         _tutorial = tutorial;
@@ -208,17 +208,16 @@ public sealed partial class AppPersonalization : UserControl
 
 
 
-    public FrameworkElement CaptureRoot { get; set; }
+    public FrameworkElement? CaptureRoot { get; set; }
 
-    private byte[] _cachedBlurredFullImage;
+    private byte[]? _cachedBlurredFullImage;
     private int _cachedWidth;
     private int _cachedHeight;
-    private bool _isBlurCacheReady = false;
 
-    private CancellationTokenSource _boldAppBlurTransitionCts;
-    private CancellationTokenSource _policeBlurTransitionCts;
-    private CancellationTokenSource _languageBlurTransitionCts;
-    private CancellationTokenSource _tutorialBlurTransitionCts;
+    private CancellationTokenSource _boldAppBlurTransitionCts = new();
+    private CancellationTokenSource _policeBlurTransitionCts = new();
+    private CancellationTokenSource _languageBlurTransitionCts = new();
+    private CancellationTokenSource _tutorialBlurTransitionCts = new();
 
     private async void BoldAppPickerPopup_Opened(object sender, object e)
     {
@@ -353,14 +352,10 @@ public sealed partial class AppPersonalization : UserControl
     {
         try
         {
-            var elementToCapture = CaptureRoot
-                ?? Window.Current.Content as FrameworkElement;
+            FrameworkElement? elementToCapture = CaptureRoot
+                ?? Window.Current?.Content as FrameworkElement;
 
-            if (elementToCapture == null)
-            {
-                System.Diagnostics.Debug.WriteLine("Aucune racine de capture disponible.");
-                return;
-            }
+            if (elementToCapture == null) { return; }
 
             var renderTarget = new RenderTargetBitmap();
             await renderTarget.RenderAsync(elementToCapture);
@@ -374,12 +369,8 @@ public sealed partial class AppPersonalization : UserControl
             _cachedBlurredFullImage = ApplyGaussianBlur(pixels, width, height, blurRadius);
             _cachedWidth = width;
             _cachedHeight = height;
-            _isBlurCacheReady = true;
         }
-        catch (Exception ex)
-        {
-            System.Diagnostics.Debug.WriteLine($"Erreur précalcul flou : {ex.Message}");
-        }
+        catch (Exception) { }
     }
 
     private async void ApplyCachedBlurToTarget(FrameworkElement target, ImageBrush destinationBrush)
@@ -387,10 +378,9 @@ public sealed partial class AppPersonalization : UserControl
 
         try
         {
-            var elementToCapture = CaptureRoot
-                ?? Window.Current.Content as FrameworkElement;
+            FrameworkElement? elementToCapture = CaptureRoot ?? Window.Current?.Content as FrameworkElement;
 
-            var croppedBytes = CropToElement(_cachedBlurredFullImage, _cachedWidth, _cachedHeight, target, elementToCapture);
+            var croppedBytes = CropToElement(_cachedBlurredFullImage ?? new byte[0], _cachedWidth, _cachedHeight, target, elementToCapture);
 
             var bitmapImage = new BitmapImage();
             using (var stream = new InMemoryRandomAccessStream())
@@ -428,7 +418,7 @@ public sealed partial class AppPersonalization : UserControl
         return data.ToArray();
     }
 
-    private byte[] CropToElement(byte[] pngBytes, int sourceWidth, int sourceHeight, FrameworkElement target, FrameworkElement captureRoot)
+    private byte[] CropToElement(byte[] pngBytes, int sourceWidth, int sourceHeight, FrameworkElement target, FrameworkElement? captureRoot)
     {
         // Calcule la position de l'élément cible par rapport à la racine capturée
         var transform = target.TransformToVisual(captureRoot);

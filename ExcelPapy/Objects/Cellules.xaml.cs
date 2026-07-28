@@ -41,8 +41,6 @@ public sealed partial class Cellules : UserControl
         this.DataContext = vm;
     }
 
-    private DispatcherTimer _resizeTimer;
-
     private void OnRowResize(object sender, ManipulationDeltaRoutedEventArgs e)
     {
         if (sender is Rectangle rect && rect.DataContext is RowHeaderViewModel row)
@@ -90,7 +88,7 @@ public sealed partial class Cellules : UserControl
 
     private void OnResizePointerExited(object sender, PointerRoutedEventArgs e)
         => SetCursor(LoadCursor(IntPtr.Zero, IDC_ARROW));
-    private void OnCellScrollChanged(object sender, ScrollViewerViewChangedEventArgs e)
+    private void OnCellScrollChanged(object? sender, ScrollViewerViewChangedEventArgs e)
     {
         if (_isSyncing) return;
         _isSyncing = true;
@@ -104,7 +102,7 @@ public sealed partial class Cellules : UserControl
     }
 
     // Quand l'en-tête colonne scrolle → sync les cellules
-    private void OnHeaderScrollChanged(object sender, ScrollViewerViewChangedEventArgs e)
+    private void OnHeaderScrollChanged(object? sender, ScrollViewerViewChangedEventArgs e)
     {
         if (_isSyncing) return;
         _isSyncing = true;
@@ -117,7 +115,7 @@ public sealed partial class Cellules : UserControl
     }
 
     // Quand l'en-tête ligne scrolle → sync les cellules
-    private void OnRowHeaderScrollChanged(object sender, ScrollViewerViewChangedEventArgs e)
+    private void OnRowHeaderScrollChanged(object? sender, ScrollViewerViewChangedEventArgs e)
     {
         if (_isSyncing) return;
         _isSyncing = true;
@@ -144,7 +142,7 @@ public sealed partial class Cellules : UserControl
         }
     }
 
-    private void OnHorizontalSliderValueChanged(object sender, double value)
+    private void OnHorizontalSliderValueChanged(object? sender, double value)
     {
         if (_isSyncing) return;
         _isSyncing = true;
@@ -155,7 +153,7 @@ public sealed partial class Cellules : UserControl
         _isSyncing = false;
     }
 
-    private void OnVerticalSliderValueChanged(object sender, double value)
+    private void OnVerticalSliderValueChanged(object? sender, double value)
     {
         if (_isSyncing) return;
         _isSyncing = true;
