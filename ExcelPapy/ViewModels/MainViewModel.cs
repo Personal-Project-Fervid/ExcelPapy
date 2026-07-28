@@ -291,13 +291,13 @@ public partial class MainViewModel : ObservableObject
 
                     if (!backgroundIsBlack)
                     {
-                        if (BrushHasColor(cell.BorderBrushTop, CouleurGris))
+                        if (!BrushHasColor(cell.BorderBrushTop, CouleurNoir))
                             cell.BorderBrushTop = background;
-                        if (BrushHasColor(cell.BorderBrushLeft, CouleurGris))
+                        if (!BrushHasColor(cell.BorderBrushLeft, CouleurNoir))
                             cell.BorderBrushLeft = background;
-                        if (BrushHasColor(cell.BorderBrushRight, CouleurGris))
+                        if (!BrushHasColor(cell.BorderBrushRight, CouleurNoir))
                             cell.BorderBrushRight = background;
-                        if (BrushHasColor(cell.BorderBrushBottom, CouleurGris))
+                        if (!BrushHasColor(cell.BorderBrushBottom, CouleurNoir))
                             cell.BorderBrushBottom = background;
                     }
                 }
