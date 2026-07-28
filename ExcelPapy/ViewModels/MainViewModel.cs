@@ -1,6 +1,7 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using ExcelPapy.Objects;
+using System.Linq;
 
 
 namespace ExcelPapy.ViewModels;
@@ -274,16 +275,20 @@ public partial class MainViewModel : ObservableObject
         if (background == null) 
             return;
 
+        Brush noir = new SolidColorBrush(Microsoft.UI.Colors.Black);
+
         foreach (var row in Rows)
             foreach (var cell in row.Cells)
                 if (cell.IsSelected)
                 {
                     cell.Background = background;
 
-                    Brush? noir = new SolidColorBrush(Microsoft.UI.Colors.Black);
                     if (background != noir)
                     {
-                        cell.BorderBrush = background;
+                        cell.BorderBrushTop = background;
+                        cell.BorderBrushLeft = background;
+                        cell.BorderBrushRight = background;
+                        cell.BorderBrushBottom = background;
                     }
                 }
     }
@@ -298,4 +303,117 @@ public partial class MainViewModel : ObservableObject
         foreach (var row in RowHeaders)
             row.FontFamily = AppFonts.Resolve(policeKey);
     }
+
+    private static readonly Brush BorderColorNoir = new SolidColorBrush(Microsoft.UI.Colors.Black);
+    private const double EpaisseurBordure = 3;
+
+    public void ApplyBorderToSelection(string borderType)
+    {
+        var selectedCells = Rows.SelectMany(r => r.Cells).Where(c => c.IsSelected).ToList();
+        if (selectedCells.Count == 0)
+            return;
+
+        switch (borderType)
+        {
+            case "None":
+                foreach (var c in selectedCells)
+                {
+                    SetTopBorder(c, 0);
+                    SetLeftBorder(c, 0);
+                    SetRightBorder(c, 0);
+                    SetBottomBorder(c, 0);
+                }
+                break;
+
+            case "All":
+                foreach (var c in selectedCells)
+                {
+                    SetTopBorder(c, EpaisseurBordure);
+                    SetLeftBorder(c, EpaisseurBordure);
+                    SetRightBorder(c, EpaisseurBordure);
+                    SetBottomBorder(c, EpaisseurBordure);
+                }
+                break;
+
+            case "Top":
+                foreach (var c in selectedCells)
+                    SetTopBorder(c, EpaisseurBordure);
+                break;
+
+            case "Left":
+                foreach (var c in selectedCells)
+                    SetLeftBorder(c, EpaisseurBordure);
+                break;
+
+            case "Right":
+                foreach (var c in selectedCells)
+                    SetRightBorder(c, EpaisseurBordure);
+                break;
+
+            case "Bottom":
+                foreach (var c in selectedCells)
+                    SetBottomBorder(c, EpaisseurBordure);
+                break;
+
+            case "Outer":
+                int rowMin = selectedCells.Min(c => c.Row);
+                int rowMax = selectedCells.Max(c => c.Row);
+                int colMin = selectedCells.Min(c => c.Column);
+                int colMax = selectedCells.Max(c => c.Column);
+
+                foreach (var c in selectedCells)
+                {
+                    if (c.Row == rowMin) SetTopBorder(c, EpaisseurBordure);
+                    if (c.Row == rowMax) SetBottomBorder(c, EpaisseurBordure);
+                    if (c.Column == colMin) SetLeftBorder(c, EpaisseurBordure);
+                    if (c.Column == colMax) SetRightBorder(c, EpaisseurBordure);
+                }
+                break;
+        }
+    }
+
+    private void SetTopBorder(CellViewModel cell, double thickness)
+    {
+        if (cell.Row > 0)
+        {
+            // Le "haut" visuel appartient au "bas" de la cellule du dessus
+            var above = Rows[cell.Row - 1].Cells[cell.Column];
+            above.BorderThicknessBottom = thickness;
+            if (thickness > 0) above.BorderBrushBottom = BorderColorNoir;
+        }
+        else
+        {
+            cell.BorderThicknessTop = thickness;
+            if (thickness > 0) cell.BorderBrushTop = BorderColorNoir;
+        }
+    }
+
+    private void SetLeftBorder(CellViewModel cell, double thickness)
+    {
+        if (cell.Column > 0)
+        {
+            // Le "gauche" visuel appartient au "droit" de la cellule de gauche
+            var left = Rows[cell.Row].Cells[cell.Column - 1];
+            left.BorderThicknessRight = thickness;
+            if (thickness > 0) left.BorderBrushRight = BorderColorNoir;
+        }
+        else
+        {
+            cell.BorderThicknessLeft = thickness;
+            if (thickness > 0) cell.BorderBrushLeft = BorderColorNoir;
+        }
+    }
+
+    private void SetRightBorder(CellViewModel cell, double thickness)
+    {
+        cell.BorderThicknessRight = thickness;
+        if (thickness > 0) cell.BorderBrushRight = BorderColorNoir;
+    }
+
+    private void SetBottomBorder(CellViewModel cell, double thickness)
+    {
+        cell.BorderThicknessBottom = thickness;
+        if (thickness > 0) cell.BorderBrushBottom = BorderColorNoir;
+    }
+    
 }

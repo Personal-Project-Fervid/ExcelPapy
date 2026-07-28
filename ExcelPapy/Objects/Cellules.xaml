@@ -106,18 +106,15 @@
                                 <ItemsRepeater.ItemTemplate>
                                     <DataTemplate x:DataType="local:CellViewModel">
 
-                                        <Border x:Name="CellBorder"
-                                                BorderBrush="{Binding BorderBrush}"
-                                                BorderThickness="0,0,3,3"
-                                                Width="{Binding ColumnHeader.Width}"
-                                                Height="{Binding RowHeader.Height}"
-                                                Background="{Binding Background}"
-                                                PointerPressed="OnCellPointerPressed"
-                                                PointerMoved="OnCellPointerMoved"
-                                                PointerReleased="OnCellPointerReleased">
-
-                                            <Grid>
-                                                <TextBox x:Name="CellTextBox"
+                                        <Grid x:Name="CellBorder"
+                                              Width="{Binding ColumnHeader.Width}"
+                                              Height="{Binding RowHeader.Height}"
+                                              Background="{Binding Background}"
+                                              PointerPressed="OnCellPointerPressed"
+                                              PointerMoved="OnCellPointerMoved"
+                                              PointerReleased="OnCellPointerReleased">
+                                            
+                                            <TextBox x:Name="CellTextBox"
                                                          Text="{Binding Value, Mode=TwoWay}"
                                                          FontFamily="{Binding FontFamily}"
                                                          FontSize="{Binding FontSize}"
@@ -134,7 +131,7 @@
                                                          SizeChanged="OnCellTextBoxSizeChanged"
                                                          Loaded="OnCellTextBoxLoaded"/>
 
-                                                <Border x:Name="UnderlineIndicator"
+                                            <Border x:Name="UnderlineIndicator"
                                                         IsHitTestVisible="False"
                                                         Height="2"
                                                         Background="{Binding Foreground}"
@@ -143,15 +140,24 @@
                                                         Margin="{Binding UnderlineMargin}"
                                                         Visibility="{Binding FontUnderline, Converter={StaticResource BoolToVisibilityConverter}}"/>
 
-                                                <Border x:Name="SelectionOverlay"
+                                            <Border x:Name="SelectionOverlay"
                                                         IsHitTestVisible="False"
                                                         BorderBrush="#EBC117"
                                                         BorderThickness="{Binding SelectionBorderThickness}"
                                                         Background="#80E8D268"
                                                         Visibility="{Binding IsSelected, Converter={StaticResource BoolToVisibilityConverter}}"
                                                         Margin="-3"/>
-                                            </Grid>
-                                        </Border>
+
+                                            <Rectangle Fill="{Binding BorderBrushTop}" Height="{Binding BorderThicknessTop}"
+                                                VerticalAlignment="Top" HorizontalAlignment="Stretch" IsHitTestVisible="False"/>
+                                            <Rectangle Fill="{Binding BorderBrushBottom}" Height="{Binding BorderThicknessBottom}"
+                                                VerticalAlignment="Bottom" HorizontalAlignment="Stretch" IsHitTestVisible="False"/>
+                                            <Rectangle Fill="{Binding BorderBrushLeft}" Width="{Binding BorderThicknessLeft}"
+                                                HorizontalAlignment="Left" VerticalAlignment="Stretch" IsHitTestVisible="False"/>
+                                            <Rectangle Fill="{Binding BorderBrushRight}" Width="{Binding BorderThicknessRight}"
+                                                HorizontalAlignment="Right" VerticalAlignment="Stretch" IsHitTestVisible="False"/>
+
+                                        </Grid>
                                     </DataTemplate>
                                 </ItemsRepeater.ItemTemplate>
                             </ItemsRepeater>

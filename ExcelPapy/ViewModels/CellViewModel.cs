@@ -73,6 +73,31 @@ public partial class CellViewModel : ObservableObject
     [ObservableProperty]
     private Brush _background = new SolidColorBrush(Microsoft.UI.Colors.FromARGB(0xFF, 0XF5, 0XF5, 0XF5));
 
+    private static readonly Brush GreyBorder = new SolidColorBrush(Microsoft.UI.Colors.FromARGB(0xFF, 0xBA, 0xBA, 0xBA));
+
+    // Épaisseur indépendante par côté (grille Excel par défaut : droite + bas)
     [ObservableProperty]
-    private Brush _borderBrush = new SolidColorBrush(Microsoft.UI.Colors.FromARGB(0xFF, 0XBA, 0XBA, 0XBA));
+    private double _borderThicknessTop = 0;
+
+    [ObservableProperty]
+    private double _borderThicknessLeft = 0;
+
+    [ObservableProperty]
+    private double _borderThicknessRight = 3;
+
+    [ObservableProperty]
+    private double _borderThicknessBottom = 3;
+
+    // Couleur indépendante par côté
+    [ObservableProperty]
+    private Brush _borderBrushTop = GreyBorder;
+
+    [ObservableProperty]
+    private Brush _borderBrushLeft = GreyBorder;
+
+    [ObservableProperty]
+    private Brush _borderBrushRight = GreyBorder;
+
+    [ObservableProperty]
+    private Brush _borderBrushBottom = GreyBorder;
 }

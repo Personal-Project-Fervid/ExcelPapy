@@ -67,6 +67,8 @@ public sealed partial class CellPersonalization : UserControl
         if (sender is Button btn)
         {
             var tag = btn.Tag?.ToString();
+            _currentBorderTag = tag;
+
             SelectedBorderText.Text = tag switch
             {
                 "Top" => "Bordure Supérieure",
@@ -81,6 +83,8 @@ public sealed partial class CellPersonalization : UserControl
 
             //Mettre à jour l'icône du bouton principal
             UpdateSelectedIcon(tag);
+
+            _mainViewModel?.ApplyBorderToSelection(tag);
 
             BorderPickerPopup.IsOpen = false;
         }
@@ -323,9 +327,10 @@ public sealed partial class CellPersonalization : UserControl
         _mainViewModel?.ApplyBackgroundToSelection(Background);
     }
 
+    private string _currentBorderTag = "Top";
     private void BorderPersonalization(object sender, RoutedEventArgs e)
     {
-
+        _mainViewModel?.ApplyBorderToSelection(_currentBorderTag);
     }
 
     private async Task BlurTransition(FrameworkElement x, FrameworkElement y, CancellationToken token)
