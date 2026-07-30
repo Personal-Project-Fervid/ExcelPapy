@@ -56,10 +56,30 @@ public partial class MainViewModel : ObservableObject
                     ColumnHeader = ColumnHeaders[c],
                     RowHeader = rowHeader,
                     IsEditing = false,
-                    IsSelected = false
+                    IsSelected = false,
+                    Owner = this
                 });
             Rows.Add(row);
         }
+
+        foreach (var row in Rows)
+            foreach (var cell in row.Cells)
+                cell.PropertyChanged += Cell_PropertyChanged;
+    }
+    private void Cell_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+    {
+        // Quand une cellule change de valeur, les formules qui la référencent
+        // ailleurs dans la grille doivent se rafraîchir.
+        if (e.PropertyName == nameof(CellViewModel.Value))
+            RefreshFormulas();
+    }
+
+    private void RefreshFormulas()
+    {
+        foreach (var row in Rows)
+            foreach (var cell in row.Cells)
+                if (FormulaEngine.IsFormula(cell.Value))
+                    cell.RaiseDisplayValueChanged();
     }
 
     private void Column_PropertyChanged(object? sender, PropertyChangedEventArgs e)

@@ -223,11 +223,13 @@ public sealed partial class Cellules : UserControl
                     {
                         if (child is TextBox textBox)
                         {
-                            // Activer la TextBox pour l'édition
-                            textBox.IsReadOnly = false;
-                            textBox.IsHitTestVisible = true;
-                            textBox.Focus(FocusState.Programmatic);
-                            textBox.SelectAll();
+                            var TextBoX = grid.Children.OfType<TextBox>().FirstOrDefault();
+
+                            if (TextBoX != null)
+                            {
+                                TextBoX.Focus(FocusState.Programmatic);
+                                TextBoX.SelectAll();
+                            }
                             break;
                         }
                     }
@@ -252,6 +254,7 @@ public sealed partial class Cellules : UserControl
                 (sender as UIElement)?.CapturePointer(e.Pointer);
                 _isDragging = true;
 
+                cell.IsEditing = false;
                 this.Focus(FocusState.Programmatic);
 
                 ShowMarquee(e.GetCurrentPoint(CellScrollViewer).Position);
@@ -392,8 +395,6 @@ public sealed partial class Cellules : UserControl
             if (e.Key == Windows.System.VirtualKey.Escape)
             {
                 // Désactiver la TextBox
-                textBox.IsReadOnly = true;
-                textBox.IsHitTestVisible = false;
                 cell.IsEditing = false;
                 // Retirer le focus de la TextBox
                 this.Focus(FocusState.Programmatic);
@@ -402,8 +403,6 @@ public sealed partial class Cellules : UserControl
             else if (e.Key == Windows.System.VirtualKey.Enter)
             {
                 // Désactiver la TextBox
-                textBox.IsReadOnly = true;
-                textBox.IsHitTestVisible = false;
                 cell.IsEditing = false;
                 // Retirer le focus de la TextBox
                 this.Focus(FocusState.Programmatic);
@@ -437,8 +436,6 @@ public sealed partial class Cellules : UserControl
                 _textBoxDragDetected = true;
 
                 // Quitter le mode édition pour permettre le drag
-                textBox.IsReadOnly = true;
-                textBox.IsHitTestVisible = false;
                 cell.IsEditing = false;
 
                 // Initialiser le drag manuellement

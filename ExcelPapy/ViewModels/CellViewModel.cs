@@ -105,4 +105,34 @@ public partial class CellViewModel : ObservableObject
 
     [ObservableProperty]
     private Brush _cornerBottomRight = TransparentBrush;
+
+    public MainViewModel? Owner { get; init; }
+
+    public string DisplayValue
+    {
+        get
+        {
+            if (IsEditing || Owner == null) 
+                return Value;
+
+            return FormulaEngine.IsFormula(Value) 
+                ? FormulaEngine.Evaluate(this, Owner)
+                : Value;
+        }
+        set => Value = value;
+    }
+
+    partial void OnValueChanged(string value)
+    {
+        if (!IsEditing)
+            OnPropertyChanged(nameof(DisplayValue));
+    } 
+    partial void OnIsEditingChanged(bool value) => OnPropertyChanged(nameof(DisplayValue));
+
+    public void RaiseDisplayValueChanged() => OnPropertyChanged(nameof(DisplayValue));
+
+
+
+
+
 }

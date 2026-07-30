@@ -205,7 +205,7 @@
                 <Line Stroke="Black" StrokeThickness="3" X1="94" Y1="6" X2="94" Y2="40"/>
                 <Button Click="PoliceColorPersonalization" Width="94" Style="{StaticResource ButtonPersonalizationPopup}" />
 
-                <Grid HorizontalAlignment="Left" Margin="18,0,-18,0">
+                <Grid HorizontalAlignment="Left" Margin="18,0,-18,0" IsHitTestVisible="False">
                     <Grid.RowDefinitions>
                         <RowDefinition/>
                         <RowDefinition Height="6"/>
