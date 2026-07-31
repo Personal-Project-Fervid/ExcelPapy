@@ -5,7 +5,14 @@
     xmlns:local="using:ExcelPapy.ViewModels"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:converters="using:ExcelPapy.Objects.Converters"
     xmlns:objet="using:ExcelPapy.Objects">
+
+    <UserControl.Resources>
+        <!-- Instance des convertisseurs pour réutilisation dans le XAML -->
+        <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+        <converters:InverseBoolToVisibilityConverter x:Key="InverseBoolToVisibilityConverter" />
+    </UserControl.Resources>
 
     <Grid>
 
@@ -116,6 +123,7 @@
                                             
                                             <TextBox x:Name="CellTextBox"
                                                     Text="{Binding Value, Mode=TwoWay}"
+                                                    TextChanged="OnCellTextBoxTextChanged"
                                                     FontFamily="{Binding FontFamily}"
                                                     FontSize="{Binding FontSize}"
                                                     Foreground="{Binding Foreground}"
@@ -141,12 +149,9 @@
                                                        VerticalAlignment="{Binding VerticalAlignment}"
                                                        HorizontalAlignment="{Binding HorizontalAlignment}"
                                                        Style="{StaticResource CellTextStyle}"
+                                                       Margin="4"
                                                        IsHitTestVisible="False"
                                                        KeyDown="OnTextBoxKeyDown"
-                                                       PointerPressed="OnTextBoxPointerPressed"
-                                                       PointerMoved="OnTextBoxPointerMoved"
-                                                       SizeChanged="OnCellTextBoxSizeChanged"
-                                                       Loaded="OnCellTextBoxLoaded"
                                                        Visibility="{Binding IsEditing, Converter={StaticResource InverseBoolToVisibilityConverter}}"/>
 
                                             <Border x:Name="UnderlineIndicator"

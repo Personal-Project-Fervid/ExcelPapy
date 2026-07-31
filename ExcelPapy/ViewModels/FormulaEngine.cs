@@ -1,87 +1,147 @@
+using System;
+using System.Collections.Generic;
+using System.Data;
 using System.Globalization;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace ExcelPapy.ViewModels;
 
 public static class FormulaEngine
 {
-    private static readonly Regex CellRefRegex = new(@"^([A-Z]+)(\d+)$", RegexOptions.Compiled);
-    private static readonly Regex RangeRegex = new(@"^([A-Z]+\d+):([A-Z]+\d+)$", RegexOptions.Compiled);
-    private static readonly Regex FormulaRegex = new(@"^([A-ZÀ-Ÿ]+)\((.*)\)$", RegexOptions.Compiled);
+    // Utilisation de \b au lieu de ^ et $ pour matcher les références au sein d'une formule globale
+    private static readonly Regex CellRefRegex = new(@"\b([A-Z]+)(\d+)\b", RegexOptions.Compiled);
+    private static readonly Regex RangeRegex = new(@"\b([A-Z]+\d+):([A-Z]+\d+)\b", RegexOptions.Compiled);
+
+    private static readonly Regex FunctionRegex = new(
+        @"\b(SOMME|SUM|MOYENNE|AVERAGE|MIN|MINIMUM|MAX|MAXIMUM|MÉDIANE|MEDIANE|MEDIAN|AUJOURD'HUI|TODAY|MAINTENANT|NOW)\s*\(([^()]*)\)",
+        RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
     private const string ErrorValue = "Erreur";
 
-    
-    
-    // Indique si le texte saisi est une formule (commence par '=').
+    /// <summary>
+    /// Indique si le texte saisi est une formule (commence par '=').
+    /// </summary>
     public static bool IsFormula(string? text) => !string.IsNullOrEmpty(text) && text.StartsWith("=");
 
-    
-    // Évalue la formule contenue dans currentCell.Value et retourne le résultat sous forme de texte.
-    // Retourne "Erreur" si la formule est invalide ou si la cellule se référence elle-même
-    // (directement ou via une plage).
-    
+    /// <summary>
+    /// Évalue la formule contenue dans currentCell.Value et retourne le résultat sous forme de texte.
+    /// </summary>
     public static string Evaluate(CellViewModel currentCell, MainViewModel vm)
     {
         var raw = currentCell.Value?.Trim();
         if (!IsFormula(raw)) return raw ?? string.Empty;
 
-        var body = raw!.Substring(1).Trim().ToUpperInvariant();
+        // Extraction du contenu sans le '='
+        string expression = raw!.Substring(1).Trim();
 
-        var match = FormulaRegex.Match(body);
-        if (!match.Success) return ErrorValue;
-
-        string functionName = match.Groups[1].Value;
-        string argsText = match.Groups[2].Value;
-
-        if (!TryResolveCells(argsText, vm, out var cells)) return ErrorValue;
-
-        // Auto-référence : la cellule ne doit pas apparaître dans ses propres arguments
-        if (cells.Contains(currentCell)) return ErrorValue;
-
-        var values = new List<double>();
-        foreach (var cell in cells)
+        try
         {
-            if (TryGetNumericValue(cell, vm, out double val))
-                values.Add(val);
-        }
+            // 1. Évaluation récursive des fonctions : ex. SOMME(A1:A5) -> "15"
+            expression = ResolveFunctions(expression, currentCell, vm);
+            if (expression == ErrorValue) return ErrorValue;
 
-        double result;
-        switch (functionName)
-        {
-            case "SOMME":
-            case "SUM":
-                result = values.Sum();
-                break;
+            string[] formatsDates = { "yyyy-MM-dd", "dd-MM-yyyy", "yyyy-MM-dd HH:mm", "dd-MM-yyyy HH:mm"};
+            if (DateTime.TryParseExact(expression, formatsDates, CultureInfo.InvariantCulture, DateTimeStyles.None, out _))
+            {
+                return expression;
+            }
 
-            case "MOYENNE":
-            case "AVERAGE":
-                if (values.Count == 0) return ErrorValue;
-                result = values.Average();
-                break;
 
-            case "MIN":
-                if (values.Count == 0) return ErrorValue;
-                result = values.Min();
-                break;
 
-            case "MAX":
-                if (values.Count == 0) return ErrorValue;
-                result = values.Max();
-                break;
+            // 2. Remplacement des références de cellules isolées : ex. A1 + A2 -> 5 + 10
+            expression = ResolveCellReferences(expression, currentCell, vm);
+            if (expression == ErrorValue) return ErrorValue;
 
-            case "MEDIANE":
-            case "MÉDIANE":
-            case "MEDIAN":
-                if (values.Count == 0) return ErrorValue;
-                result = Median(values);
-                break;
+            // 3. Évaluation mathématique globale avec DataTable
+            double numericResult = EvaluateMathExpression(expression);
 
-            default:
+            if (double.IsNaN(numericResult) || double.IsInfinity(numericResult))
                 return ErrorValue;
+
+            return numericResult.ToString(CultureInfo.InvariantCulture);
+        }
+        catch
+        {
+            return ErrorValue;
+        }
+    }
+
+    private static string ResolveFunctions(string expr, CellViewModel currentCell, MainViewModel vm)
+    {
+        while (FunctionRegex.IsMatch(expr))
+        {
+            expr = FunctionRegex.Replace(expr, match =>
+            {
+                string funcName = match.Groups[1].Value.ToUpperInvariant();
+                string argsText = match.Groups[2].Value;
+
+                if (funcName is "TODAY" or "AUJOURD'HUI")
+                {
+                    string format = funcName == "TODAY" ? "yyyy-MM-dd" : "dd-MM-yyyy";
+                    return DateTime.Now.ToString(format);
+                }
+
+                if (funcName is "NOW" or "MAINTENANT")
+                {
+                    string format = funcName == "NOW" ? "yyyy-MM-dd HH:mm" : "dd-MM-yyyy HH:mm";
+                    return DateTime.Now.ToString(format);
+                }
+
+
+                if (!TryResolveCellsAndValues(argsText, vm, currentCell, out var values)) return ErrorValue;
+
+                double res = funcName switch
+                {
+                    "SOMME" or "SUM" => values.Sum(),
+                    "MOYENNE" or "AVERAGE" => values.Count == 0 ? double.NaN : values.Average(),
+                    "MIN" or "MINIMUM" => values.Count == 0 ? double.NaN : values.Min(),
+                    "MAX" or "MAXIMUM" => values.Count == 0 ? double.NaN : values.Max(),
+                    "MEDIANE" or "MÉDIANE" or "MEDIAN" => values.Count == 0 ? double.NaN : Median(values),
+                    _ => double.NaN
+                };
+
+                if (double.IsNaN(res)) return ErrorValue;
+
+                return res.ToString(CultureInfo.InvariantCulture);
+            });
+
+            if (expr.Contains(ErrorValue)) return ErrorValue;
         }
 
-        return result.ToString(CultureInfo.InvariantCulture);
+        return expr;
+    }
+
+    private static string ResolveCellReferences(string expr, CellViewModel currentCell, MainViewModel vm)
+    {
+        return CellRefRegex.Replace(expr, match =>
+        {
+            string cellRef = match.Value;
+
+            if (!TryGetCellIndex(cellRef, out int col, out int row))
+                return ErrorValue;
+
+            var cell = GetCell(vm, row, col);
+            if (cell == null || cell == currentCell) return ErrorValue; // Auto-référence ou hors-limites
+
+            if (TryGetNumericValue(cell, vm, out double val))
+            {
+                // Formatage sécurisé pour DataTable (évite l'ambiguïté des signes négatifs)
+                return val < 0
+                    ? $"({val.ToString(CultureInfo.InvariantCulture)})"
+                    : val.ToString(CultureInfo.InvariantCulture);
+            }
+
+            // Si la cellule est vide, on la traite comme 0
+            return "0";
+        });
+    }
+
+    private static double EvaluateMathExpression(string mathExpr)
+    {
+        using var dt = new DataTable();
+        var result = dt.Compute(mathExpr, null);
+        return Convert.ToDouble(result, CultureInfo.InvariantCulture);
     }
 
     private static double Median(List<double> values)
@@ -93,18 +153,19 @@ public static class FormulaEngine
             : (sorted[n / 2 - 1] + sorted[n / 2]) / 2.0;
     }
 
-    
-    // Résout les arguments texte (ex: "A1:A5,C2") en liste de CellViewModel, sans doublons.
-    // Retourne false si un argument est invalide ou hors limites.
-    private static bool TryResolveCells(string argsText, MainViewModel vm, out List<CellViewModel> cells)
+    /// <summary>
+    /// Résout les arguments d'une fonction (cellules, plages ou valeurs brutes).
+    /// </summary>
+    private static bool TryResolveCellsAndValues(string argsText, MainViewModel vm, CellViewModel currentCell, out List<double> values)
     {
-        cells = new List<CellViewModel>();
+        values = new List<double>();
         if (string.IsNullOrWhiteSpace(argsText)) return true;
 
         var tokens = argsText.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
 
         foreach (var token in tokens)
         {
+            // 1. Plage de cellules (ex: A1:A5)
             var rangeMatch = RangeRegex.Match(token);
             if (rangeMatch.Success)
             {
@@ -119,33 +180,41 @@ public static class FormulaEngine
                     for (int c = minCol; c <= maxCol; c++)
                     {
                         var cell = GetCell(vm, r, c);
-                        if (cell == null) return false;
-                        if (!cells.Contains(cell)) cells.Add(cell);
+                        if (cell == null || cell == currentCell) return false;
+
+                        if (TryGetNumericValue(cell, vm, out double val))
+                            values.Add(val);
                     }
                 }
                 continue;
             }
 
+            // 2. Cellule unique (ex: A1)
             var singleMatch = CellRefRegex.Match(token);
             if (singleMatch.Success)
             {
                 if (!TryGetCellIndex(token, out int col, out int row)) return false;
                 var cell = GetCell(vm, row, col);
-                if (cell == null) return false;
-                if (!cells.Contains(cell)) cells.Add(cell);
+                if (cell == null || cell == currentCell) return false;
+
+                if (TryGetNumericValue(cell, vm, out double val))
+                    values.Add(val);
                 continue;
             }
 
-            // Argument non reconnu (ni référence simple "A1", ni plage "A1:A5")
+            // 3. Valeur numérique directe (ex: 10 ou 12.5)
+            if (double.TryParse(token, NumberStyles.Any, CultureInfo.InvariantCulture, out double directVal))
+            {
+                values.Add(directVal);
+                continue;
+            }
+
             return false;
         }
 
         return true;
     }
 
-    
-    // Convertit une référence de cellule (ex: "A1", "AB12") en index colonne/ligne base 0.
-    
     private static bool TryGetCellIndex(string reference, out int colIndex, out int rowIndex)
     {
         colIndex = -1;
@@ -162,21 +231,14 @@ public static class FormulaEngine
         return colIndex >= 0 && rowIndex >= 0;
     }
 
-    
-    // Convertit des lettres de colonne (A, B, ..., Z, AA, AB, ...) en index base 0.
-    
     private static int ColumnLettersToIndex(string letters)
     {
         int result = 0;
         foreach (char c in letters)
-            result = result * 26 + (c - 'A' + 1);
+            result = result * 26 + (char.ToUpper(c) - 'A' + 1);
         return result - 1;
     }
 
-    
-    // Récupère la CellViewModel à la position (ligne, colonne), ou null si hors limites.
-    // Adapte cette méthode si la structure de MainViewModel diffère (Rows[].Cells[]).
-    
     private static CellViewModel? GetCell(MainViewModel vm, int rowIndex, int colIndex)
     {
         if (rowIndex < 0 || rowIndex >= vm.Rows.Count) return null;
@@ -185,12 +247,6 @@ public static class FormulaEngine
         return row.Cells[colIndex];
     }
 
-    
-    // Récupère la valeur numérique d'une cellule. Si la cellule contient elle-même une formule,
-    // elle est évaluée récursivement.
-    // Note : les références circulaires indirectes (A1 dépend de B1 qui dépend de A1) ne sont pas
-    // détectées ici, seule l'auto-référence directe/via plage l'est.
-    
     private static bool TryGetNumericValue(CellViewModel cell, MainViewModel vm, out double value)
     {
         value = 0;

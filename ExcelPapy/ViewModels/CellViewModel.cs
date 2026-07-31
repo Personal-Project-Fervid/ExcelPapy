@@ -119,20 +119,24 @@ public partial class CellViewModel : ObservableObject
                 ? FormulaEngine.Evaluate(this, Owner)
                 : Value;
         }
-        set => Value = value;
     }
 
     partial void OnValueChanged(string value)
     {
         if (!IsEditing)
             OnPropertyChanged(nameof(DisplayValue));
-    } 
-    partial void OnIsEditingChanged(bool value) => OnPropertyChanged(nameof(DisplayValue));
+    }
+
+    private string? _editingOriginalValue;
+    public string? EditingOriginalValue => _editingOriginalValue;
+    partial void OnIsEditingChanged(bool value)
+    {
+        if (value)
+            _editingOriginalValue = Value;
+        if (!value)
+            OnPropertyChanged(nameof(DisplayValue));
+    }
 
     public void RaiseDisplayValueChanged() => OnPropertyChanged(nameof(DisplayValue));
-
-
-
-
 
 }

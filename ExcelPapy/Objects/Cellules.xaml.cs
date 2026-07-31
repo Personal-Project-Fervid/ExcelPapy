@@ -11,6 +11,7 @@ public sealed partial class Cellules : UserControl
     private Point _marqueeStartPoint;
     private CellViewModel? _dragEndCell = null;
 
+    // CONTEXTE //
     public Cellules()
     {
         this.InitializeComponent();
@@ -41,6 +42,7 @@ public sealed partial class Cellules : UserControl
         this.DataContext = vm;
     }
 
+    // GESTION DES REDIMENSIONS //
     private void OnRowResize(object sender, ManipulationDeltaRoutedEventArgs e)
     {
         if (sender is Rectangle rect && rect.DataContext is RowHeaderViewModel row)
@@ -187,13 +189,16 @@ public sealed partial class Cellules : UserControl
         RowHeaderScrollViewer.Margin = new Thickness(0, 0, 0, Math.Max(0, diffy));
     }
 
+
+    // GESTION DE LA SÉLECTION //
+
     private bool _isDragging = false;
     private CellViewModel? _lastClickedCell = null;
     private DateTime _lastClickTime = DateTime.MinValue;
     private CellViewModel? _dragStartCell = null;
     private bool _hasDraggedToOtherCell = false;
 
-    private void OnCellPointerPressed(object sender, PointerRoutedEventArgs e)
+    private void OnCellPointerPressed(object sender, PointerRoutedEventArgs e)          // Gestion du clic sur une cellule
     {
         if (sender is FrameworkElement el && el.DataContext is CellViewModel cell)
         {
@@ -264,7 +269,7 @@ public sealed partial class Cellules : UserControl
         }
     }
 
-    private void OnCellPointerMoved(object sender, PointerRoutedEventArgs e)
+    private void OnCellPointerMoved(object sender, PointerRoutedEventArgs e)    // Gestion du drag sur une cellule
     {
         if (!_isDragging) return;
 
@@ -321,7 +326,7 @@ public sealed partial class Cellules : UserControl
         }
     }
 
-    private void OnCellPointerReleased(object sender, PointerRoutedEventArgs e)
+    private void OnCellPointerReleased(object sender, PointerRoutedEventArgs e)         // Gestion du relâchement du clic sur une cellule
     {
         HideMarquee();
 
@@ -363,7 +368,7 @@ public sealed partial class Cellules : UserControl
         (sender as UIElement)?.ReleasePointerCapture(e.Pointer);
     }
 
-    private void ShowMarquee(Point start)
+    private void ShowMarquee(Point start)                       
     {
         _marqueeStartPoint = start;
         MarqueeRect.Visibility = Visibility.Visible;
@@ -394,6 +399,7 @@ public sealed partial class Cellules : UserControl
         {
             if (e.Key == Windows.System.VirtualKey.Escape)
             {
+                cell.Value = cell.EditingOriginalValue ?? string.Empty;
                 // Désactiver la TextBox
                 cell.IsEditing = false;
                 // Retirer le focus de la TextBox
@@ -497,5 +503,15 @@ public sealed partial class Cellules : UserControl
             }
         }
         return null;
+    }
+
+    private void OnCellTextBoxTextChanged(object sender, TextChangedEventArgs e)
+    {
+        if (sender is TextBox tb && tb.DataContext is CellViewModel cell && cell.IsEditing)
+        {
+            // Mettre à jour la valeur de la cellule avec le texte de la TextBox
+            if (tb.Text != cell.Value)
+                cell.Value = tb.Text;
+        }
     }
 }
