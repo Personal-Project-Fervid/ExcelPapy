@@ -121,17 +121,40 @@ public partial class MainViewModel : ObservableObject
             foreach (var c in row.Cells)
                 c.IsEditing = false;
 
+        CellViewModel effectiveCell = cell.IsMergedChild && cell.MasterCell != null ? cell.MasterCell : cell;
+
         if (!isShiftHeld)
         {
             ClearSelection();
-            _selectionStart = cell;
-            cell.IsSelected = true;
+            _selectionStart = effectiveCell;
+
+            // Déterminer la plage complète de la cellule fusionnée (ou de la cellule simple)
+            int rowMin = effectiveCell.Row;
+            int rowMax = effectiveCell.Row + (effectiveCell.IsMergedMaster ? effectiveCell.MergeRowSpan - 1 : 0);
+            int colMin = effectiveCell.Column;
+            int colMax = effectiveCell.Column + (effectiveCell.IsMergedMaster ? effectiveCell.MergeColSpan - 1 : 0);
+
+            foreach (var row in Rows)
+                foreach (var c in row.Cells)
+                    if (c.Row >= rowMin && c.Row <= rowMax &&
+                        c.Column >= colMin && c.Column <= colMax)
+                        c.IsSelected = true;
+
         }
         else if (_selectionStart != null)
         {
             // Ne PAS effacer _selectionStart, juste recalculer la zone
             ClearSelection();
             _selectionStart.IsSelected = true; // garder l'origine visible
+
+            int startMasterRow = _selectionStart.IsMergedChild && _selectionStart.MasterCell != null ? _selectionStart.MasterCell.Row : _selectionStart.Row;
+            int startMasterCol = _selectionStart.IsMergedChild && _selectionStart.MasterCell != null ? _selectionStart.MasterCell.Column : _selectionStart.Column;
+            int startMasterRowMax = startMasterRow + (_selectionStart.IsMergedMaster ? _selectionStart.MergeRowSpan - 1 : 0);
+            int startMasterColMax = startMasterCol + (_selectionStart.IsMergedMaster ? _selectionStart.MergeColSpan - 1 : 0);
+
+            // Bornes de la cellule cliquée (en tenant compte de sa fusion éventuelle)
+            int effectiveRowMax = effectiveCell.Row + (effectiveCell.IsMergedMaster ? effectiveCell.MergeRowSpan - 1 : 0);
+            int effectiveColMax = effectiveCell.Column + (effectiveCell.IsMergedMaster ? effectiveCell.MergeColSpan - 1 : 0);
 
             int rowMin = Math.Min(_selectionStart.Row, cell.Row);
             int rowMax = Math.Max(_selectionStart.Row, cell.Row);
@@ -140,15 +163,29 @@ public partial class MainViewModel : ObservableObject
 
             foreach (var row in Rows)
                 foreach (var c in row.Cells)
+                {
+                    int cRow = c.IsMergedChild && c.MasterCell != null ? c.MasterCell.Row : c.Row;
+                    int cCol = c.IsMergedChild && c.MasterCell != null ? c.MasterCell.Column : c.Column;
+
                     if (c.Row >= rowMin && c.Row <= rowMax &&
                         c.Column >= colMin && c.Column <= colMax)
                         c.IsSelected = true;
+                }
         }
         else
         {
             // Si _selectionStart est null et isShiftHeld, on traite comme un clic simple
-            _selectionStart = cell;
-            cell.IsSelected = true;
+            _selectionStart = effectiveCell;
+            int rowMin = effectiveCell.Row;
+            int rowMax = effectiveCell.Row + (effectiveCell.IsMergedMaster ? effectiveCell.MergeRowSpan - 1 : 0);
+            int colMin = effectiveCell.Column;
+            int colMax = effectiveCell.Column + (effectiveCell.IsMergedMaster ? effectiveCell.MergeColSpan - 1 : 0);
+
+            foreach (var row in Rows)
+                foreach (var c in row.Cells)
+                    if (c.Row >= rowMin && c.Row <= rowMax &&
+                        c.Column >= colMin && c.Column <= colMax)
+                        c.IsSelected = true;
         }
 
         // Recalculer les bordures de sélection
