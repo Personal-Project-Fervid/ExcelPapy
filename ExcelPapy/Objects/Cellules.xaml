@@ -6,7 +6,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:converters="using:ExcelPapy.Objects.Converters"
-    xmlns:objet="using:ExcelPapy.Objects">
+    xmlns:objet="using:ExcelPapy.Objects"
+    IsTabStop="True">
 
     <UserControl.Resources>
         <!-- Instance des convertisseurs pour réutilisation dans le XAML -->
@@ -114,8 +115,11 @@
                                     <DataTemplate x:DataType="local:CellViewModel">
 
                                         <Grid x:Name="CellBorder"
-                                              Width="{Binding ColumnHeader.Width}"
-                                              Height="{Binding RowHeader.Height}"
+                                              Width="{Binding MergedWidth}"
+                                              Height="{Binding MergedHeight}"
+                                              Margin="{Binding MergedMargin}"
+                                              Canvas.ZIndex="{Binding CellZIndex}"
+                                              Opacity="{Binding CellOpacity}"
                                               Background="{Binding Background}"
                                               PointerPressed="OnCellPointerPressed"
                                               PointerMoved="OnCellPointerMoved"

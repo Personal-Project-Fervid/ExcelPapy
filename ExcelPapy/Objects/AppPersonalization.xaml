@@ -348,6 +348,7 @@
                                 <CheckBox x:Name="Couper" Content="Couper" Tag="Couper" Checked="TutorialCheck" Unchecked="TutorialUncheck" FontWeight="{Binding AppView.WeightApp}" FontFamily="{Binding AppView.FontApp}" Style="{StaticResource CheckBoxStyle}"/>
                                 <CheckBox x:Name="Copier" Content="Copier" Tag="Copier" Checked="TutorialCheck" Unchecked="TutorialUncheck" FontWeight="{Binding AppView.WeightApp}" FontFamily="{Binding AppView.FontApp}" Style="{StaticResource CheckBoxStyle}"/>
                                 <CheckBox x:Name="Coller" Content="Coller" Tag="Coller" Checked="TutorialCheck" Unchecked="TutorialUncheck" FontWeight="{Binding AppView.WeightApp}" FontFamily="{Binding AppView.FontApp}" Style="{StaticResource CheckBoxStyle}"/>
+                                <CheckBox x:Name="Fusionner" Content="Fusionner" Tag="Fusionner" Checked="TutorialCheck" Unchecked="TutorialUncheck" FontWeight="{Binding AppView.WeightApp}" FontFamily="{Binding AppView.FontApp}" Style="{StaticResource CheckBoxStyle}"/>
                                 <CheckBox x:Name="Zoom" Content="Zoom" Tag="Zoom" Checked="TutorialCheck" Unchecked="TutorialUncheck" FontWeight="{Binding AppView.WeightApp}" FontFamily="{Binding AppView.FontApp}" Style="{StaticResource CheckBoxStyle}"/>
 
                             </StackPanel>

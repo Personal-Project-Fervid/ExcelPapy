@@ -35,6 +35,8 @@ public sealed partial class Cellules : UserControl
             AdjustScrollViewersAlignment();
             UpdateSlidersFromScroll();
         };
+
+        this.KeyDown += OnControlKeyDown;
     }
 
     public void SetViewModel(MainViewModel vm)
@@ -512,6 +514,21 @@ public sealed partial class Cellules : UserControl
             // Mettre à jour la valeur de la cellule avec le texte de la TextBox
             if (tb.Text != cell.Value)
                 cell.Value = tb.Text;
+        }
+    }
+
+    private void OnControlKeyDown(object sender, KeyRoutedEventArgs e)
+    {
+        var ctrlState = Microsoft.UI.Input.InputKeyboardSource.GetKeyStateForCurrentThread(Windows.System.VirtualKey.Control);
+        bool isCtrl = ((int)ctrlState & 1) != 0 || ((int)ctrlState & 128) != 0;
+
+        if (isCtrl && e.Key == Windows.System.VirtualKey.A)
+        {
+            if (this.DataContext is MainViewModel vm)
+            {
+                vm.ToggleMergeSelection();
+                e.Handled = true; // Empêche l'événement de se propager
+            }
         }
     }
 }

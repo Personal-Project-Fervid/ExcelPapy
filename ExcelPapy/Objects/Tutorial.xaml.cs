@@ -34,6 +34,9 @@ public sealed partial class Tutorial : UserControl
             case "Retour":
                 retour.Visibility = Visibility.Visible;
                 break;
+            case "Fusionner":
+                fusionner.Visibility = Visibility.Visible;
+                break;
             case "Zoom":
                 zoom.Visibility = Visibility.Visible;
                 break;
@@ -61,6 +64,9 @@ public sealed partial class Tutorial : UserControl
                 break;
             case "Retour":
                 retour.Visibility = Visibility.Collapsed;
+                break;
+            case "Fusionner":
+                fusionner.Visibility = Visibility.Collapsed;
                 break;
             case "Zoom":
                 zoom.Visibility = Visibility.Collapsed;

@@ -169,6 +169,32 @@
                 </Grid>
             </Border>
 
+            <!-- Fusionner -->
+            <Border x:Name="fusionner"  Width="130" Height="70"  Background="#80E8CF8B" CornerRadius="15" HorizontalAlignment="Right" Visibility="Collapsed">
+                <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                    <Border VerticalAlignment="Top" HorizontalAlignment="Stretch" Height="16" Margin="5" Background="#AAE8C874" CornerRadius="10">
+                        <TextBlock Text="Fusionner" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="14" FontWeight="Bold" Margin="8,0,-8,0"/>
+                    </Border>
+                    <Canvas Margin="5,25,-5,-25">
+                        <Grid>
+                            <Rectangle Fill="#828282" Width="60" Height="40" RadiusX="8" RadiusY="8" />
+                            <Rectangle Fill="#A1A1A1" Width="52" Height="32" RadiusX="8" RadiusY="8" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                            <TextBlock Text="Ctrl" HorizontalAlignment="Center" VerticalAlignment="Top" HorizontalTextAlignment="Center" FontSize="18" FontWeight="Bold"/>
+                        </Grid>
+                    </Canvas>
+
+                    <TextBlock Text="+" HorizontalAlignment="Center" FontSize="28" FontWeight="Bold" Margin="10.5,22,-10.5,-22"/>
+
+                    <Canvas Margin="85,25,-85,-25">
+                        <Grid>
+                            <Rectangle Fill="#828282" Width="40" Height="40" RadiusX="8" RadiusY="8" />
+                            <Rectangle Fill="#A1A1A1" Width="32" Height="32" RadiusX="8" RadiusY="8" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                            <TextBlock Text="A" HorizontalAlignment="Center" VerticalAlignment="Top" HorizontalTextAlignment="Center" FontSize="18" FontWeight="Bold"/>
+                        </Grid>
+                    </Canvas>
+                </Grid>
+            </Border>
+
             <!-- Zoom -->
             <Border x:Name="zoom"  Width="130" Height="70"  Background="#80E8CF8B" CornerRadius="15" HorizontalAlignment="Right" Visibility="Collapsed">
                 <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">

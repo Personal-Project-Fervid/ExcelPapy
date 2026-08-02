@@ -148,6 +148,7 @@ public sealed partial class AppPersonalization : UserControl
             Coller.IsChecked = true;
             Couper.IsChecked = true;
             Retour.IsChecked = true;
+            Fusionner.IsChecked = true;
             Zoom.IsChecked = true;
 
             All.Text = "Tout décocher";
@@ -159,6 +160,7 @@ public sealed partial class AppPersonalization : UserControl
             Coller.IsChecked = false;
             Couper.IsChecked = false;
             Retour.IsChecked = false;
+            Fusionner.IsChecked = false;
             Zoom.IsChecked = false;
             All.Text = "Tout cocher";
         }
@@ -181,6 +183,7 @@ public sealed partial class AppPersonalization : UserControl
                 case "Coller": _tutorial.ShowTutorial(Tuto); break;
                 case "Couper": _tutorial.ShowTutorial(Tuto); break;
                 case "Retour": _tutorial.ShowTutorial(Tuto); break;
+                case "Fusionner": _tutorial.ShowTutorial(Tuto); break;
                 case "Zoom": _tutorial.ShowTutorial(Tuto); break;
                 default: break;
             };
@@ -200,6 +203,7 @@ public sealed partial class AppPersonalization : UserControl
                 case "Coller": _tutorial.HideTutorial(Tuto); break;
                 case "Couper": _tutorial.HideTutorial(Tuto); break;
                 case "Retour": _tutorial.HideTutorial(Tuto); break;
+                case "Fusionner": _tutorial.HideTutorial(Tuto); break;
                 case "Zoom": _tutorial.HideTutorial(Tuto); break;
                 default: break;
             }

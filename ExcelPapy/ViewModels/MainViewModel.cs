@@ -87,6 +87,30 @@ public partial class MainViewModel : ObservableObject
         if (e.PropertyName == nameof(ColumnHeaderViewModel.Width))
         {
             OnPropertyChanged(nameof(TotalColumnsWidth));
+
+            // Rafraîchir la largeur des cellules
+            foreach (var row in Rows)
+            {
+                foreach (var cell in row.Cells)
+                {
+                    // On force la mise à jour de la largeur pour que la grille s'adapte
+                    cell.UpdateMergeUI();
+                }
+            }
+        }
+    }
+
+    private void RowHeader_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+    {
+        if (e.PropertyName == nameof(RowHeaderViewModel.Height))
+        {
+            foreach (var row in Rows)
+            {
+                foreach (var cell in row.Cells)
+                {
+                    cell.UpdateMergeUI();
+                }
+            }
         }
     }
 
@@ -423,46 +447,82 @@ public partial class MainViewModel : ObservableObject
 
     private void SetTopBorder(CellViewModel cell, double thickness, Brush ColorBorder)
     {
-        if (cell.Row > 0)
+        int colspan = cell.IsMergedMaster ? cell.MergeColSpan : 1;
+
+        for (int i = 0; i < colspan; i++)
         {
-            // Le "haut" visuel appartient au "bas" de la cellule du dessus
-            var above = Rows[cell.Row - 1].Cells[cell.Column];
-            above.BorderThicknessBottom = thickness;
-            above.BorderBrushBottom = ColorBorder;
-        }
-        else
-        {
-            cell.BorderThicknessTop = thickness;
-            cell.BorderBrushTop = ColorBorder;
+            int targetCol = cell.Column + i;
+
+            if (cell.Row > 0)
+            {
+                // Le "haut" visuel appartient au "bas" de la cellule du dessus
+                var above = Rows[cell.Row - 1].Cells[targetCol];
+                above.BorderThicknessBottom = thickness;
+                above.BorderBrushBottom = ColorBorder;
+            }
+            else
+            {
+                if(i==0)
+                {
+                    cell.BorderThicknessTop = thickness;
+                    cell.BorderBrushTop = ColorBorder;
+                }
+            }
         }
     }
 
     private void SetLeftBorder(CellViewModel cell, double thickness, Brush ColorBorder)
     {
-        if (cell.Column > 0)
+        int rowSpan = cell.IsMergedMaster ? cell.MergeRowSpan : 1;
+
+        for (int i = 0; i < rowSpan; i++)
         {
-            // Le "gauche" visuel appartient au "droit" de la cellule de gauche
-            var left = Rows[cell.Row].Cells[cell.Column - 1];
-            left.BorderThicknessRight = thickness;
-            left.BorderBrushRight = ColorBorder;
-        }
-        else
-        {
-            cell.BorderThicknessLeft = thickness;
-            cell.BorderBrushLeft = ColorBorder;
+            int targetRow = cell.Row + i;
+
+            if (cell.Column > 0)
+            {
+                // Le "gauche" visuel appartient au "droit" de la cellule de gauche
+                var left = Rows[targetRow].Cells[cell.Column - 1];
+                left.BorderThicknessRight = thickness;
+                left.BorderBrushRight = ColorBorder;
+            }
+            else
+            {
+                if (i == 0)
+                {
+                    cell.BorderThicknessLeft = thickness;
+                    cell.BorderBrushLeft = ColorBorder;
+                }
+            }
         }
     }
 
     private void SetRightBorder(CellViewModel cell, double thickness, Brush ColorBorder)
     {
-        cell.BorderThicknessRight = thickness;
-        cell.BorderBrushRight = ColorBorder;
+        if (cell.IsMergedChild && cell.MasterCell != null)
+        {
+            cell.MasterCell.BorderThicknessRight = thickness;
+            cell.MasterCell.BorderBrushRight = ColorBorder;
+        }
+        else
+        {
+            cell.BorderThicknessRight = thickness;
+            cell.BorderBrushRight = ColorBorder;
+        }
     }
 
     private void SetBottomBorder(CellViewModel cell, double thickness, Brush ColorBorder)
     {
-        cell.BorderThicknessBottom = thickness;
-        cell.BorderBrushBottom = ColorBorder;
+        if (cell.IsMergedChild && cell.MasterCell != null)
+        {
+            cell.MasterCell.BorderThicknessBottom = thickness;
+            cell.MasterCell.BorderBrushBottom = ColorBorder;
+        }
+        else
+        {
+            cell.BorderThicknessBottom = thickness;
+            cell.BorderBrushBottom = ColorBorder;
+        }
     }
 
     private static readonly Brush TransparentBrush = new SolidColorBrush(Microsoft.UI.Colors.Transparent);
@@ -524,5 +584,100 @@ public partial class MainViewModel : ObservableObject
                scb.Color.G == 0 &&
                scb.Color.B == 0;
     }
+
+    public void ToggleMergeSelection()
+    {
+        var selectedCells = Rows.SelectMany(r => r.Cells).Where(c => c.IsSelected).ToList();
+        if (!selectedCells.Any()) return;
+
+        int minRow = selectedCells.Min(c => c.Row);
+        int maxRow = selectedCells.Max(c => c.Row);
+        int minCol = selectedCells.Min(c => c.Column);
+        int maxCol = selectedCells.Max(c => c.Column);
+
+        var topLeftCell = Rows[minRow].Cells[minCol];
+        int selectedRowCount = maxRow - minRow + 1;
+        int selectedColCount = maxCol - minCol + 1;
+
+        // 1. Vérifier si on doit DÉFUSIONNER (si la cellule maître correspond exactement à la sélection)
+        if (topLeftCell.IsMergedMaster &&
+            topLeftCell.MergeRowSpan == selectedRowCount &&
+            topLeftCell.MergeColSpan == selectedColCount)
+        {
+            topLeftCell.IsMergedMaster = false;
+            topLeftCell.MergeRowSpan = 1;
+            topLeftCell.MergeColSpan = 1;
+
+            foreach (var cell in selectedCells)
+            {
+                cell.IsMergedChild = false;
+                cell.MasterCell = null;
+                cell.UpdateMergeUI();
+            }
+            return;
+        }
+
+        // --- NOUVEAU CODE : NETTOYAGE D'UNE ANCIENNE FUSION DIFFÉRENTE ---
+        // Si la cellule principale était déjà une cellule maîtresse mais avec des dimensions différentes
+        if (topLeftCell.IsMergedMaster)
+        {
+            int oldRowSpan = topLeftCell.MergeRowSpan;
+            int oldColSpan = topLeftCell.MergeColSpan;
+
+            // On parcourt TOUTE l'ancienne zone fusionnée pour la réinitialiser
+            for (int r = 0; r < oldRowSpan; r++)
+            {
+                for (int c = 0; c < oldColSpan; c++)
+                {
+                    int targetRow = topLeftCell.Row + r;
+                    int targetCol = topLeftCell.Column + c;
+
+                    // Vérification de sécurité pour ne pas déborder de la grille
+                    if (targetRow < Rows.Count && targetCol < Rows[targetRow].Cells.Count)
+                    {
+                        var oldCell = Rows[targetRow].Cells[targetCol];
+
+                        // On libère les anciennes cellules enfants (ex: C2:D3)
+                        if (oldCell != topLeftCell)
+                        {
+                            oldCell.IsMergedChild = false;
+                            oldCell.MasterCell = null;
+                            oldCell.UpdateMergeUI(); // On force le rafraîchissement visuel pour qu'elles réapparaissent
+                        }
+                    }
+                }
+            }
+        }
+
+        // 2. FUSIONNER à la façon Microsoft Excel
+        foreach (var cell in selectedCells)
+        {
+            cell.IsMergedMaster = false;
+            cell.IsMergedChild = true;
+            cell.MasterCell = topLeftCell;
+            cell.MergeRowSpan = 1;
+            cell.MergeColSpan = 1;
+
+            // Excel vide les autres cellules et ne garde que la valeur de la cellule de référence
+            if (cell != topLeftCell)
+            {
+                cell.Value = string.Empty;
+            }
+        }
+
+        topLeftCell.IsMergedMaster = true;
+        topLeftCell.IsMergedChild = false;
+        topLeftCell.MasterCell = null;
+        topLeftCell.MergeRowSpan = selectedRowCount;
+        topLeftCell.MergeColSpan = selectedColCount;
+
+        // Mettre à jour l'interface utilisateur pour toutes les cellules concernées
+        foreach (var cell in selectedCells)
+        {
+            cell.UpdateMergeUI();
+        }
+    }
+
+   
 
 }

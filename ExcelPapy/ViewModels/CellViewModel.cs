@@ -139,4 +139,64 @@ public partial class CellViewModel : ObservableObject
 
     public void RaiseDisplayValueChanged() => OnPropertyChanged(nameof(DisplayValue));
 
+
+
+    [ObservableProperty]
+    private bool _isMergedMaster = false;
+
+    [ObservableProperty]
+    private bool _isMergedChild = false;
+
+    public int MergeRowSpan { get; set; } = 1;
+    public int MergeColSpan { get; set; } = 1;
+    public CellViewModel? MasterCell { get; set; }
+
+    public double CellOpacity => IsMergedChild ? 0.0 : 1.0;
+
+    public int CellZIndex => IsMergedMaster ? 10 : 1;
+
+    public double MergedWidth
+    {
+        get
+        {
+            if (!IsMergedMaster || Owner == null) return ColumnHeader?.Width ?? 0;
+            double width = 0;
+            for(int i = 0; i< MergeColSpan;i++)
+            {
+                if(Column + i < Owner.ColumnHeaders.Count)
+                    width += Owner.ColumnHeaders[Column + i].Width;
+            }
+            return width;
+        }
+    }
+
+    public double MergedHeight
+    {
+        get
+        {
+            if (!IsMergedMaster || Owner == null) return RowHeader?.Height ?? 0;
+            double height = 0;
+            for (int i = 0; i < MergeRowSpan; i++)
+            {
+                if (Row + i < Owner.RowHeaders.Count)
+                    height += Owner.RowHeaders[Row + i].Height;
+            }
+            return height;
+        }
+    }
+
+    public Thickness MergedMargin => IsMergedMaster
+        ? new Thickness(0, 0, -(MergedWidth - (ColumnHeader?.Width ?? 0)), -(MergedHeight - (RowHeader?.Height ?? 0)))
+        : new Thickness(0);
+
+    public void UpdateMergeUI()
+    {
+        OnPropertyChanged(nameof(IsMergedMaster));
+        OnPropertyChanged(nameof(IsMergedChild));
+        OnPropertyChanged(nameof(CellOpacity));
+        OnPropertyChanged(nameof(CellZIndex));
+        OnPropertyChanged(nameof(MergedWidth));
+        OnPropertyChanged(nameof(MergedHeight));
+        OnPropertyChanged(nameof(MergedMargin));
+    }
 }
